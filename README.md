@@ -1,5 +1,15 @@
 # Blog
 
+## init
+
+1. clone 当前项目
+2. 初始化作为子模块的themes
+
+```bash
+git submodule init
+git submodule update --remote
+```
+
 ## workflow
 
 1. 新建草稿: `hugo new draft/new-article.md`
