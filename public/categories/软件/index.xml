@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>软件 on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/categories/%E8%BD%AF%E4%BB%B6/</link>
+    <description>Recent content in 软件 on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 24 Sep 2017 06:11:58 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/categories/%E8%BD%AF%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Connecting Android Devices with Linux</title>
+      <link>https://blog.fliaping.com/connecting-android-devices-with-linux/</link>
+      <pubDate>Sun, 24 Sep 2017 06:11:58 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/connecting-android-devices-with-linux/</guid>
+      <description>结合自身的实际，在Linux上连接Android的需求其实可以分为一下几类： 手机的通知可以在Linux上弹窗提示 能方便的在手机和Linux之</description>
+    </item>
+    
+  </channel>
+</rss>

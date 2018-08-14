@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Connecting Android Devices with Linux - Fliaping&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Payne Xu" />
+  <meta name="description" content="结合自身的实际，在Linux上连接Android的需求其实可以分为一下几类： 手机的通知可以在Linux上弹窗提示 能方便的在手机和Linux之" />
+
+  <meta name="keywords" content="fliaping, Payne.Xu" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.46" />
+
+
+<link rel="canonical" href="https://blog.fliaping.com/connecting-android-devices-with-linux/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Connecting Android Devices with Linux" />
+<meta property="og:description" content="结合自身的实际，在Linux上连接Android的需求其实可以分为一下几类： 手机的通知可以在Linux上弹窗提示 能方便的在手机和Linux之" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.fliaping.com/connecting-android-devices-with-linux/" />
+
+
+
+<meta property="article:published_time" content="2017-09-24T06:11:58&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-09-24T06:11:58&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Connecting Android Devices with Linux">
+<meta itemprop="description" content="结合自身的实际，在Linux上连接Android的需求其实可以分为一下几类： 手机的通知可以在Linux上弹窗提示 能方便的在手机和Linux之">
+
+
+<meta itemprop="datePublished" content="2017-09-24T06:11:58&#43;00:00" />
+<meta itemprop="dateModified" content="2017-09-24T06:11:58&#43;00:00" />
+<meta itemprop="wordCount" content="1494">
+
+
+
+<meta itemprop="keywords" content="软件," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Connecting Android Devices with Linux"/>
+<meta name="twitter:description" content="结合自身的实际，在Linux上连接Android的需求其实可以分为一下几类： 手机的通知可以在Linux上弹窗提示 能方便的在手机和Linux之"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Fliaping&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Fliaping&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Connecting Android Devices with Linux</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-09-24 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E8%BD%AF%E4%BB%B6/"> 软件 </a>
+            
+          </div>
+        <span class="more-meta"> 约 1494 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#kde-connect">KDE Connect</a></li>
+<li><a href="#deskdock">DeskDock</a></li>
+<li><a href="#vysor">Vysor</a></li>
+<li><a href="#其他内容">其他内容</a>
+<ul>
+<li><a href="#无线adb">无线adb</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<p>结合自身的实际，在Linux上连接Android的需求其实可以分为一下几类：</p>
+
+<ol>
+<li>手机的通知可以在Linux上弹窗提示</li>
+<li>能方便的在手机和Linux之间传输文件、甚至同步粘贴板</li>
+<li>能将手机画面同步到Linux上，并且还能直接操作</li>
+<li>将手机作为另外一个屏幕，共享Linux的鼠标键盘，直接操作Android系统</li>
+<li>仅仅将手机作为Linux的扩展屏</li>
+</ol>
+
+<p>接下来我就来介绍几个软件，看看它们都能实现哪些需求</p>
+
+<h1 id="kde-connect">KDE Connect</h1>
+
+<p>看名字就知道是KDE桌面环境的组件，KDE桌面的高度定制以及酷炫的特性就不用多说了，没想到还这么关心小众需求，值得赞一个。</p>
+
+<p>KDE Connect实现的需求是1和2另外还有些特色功能，下面列出主要功能</p>
+
+<ul>
+<li>在Desktop上展示手机通知</li>
+<li>互相传送文件</li>
+<li>用手机模拟成桌面的触摸板（感觉这个功能还是蛮有用的）</li>
+<li>控制桌面的打开的媒体播放器</li>
+</ul>
+
+<p>该软件分为桌面端和手机端，手机端直接在google play就可以下载，桌面端可以在各大发行版仓库中下载。它们之间的连接是通过内网连接，需要在同一个环境下，并且需要开放相关端口。安装KDE Connect之后它们会自动发现，但是有时候并不能，需要手动添加。在右上角三竖点的子项 Add devices by IP。输入桌面端的IP地址即可在，KDE Connect Settings中发现手机，pair之后即可看到对于该手机的一些设置项。
+<img src="https://o364p1r5a.qnssl.com/2017/09/kde-connect-settings.png" alt="kde-connect-settings" /></p>
+
+<p>对于手机端，如下图，可以发送文件，控制桌面的媒体播放器，模拟桌面的触摸板，除此之外还可以在右上角三竖点的子项中发现Plugin settings，对应于桌面端的那些设置，尤其值得注意，要想在桌面收到手机端的通知需要开启Notification sync，哦也可以设置APP维度通知的过滤。</p>
+
+<p><img src="https://o364p1r5a.qnssl.com/2017/09/kde-connect-android.jpg" alt="kde-connect-android" /></p>
+
+<p><img src="https://o364p1r5a.qnssl.com/2017/09/kde-connect-android-plugin-settings.jpg" alt="kde-connect-android-plugin-settings" /></p>
+
+<p>另外有个扩展软件叫indicator-kdeconnect，可以在托盘中显示一个手机图标，显示设备的状态，以及一些快捷选项。可以通过一下命令安装，安装不成功的话就编译安装吧。Github: <a href="https://github.com/vikoadi/indicator-kdeconnect">indicator-kdeconnect</a></p>
+
+<pre><code class="language-bash">sudo add-apt-repository ppa:webupd8team/indicator-kdeconnect
+sudo apt update
+sudo apt install kdeconnect indicator-kdeconnect
+</code></pre>
+
+<p>编译安装：</p>
+
+<pre><code class="language-bash">sudo apt-get install gtk+-3.0-dev libappindicator3-dev valac
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+make
+sudo make install
+</code></pre>
+
+<p>相关链接（介绍和用法）：
+<a href="https://community.kde.org/KDEConnect">KDEConnect - KDE Community Wiki</a>
+<a href="https://www.addictivetips.com/ubuntu-linux-tips/install-kde-connect-on-linux/">How To Install KDE Connect On Linux To Access Files And Notifications On Andriod</a></p>
+
+<h1 id="deskdock">DeskDock</h1>
+
+<p>用你电脑键盘鼠标控制你的手机，利用adb来模拟外设，能做到文章开头的2和4。同样是桌面端和手机端，但是手机端免费版功能受限，例如键盘不可用等，收费版要$5.49，还不便宜呀。我只试用了免费版的，感觉还可以，只是鼠标进入手机屏幕时会有些不畅甚至进不去的问题(可能是linux问题，windows和macOs应该好一点)，不过总体用起来还可以，可以通过快捷键切换鼠标焦点到PC或者手机。</p>
+
+<p>桌面端软件是个jar包，安装了jre的都可以运行。因为是用adb连接，需要连接数据线，当然也可以开启Android的无线adb功能（下文会提到）。</p>
+
+<p><img src="https://o364p1r5a.qnssl.com/2017/09/deskdock-android-status.jpg" alt="deskdock-android-status" /></p>
+
+<p><img src="https://o364p1r5a.qnssl.com/2017/09/deskdock-pc-settings.png" alt="deskdock-pc-settings" /></p>
+
+<p>相关链接（介绍和用法）：
+<a href="https://forum.xda-developers.com/android/apps-games/app-deskdock-missing-link-computer-t3447035">DeskDock - Share computer&rsquo;s mouse &amp; keyboard with Android (+ Drag &amp; Drop)</a>
+<a href="https://lifehacker.com/deskdock-controls-your-android-device-with-your-compute-1786425812">DeskDock Controls Your Android Device With Your Computer&rsquo;s Keyboard and Mouse</a></p>
+
+<h1 id="vysor">Vysor</h1>
+
+<p>这是一款chrome插件，但是它能做到真正的控制，首先是画面的同步、然后是操作的控制，还有截图、录像等功能，不过这是一款订阅收费的软件，免费版限制很多，不过即便如此免费版已经满足基本需求，满足文章开头的3。</p>
+
+<p>使用vysor需要连接数据线，当然也可以不用数据线，通过无线adb连接。
+<img src="https://o364p1r5a.qnssl.com/2017/09/vysor-pc-ui.png" alt="vysor-pc-ui" />
+<img src="https://o364p1r5a.qnssl.com/2017/09/vysor-pc-android-view.png" alt="vysor-pc-android-view" />
+<img src="https://o364p1r5a.qnssl.com/2017/09/vysor-pc-android-settings.png" alt="vysor-pc-android-settings" /></p>
+
+<h1 id="其他内容">其他内容</h1>
+
+<p>其实还有很多android透屏到电脑的软件，以后用到了再介绍。不过我目前还没发现满足需求5的软件，发现了再说。</p>
+
+<p>对于键盘鼠标共享有个<code>Synergy</code>的软件蛮不错的，但是没有Android平台</p>
+
+<h2 id="无线adb">无线adb</h2>
+
+<p>对于没有root的android设备，要想开启无线adb需要先用数据线连一次，通过adb命令开启网络adb功能后即可。</p>
+
+<pre><code class="language-bash"># 连接数据线，开启网络adb功能
+adb tcpip 5555
+# 断开数据线，连接手机
+adb connect &lt;device_ip_address&gt;
+# 检测是否连接成功
+adb devices
+</code></pre>
+
+<p><a href="https://developer.android.com/studio/command-line/adb.html">Android Debug Bridge (adb) | Android Studio</a></p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Payne Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2017-09-24</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/container-core-technical-details/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">容器核心技术详解</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/http2-summary-and-simple-practicing/">
+            <span class="next-text nav-default">http2总结及简单实践</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'fliaping';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:xavierrpayne@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/xupingxx" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/paynexu/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/fliaping" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.fliaping.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2015 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">fliaping</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-63276498-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

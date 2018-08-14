@@ -1,0 +1,8 @@
+#!/bin/sh
+USER=fliaping
+HOST=june
+DIR=www/fliaping_blog   # might sometimes be empty!
+
+hugo && rsync -avz --delete public/ ${USER}@${HOST}:~/${DIR}
+
+exit 0

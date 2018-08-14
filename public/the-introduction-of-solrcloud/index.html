@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>SolrCloud基础 - Fliaping&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Payne Xu" />
+  <meta name="description" content="本节是SolrCloud基础理论知识，我也是从网上学习到，这里只是进行一些整理。参考的博客比本文更好，更有深度，有耐心的请看参考的原文&amp;ndash; SolrCloud之分布式索引及与Zookeeper的集成
+SolrCloud基本概念 SolrCloud模式下有Cluster，Node，Collection，Shard，LeaderCore，ReplicationCore等重要概念。
+
+" />
+
+  <meta name="keywords" content="fliaping, Payne.Xu" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.46" />
+
+
+<link rel="canonical" href="https://blog.fliaping.com/the-introduction-of-solrcloud/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="SolrCloud基础" />
+<meta property="og:description" content="本节是SolrCloud基础理论知识，我也是从网上学习到，这里只是进行一些整理。参考的博客比本文更好，更有深度，有耐心的请看参考的原文&ndash; SolrCloud之分布式索引及与Zookeeper的集成
+
+SolrCloud基本概念
+
+SolrCloud模式下有Cluster，Node，Collection，Shard，LeaderCore，ReplicationCore等重要概念。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.fliaping.com/the-introduction-of-solrcloud/" />
+
+
+
+<meta property="article:published_time" content="2016-06-12T08:02:25&#43;00:00"/>
+
+<meta property="article:modified_time" content="2016-06-12T08:02:25&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="SolrCloud基础">
+<meta itemprop="description" content="本节是SolrCloud基础理论知识，我也是从网上学习到，这里只是进行一些整理。参考的博客比本文更好，更有深度，有耐心的请看参考的原文&ndash; SolrCloud之分布式索引及与Zookeeper的集成
+
+SolrCloud基本概念
+
+SolrCloud模式下有Cluster，Node，Collection，Shard，LeaderCore，ReplicationCore等重要概念。
+
+">
+
+
+<meta itemprop="datePublished" content="2016-06-12T08:02:25&#43;00:00" />
+<meta itemprop="dateModified" content="2016-06-12T08:02:25&#43;00:00" />
+<meta itemprop="wordCount" content="3492">
+
+
+
+<meta itemprop="keywords" content="搜索引擎,Solr," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SolrCloud基础"/>
+<meta name="twitter:description" content="本节是SolrCloud基础理论知识，我也是从网上学习到，这里只是进行一些整理。参考的博客比本文更好，更有深度，有耐心的请看参考的原文&ndash; SolrCloud之分布式索引及与Zookeeper的集成
+
+SolrCloud基本概念
+
+SolrCloud模式下有Cluster，Node，Collection，Shard，LeaderCore，ReplicationCore等重要概念。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Fliaping&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Fliaping&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">SolrCloud基础</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-06-12 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+            
+              <a href="/categories/solr/"> Solr </a>
+            
+          </div>
+        <span class="more-meta"> 约 3492 字 </span>
+        <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#solrcloud基本概念">SolrCloud基本概念</a></li>
+<li><a href="#collection逻辑图">Collection逻辑图</a></li>
+<li><a href="#solrcloud的工作模式">SolrCloud的工作模式</a></li>
+<li><a href="#solrcloud索引的检索">SolrCloud索引的检索</a></li>
+<li><a href="#solr-shard-splitting的具体过程">Solr Shard Splitting的具体过程</a></li>
+<li><a href="#zookeeper">Zookeeper</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p>本节是SolrCloud基础理论知识，我也是从网上学习到，这里只是进行一些整理。参考的博客比本文更好，更有深度，有耐心的请看参考的原文&ndash; <a href="http://josh-persistence.iteye.com/blog/2234411">SolrCloud之分布式索引及与Zookeeper的集成</a></p>
+
+<h1 id="solrcloud基本概念">SolrCloud基本概念</h1>
+
+<p>SolrCloud模式下有Cluster，Node，Collection，Shard，LeaderCore，ReplicationCore等重要概念。</p>
+
+<p></p>
+
+<ol>
+<li><strong>Cluster集群：</strong>Cluster是一组Solr节点，逻辑上作为一个单元进行管理，整个集群必须使用同一套schema和SolrConfig。</li>
+<li><strong>Node节点：</strong>一个运行Solr的JVM实例。</li>
+<li><strong>Collection：</strong>在SolrCloud集群中逻辑意义上的完整的索引,常常被划分为一个或多个Shard，这些Shard使用相同的Config Set，如果Shard数超过一个，那么索引方案就是分布式索引。SolrCloud允许客户端用户通过Collection名称引用它，这样用户不需要关心分布式检索时需要使用的和Shard相关参数。</li>
+<li><strong>Core:</strong> 也就是Solr Core，一个Solr中包含一个或者多个Solr Core，每个Solr Core可以独立提供索引和查询功能，Solr Core的提出是为了增加管理灵活性和共用资源。SolrCloud中使用的配置是在Zookeeper中的，而传统的Solr Core的配置文件是在磁盘上的配置目录中。</li>
+<li><strong>Config Set:</strong> Solr Core提供服务必须的一组配置文件,每个Config Set有一个名字。最小需要包括solrconfig.xml和schema.xml，除此之外，依据这两个文件的配置内容，可能还需要包含其它文件,如中文索引需要的词库文件。Config Set存储在Zookeeper中，可以重新上传或者使用upconfig命令进行更新，可使用Solr的启动参数bootstrap_confdir进行初始化或更新。</li>
+<li><strong>Shard分片:</strong> Collection的逻辑分片。每个Shard被分成一个或者多个replicas，通过选举确定哪个是Leader。</li>
+<li><strong>Replica:</strong> Shard的一个拷贝。每个Replica存在于Solr的一个Core中。换句话说一个Solr Core对应着一个Replica，如一个命名为“test”的collection以numShards=1创建，并且指定replicationFactor为2，这会产生2个replicas，也就是对应会有2个Core，分别存储在不同的机器或者Solr实例上，其中一个会被命名为test_shard1_replica1，另一个命名为test_shard1_replica2，它们中的一个会被选举为Leader。</li>
+<li><strong>Leader:</strong> 赢得选举的Shard replicas，每个Shard有多个Replicas，这几个Replicas需要选举来确定一个Leader。选举可以发生在任何时间，但是通常他们仅在某个Solr实例发生故障时才会触发。当进行索引操作时，SolrCloud会将索引操作请求传到此Shard对应的leader，leader再分发它们到全部Shard的replicas。</li>
+<li><strong>Zookeeper:</strong> Zookeeper提供分布式锁功能，这对SolrCloud是必须的，主要负责处理Leader的选举。Solr可以以内嵌的Zookeeper运行，也可以使用独立的Zookeeper，并且Solr官方建议最好有3个以上的主机。</li>
+</ol>
+
+<h1 id="collection逻辑图">Collection逻辑图</h1>
+
+<p><img src="https://o364p1r5a.qnssl.com/blog/14657908838729.jpg" alt="" /></p>
+
+<p><strong>解释：</strong></p>
+
+<ul>
+<li>从上图可以看到，有一个collection，被分为两个shard，每个shard分为三个replica，其中每个shard从自己的三个replica选择一个作为Leader。</li>
+<li>每个shard的replica被分别存储在三台不同的机器（Solr实例）中，这样的目的是容灾处理，提高可用性。如果有一个机器挂掉之后，因为每个shard在别的机器上有复制品，所以能保证整个数据的可用，这是Solrcloud就会在还存在的replica中重新选举一个作为这个shard的Leader。</li>
+</ul>
+
+<h1 id="solrcloud的工作模式">SolrCloud的工作模式</h1>
+
+<p><img src="https://o364p1r5a.qnssl.com/blog/14657929987086.jpg" alt="" /></p>
+
+<p><strong>解释：</strong></p>
+
+<ul>
+<li>上图的下半部分就是Collection逻辑图，上半部分是SolrCloud的物理结构，每个solr实例中有两个core，每个core对应一个Shard的一个replica。</li>
+<li>当Solr Client通过Collection访问Solr集群的时候，便可通过Shard分片找到对应的Replica即Solr Core，从而就可以访问索引文档了。</li>
+</ul>
+
+<p>#SolrCloud创建索引和更新索引</p>
+
+<p><img src="https://o364p1r5a.qnssl.com/blog/14657978881168.jpg" alt="" /></p>
+
+<p><strong>解释：</strong></p>
+
+<p>1.　用户可以把新建文档提交给任意一个Replica（Solr Core）
+2. 如果它不是leader，它会把请求转给和自己同Shard的Leader。
+3. Leader把文档路由给本Shard的每个Replica。
+Ⅲ. 如果文档基于路由规则(如取hash值)并不属于当前的Shard，leader会把它转交给对应Shard的Leader。
+Ⅵ. 对应Leader会把文档路由给本Shard的每个Replica。</p>
+
+<p><strong>更新索引：</strong></p>
+
+<ol>
+<li>Leader接受到update请求后，先将update信息存放到本地的update log，同时Leader还会给document分配新的version，对于已存在的document，如果新的版本高就会抛弃旧版本，最后发送至replica。</li>
+<li>一旦document经过验证以及加入version后，就会并行的被转发至所有上线的replica。SolrCloud并不会关注那些已经下线的replica，因为当他们上线时候会有recovery进程对他们进行恢复。如果转发的replica处于recovering状态，那么这个replica就会把update放入update transaction 日志。</li>
+<li>当leader接受到所有的replica的反馈成功后，它才会反馈客户端成功。只要shard中有一个replica是active的，Solr就会继续接受update请求。这一策略其实是牺牲了一致性换取了写入的有效性。</li>
+</ol>
+
+<p><strong>近实时搜索：</strong></p>
+
+<p>SolrCloud支持近实时搜索（near real time），所谓的近实时搜索即在较短的时间内使得新添加的document可见可查，这主要基于softcommit机制。软提交（softcommit）指的是仅把数据提交到内存，index可见，此时没有写入到磁盘索引文件中。</p>
+
+<h1 id="solrcloud索引的检索">SolrCloud索引的检索</h1>
+
+<p><img src="https://o364p1r5a.qnssl.com/blog/14657975180492.jpg" alt="" /></p>
+
+<p><strong>解释：</strong></p>
+
+<p>1.　用户的一个查询，可以发送到含有该Collection的任意Solr的Server，Solr内部处理的逻辑会转到一个Replica。
+2.　此Replica会基于查询索引的方式，启动分布式查询，基于索引的Shard的个数，把查询转为多个子查询，并把每个子查询定位到对应Shard的任意一个Replica。
+3.　每个子查询返回查询结果。
+4.　最初的Replica合并子查询，并把最终结果返回给用户。</p>
+
+<h1 id="solr-shard-splitting的具体过程">Solr Shard Splitting的具体过程</h1>
+
+<p><img src="https://o364p1r5a.qnssl.com/blog/14657976046061.jpg" alt="" /></p>
+
+<p><strong>解释：</strong></p>
+
+<ul>
+<li>一般情况下，增加Shard和Replica的数量能提升SolrCloud的查询性能和容灾能力，但是我们仍然得根据实际的document的数量，document的大小，以及建索引的并发，查询复杂度，以及索引的增长率来统筹考虑Shard和Replica的数量。</li>
+<li>多个shard的情况下需要对文档进行分片，这就是这节要讲的。</li>
+</ul>
+
+<p>Shard分割的具体过程（old shard split为newShard1和newShard2）可以描述为：</p>
+
+<p>a. 在一个Shard的文档到达阈值，或者接收到用户的API命令，Solr将启动Shard的分裂过程。
+b. 此时，原有的Shard仍然会提供服务，Solr将会提取原有Shard并按路由规则，转到新的Shard做索引。</p>
+
+<p>同时，新加入的文档：</p>
+
+<ol>
+<li>用户可以把文档提交给任意一个Replica</li>
+<li>Replica将文档转交给Leader。</li>
+<li>Leader把文档路由给原有Shard的每个Replica，各自做索引。</li>
+</ol>
+
+<p>III.V. 同时，会把文档路由给新的Shard的Leader</p>
+
+<p>IV.VI. 新Shard的Leader会路由文档到自己的Replica，各自做索引，在原有文档重新索引完成，系统会把分发文档路由切到对应的新的Leader上，原有Shard关闭。Shard只是一个逻辑概念，所以Shard的Splitting只是将原有Shard的Replica均匀的分不到更多的Shard的更多的Solr节点上去。</p>
+
+<h1 id="zookeeper">Zookeeper</h1>
+
+<p><img src="https://o364p1r5a.qnssl.com/blog/14658023256630.jpg" alt="" /></p>
+
+<p>以上为本项目中的Zookeeper的文件结构，可以看到上传的Solr配置文件。</p>
+
+<p>zookeeper的主要作用有：</p>
+
+<ul>
+<li>集中配置存储以及管理。</li>
+<li>集群状态改变时进行监控以及通知。</li>
+<li>shard leader的选举。</li>
+</ul>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Payne Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2016-06-12</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/">搜索引擎</a>
+          
+          <a href="/tags/solr/">Solr</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/the-solrcloud-with-docker/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">借助Docker技术的Solr集群实现</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/filtering-and-sorting-the-search-result/">
+            <span class="next-text nav-default">搜索结果的筛选和排序</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'fliaping';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:xavierrpayne@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/xupingxx" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/paynexu/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/fliaping" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.fliaping.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2015 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">fliaping</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-63276498-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Github on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/tags/github/</link>
+    <description>Recent content in Github on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 01 Mar 2016 15:04:33 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>github在新疆用不了的问题</title>
+      <link>https://blog.fliaping.com/solving-the-problem-of-github-can-not-be-use-in-xinjaing/</link>
+      <pubDate>Tue, 01 Mar 2016 15:04:33 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/solving-the-problem-of-github-can-not-be-use-in-xinjaing/</guid>
+      <description>&lt;p&gt;新疆一直是GFW的实验区，甚至国内的很多网站也跟着遭殃，百度网盘分享链接、酷我、唱吧、github挂掉，再接着CSDN、cnblog相继挂掉，这里也不想探讨原因，大家都懂的。可怜了在新疆上学的孩子，本来新疆的师资力量都够烂了，还要增高学生的信息获取门槛。虽然我就要离开这个地方，但依然为在新疆上学的孩子感到悲伤。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;本来在中国的学生在信息获取上处于劣势，在新疆上学的学生更是悲惨。作为搞技术的还好，通过与墙斗争能提高技术水平。但大多数只能被禁锢，但最让人胆颤的是很多人&lt;strong&gt;被禁锢而不以为然&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spring-cloud-gateway on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/categories/spring-cloud-gateway/</link>
+    <description>Recent content in Spring-cloud-gateway on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 14 Aug 2018 20:42:55 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/categories/spring-cloud-gateway/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Spring cloud gateway通过nginx代理报错问题</title>
+      <link>https://blog.fliaping.com/problem-of-nginx-proxy-spring-gateway/</link>
+      <pubDate>Tue, 14 Aug 2018 20:42:55 +0800</pubDate>
+      
+      <guid>https://blog.fliaping.com/problem-of-nginx-proxy-spring-gateway/</guid>
+      <description>背景 不久前在一个项目中使用了spring cloud gateway, 开发测试中没出现什么问题,当上线之后就一直在报错,错误内容如下: 2018-08-13 11:56:49,853 ERROR [] [reactor-http-server-epoll-7] org.springframework.web.server.adapter.HttpWebHandlerAdapter:handleFailure:213 Unhandled failure: Connection has been closed, response already set (status=304)</description>
+    </item>
+    
+  </channel>
+</rss>

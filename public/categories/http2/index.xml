@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Http2 on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/categories/http2/</link>
+    <description>Recent content in Http2 on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 13 Aug 2017 02:32:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/categories/http2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>http2总结及简单实践</title>
+      <link>https://blog.fliaping.com/http2-summary-and-simple-practicing/</link>
+      <pubDate>Sun, 13 Aug 2017 02:32:00 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/http2-summary-and-simple-practicing/</guid>
+      <description>HTTP发展历史 在总结http2之前先来回顾下http的发展历史。以下三张图片来自Jerry Qu HTTP/0.9 (1991) HTTP/1.0 (1996) HTTP/1.1 (1999) HTTP通信过程 众所周知，http</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,11 +1,11 @@
 ---
-author: "Payne Xu"
-title: "{{ replace .Name "-" " " | title }}"
+title: "{{ replace .TranslationBaseName "-" " " | title }}"
 date: {{ .Date }}
 draft: true
 categories: ["cat"]
-slug: 
+slug: "{{.TranslationBaseName}}"
 tags: ["tag"]
+author: "Payne Xu"
 
 ---
 

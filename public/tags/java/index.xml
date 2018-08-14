@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/tags/java/</link>
+    <description>Recent content in Java on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 27 Feb 2017 08:47:25 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>java常用JSON库注意事项总结</title>
+      <link>https://blog.fliaping.com/the-attention-of-json-serialization-and-deserialization-in-java/</link>
+      <pubDate>Mon, 27 Feb 2017 08:47:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-attention-of-json-serialization-and-deserialization-in-java/</guid>
+      <description>如果想将对象进行网络传输，就需要序列话和反序列化。主要分为以文本为介质和以二进制为介质。以文本为介质最广泛的是 xml 和 json ，但是 xml 过于冗长，jso</description>
+    </item>
+    
+    <item>
+      <title>Java静态代码块的执行</title>
+      <link>https://blog.fliaping.com/the-execute-of-java-static-code-block/</link>
+      <pubDate>Mon, 23 Jan 2017 12:58:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-execute-of-java-static-code-block/</guid>
+      <description>&lt;h1 id=&#34;问题及总结&#34;&gt;问题及总结&lt;/h1&gt;
+
+&lt;p&gt;关于静态代码块其实是面试时老生常谈的问题，虽然面试时问了我也大概知道，但是在用的时候还是踩了个小坑。我想通过调用类的静态变量来触发静态代码块的调用，但是没有成功。&lt;/p&gt;
+
+&lt;p&gt;总结下静态代码块能执行的条件：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;第一次初始化对象&lt;/li&gt;
+&lt;li&gt;第一次调用静态方法&lt;/li&gt;
+&lt;li&gt;第一次调用静态代码块下面的静态变量&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>不同平台下的RSA加解密及认证</title>
+      <link>https://blog.fliaping.com/rsa-encryption-and-decryption-in-different-platform/</link>
+      <pubDate>Tue, 22 Nov 2016 11:36:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/rsa-encryption-and-decryption-in-different-platform/</guid>
+      <description>&lt;p&gt;RSA是目前(2016)用途最为广泛的非对称加密方法，广泛应用于加解密以及认证，例如：ssh登录、加密通信、https等很多方面。但是不同平台对其支持时，在实现上有少许的不同，这些不同可能会阻碍我们使用，尤其是在跨平台的时候，如果不知道其中的细节，往往会失败，本文以作者用过的几个语言做一些实例。&lt;/p&gt;
+
+&lt;p&gt;代码：&lt;a href=&#34;https://github.com/fliaping/tools_code/tree/master/RSA&#34;&gt;https://github.com/fliaping/tools_code/tree/master/RSA&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;目前只有 JAVA 和 PHP 的互通，后续可能进行一些补充。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

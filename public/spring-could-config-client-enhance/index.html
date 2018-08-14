@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Spring Could Config Client 增强 - Fliaping&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Payne Xu" />
+  <meta name="description" content="config-client-enhance 对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置， 并修改spring-cloud-bus" />
+
+  <meta name="keywords" content="fliaping, Payne.Xu" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.46" />
+
+
+<link rel="canonical" href="https://blog.fliaping.com/spring-could-config-client-enhance/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Spring Could Config Client 增强" />
+<meta property="og:description" content="config-client-enhance 对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置， 并修改spring-cloud-bus" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.fliaping.com/spring-could-config-client-enhance/" />
+
+
+
+<meta property="article:published_time" content="2017-10-22T07:15:23&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-22T07:15:23&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Spring Could Config Client 增强">
+<meta itemprop="description" content="config-client-enhance 对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置， 并修改spring-cloud-bus">
+
+
+<meta itemprop="datePublished" content="2017-10-22T07:15:23&#43;00:00" />
+<meta itemprop="dateModified" content="2017-10-22T07:15:23&#43;00:00" />
+<meta itemprop="wordCount" content="4414">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Spring Could Config Client 增强"/>
+<meta name="twitter:description" content="config-client-enhance 对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置， 并修改spring-cloud-bus"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Fliaping&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Fliaping&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Spring Could Config Client 增强</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-10-22 </span>
+        
+        <span class="more-meta"> 约 4414 字 </span>
+        <span class="more-meta"> 预计阅读 9 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#config-client-enhance">config-client-enhance</a>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#原理">原理</a>
+<ul>
+<li><a href="#官方spring-cloud-config的工作原理">官方spring-cloud-config的工作原理</a></li>
+</ul></li>
+<li><a href="#用法">用法</a>
+<ul>
+<li><a href="#jar包">jar包</a></li>
+<li><a href="#配置文件">配置文件</a></li>
+</ul></li>
+<li><a href="#详细实现">详细实现</a>
+<ul>
+<li><a href="#从多配置仓库加载配置">从多配置仓库加载配置</a></li>
+<li><a href="#批量刷新共有配置">批量刷新共有配置</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<h1 id="config-client-enhance">config-client-enhance</h1>
+
+<p>对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置，
+并修改spring-cloud-bus的相关功能，实现批量刷新.</p>
+
+<p>github链接：<a href="https://github.com/fliaping/config-client-enhance">config-client-enhance</a></p>
+
+<h2 id="简介">简介</h2>
+
+<p>随着微服务改造的推进，每个服务的功能趋于专一，不过有些服务是从一个单体应用中拆分出来，
+因此微服务之间有不少的共有配置，导致每个应用重复配置，当某个配置项发生改变时，
+需要逐个修改，比较麻烦。最好的办法是将这些公共配置项抽取出来作为一个配置源，
+但是官方的spring-cloud-config-client只能从单一配置源加载配置。因此在官方的基础上进行扩展，
+通过config group的概念，可以将一个应用加入多个config group中，共用不同group的配置项。
+再结合spring-cloud-bus，让每个服务能感知所加入的config group的改动，从而做到一处更改多处生效。</p>
+
+<p>基于官方<a href="https://github.com/spring-cloud/spring-cloud-config">spring-cloud-config-client</a>,
+通过spring-boot的autoconfig功能，覆盖配置源加载的方法，在兼容官方的配置前提下，
+增加了一些配置项，使其能能从多个配置源加载配置。自动更新时客户端会收到远程的refresh消息，
+并通过一个函数来确定是不是发给自己的，通过切面，修改这个判断函数，使多配置源的修改能及时更新到应用。</p>
+
+<h2 id="原理">原理</h2>
+
+<h3 id="官方spring-cloud-config的工作原理">官方spring-cloud-config的工作原理</h3>
+
+<p>如下图，就是我们常用的结构，当然是比较简化的。</p>
+
+<p><img src="https://o364p1r5a.qnssl.com/2017/10/spring-cloud-config.png" alt="spring-cloud-config" /></p>
+
+<ol>
+<li>当我们的配置发生变化之后，配置在git仓库的webhook用http的方式向ConfigServer发送refresh消息（或者自己手动触发）</li>
+<li>ConfigServer再将这个消息发送给spring cloud bus（用kafka或者rabbitMQ实现）</li>
+<li>每个应用中有一个config-client，将会收到这个refresh消息</li>
+<li>如果destination和自己匹配，就执行刷新动作。 向config-server请求配置</li>
+<li>config-server拉取配置仓库中的配置文件并转成相应的json格式</li>
+<li>回传给config-client，随后config-client将内容更新到上下文中。</li>
+</ol>
+
+<p>那么我们增强的地方是哪里呢？其实都在config-client那里。先给出增强版的用法.</p>
+
+<h2 id="用法">用法</h2>
+
+<h3 id="jar包">jar包</h3>
+
+<p>在项目根目录执行命令<code>gradle build</code>，在build/libs中可以找到jar包</p>
+
+<p>如果在有私有的maven仓库，通过<code>gradle uploadArchives</code>将jar包上传到仓库,通过maven或者gradle坐标就可以引用</p>
+
+<p>maven:</p>
+
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;com.dianwoda.cloud.config&lt;/groupId&gt;
+  &lt;artifactId&gt;config-client-enhance&lt;/artifactId&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>gradle:</p>
+
+<pre><code class="language-groovy">compile 'com.dianwoda.cloud.config:config-client-enhance:1.0-SNAPSHOT'
+</code></pre>
+
+<h3 id="配置文件">配置文件</h3>
+
+<pre><code># config-client-enhance 新增配置
+# 该配置组的名字，和spring.application.name作用相同，确定配置仓库
+spring.cloud.config.group[0].name=sparta-web
+# 该配置组的profile，和spring.cloud.config.profile作用相同，一般表示环境，确定仓库中的哪个文件
+spring.cloud.config.group[0].profile=dwd-dev
+# 该配置组的label，和spring.cloud.config.label作用相同，git仓库的分支
+spring.cloud.config.group[0].label=master,RC
+# 该配置组的其他文本配置，可以多个，半角逗号分开
+spring.cloud.config.group[0].plainText=mm1.json,mm2.json
+
+spring.cloud.config.group[1].name=sparta-dubbo
+spring.cloud.config.group[1].profile=dwd-dev
+
+# 主配置仓库中的纯文本配置
+spring.cloud.config.plain-text=sms_template.json,push_fto.json,xx.json
+# 忽略向ConfigServer发送refresh消息时，没有destination的情况（实际destination会变成通配符，匹配所有应用）
+spring.cloud.bus.ignore-empty-dest=true
+# 是否接受配置组发生的改变
+spring.cloud.bus.accept-group-change=true
+# config-client-enhance config 结束
+
+# spring cloud config 官方版本配置
+# 应用名（主仓库名）
+spring.application.name=your application name
+spring.cloud.consul.port=8500
+#配置consul通过ip检查应用健康状态
+spring.cloud.consul.discovery.prefer-ip-address=true
+spring.cloud.consul.discovery.query-passing=true
+#使用服务发现找到配置中心服务
+spring.cloud.config.discovery.enabled=true
+spring.cloud.config.discovery.serviceId=config-server
+spring.cloud.config.fail-fast=true
+
+health.config.enabled=false
+
+#对应配置仓库的profile
+spring.cloud.config.profile=dwd-dev
+#对应配置仓库的分支
+spring.cloud.config.label=master
+#consul host 开发环境
+spring.cloud.consul.host=192.168.11.29
+# spring cloud bus 开关
+spring.cloud.bus.enabled=true
+
+#spring cloud bus kafka
+spring.cloud.stream.kafka.binder.zk-nodes=192.168.11.30:2181,192.168.11.33:2181,192.168.11.35:2181
+spring.cloud.stream.kafka.binder.brokers=192.168.11.30:9092,192.168.11.33:9092,192.168.11.35:9092
+# # spring cloud config 官方版本配置结束
+</code></pre>
+
+<p>配置文件在完全兼容官方版本，但是额外增加一些配置，主要是config-group和refresh消息的控制。
+group可以为多个，每个group有些配置项，基本和主配置一样，另外多加了plain-text是方便使用其他类型的纯文本配置，
+下面给出示例：</p>
+
+<pre><code class="language-java">@Component
+public class ConfigListener implements ApplicationListener&lt;EnvironmentChangeEvent&gt; {
+    @Override
+    public void onApplicationEvent(EnvironmentChangeEvent event) {
+
+        Set&lt;String&gt; keys = event.getKeys();
+        if (keys.contains(&quot;xx.json&quot;)) {
+            System.out.println(&quot;根据xx.json重新配置&quot;);
+        }
+    }
+}
+</code></pre>
+
+<h2 id="详细实现">详细实现</h2>
+
+<h3 id="从多配置仓库加载配置">从多配置仓库加载配置</h3>
+
+<p>要想改造首先就要在代码水平清楚知道启动时如何加载远程服务器中的配置，我们从加了spring cloud的spring boot启动说起。
+当执行了<code>SpringApplication.run(Application.class)</code>首先来到了这里，起个别名函数1</p>
+
+<pre><code class="language-java">// 函数1 SpringApplication
+public ConfigurableApplicationContext run(String... args) {
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+		ConfigurableApplicationContext context = null;
+		FailureAnalyzers analyzers = null;
+		configureHeadlessProperty();
+		SpringApplicationRunListeners listeners = getRunListeners(args);
+		listeners.starting();
+		try {
+			ApplicationArguments applicationArguments = new DefaultApplicationArguments(
+					args);
+			ConfigurableEnvironment environment = prepareEnvironment(listeners,
+					applicationArguments);
+			Banner printedBanner = printBanner(environment);
+			context = createApplicationContext();
+			analyzers = new FailureAnalyzers(context);
+			prepareContext(context, environment, listeners, applicationArguments,
+					printedBanner);
+			refreshContext(context);
+			afterRefresh(context, applicationArguments);
+			listeners.finished(context, null);
+			stopWatch.stop();
+			if (this.logStartupInfo) {
+				new StartupInfoLogger(this.mainApplicationClass)
+						.logStarted(getApplicationLog(), stopWatch);
+			}
+			return context;
+		}
+		catch (Throwable ex) {
+			handleRunFailure(context, listeners, analyzers, ex);
+			throw new IllegalStateException(ex);
+		}
+	}
+</code></pre>
+
+<p>在这个函数中，嵌入spring cloud的程序和没有嵌入的行为有些差异，尤其是当我们调试的时候，我们会发现
+程序进入<code>ConfigurableEnvironment environment = prepareEnvironment(listeners, applicationArguments);</code>（函数2）
+这一行后又重新进入这个函数（普通的SpringBoot程序只会调用该函数一次），再看下进程，还是主进程，
+于是通过IDEA强大的代码索引能力，我们发现<code>SpringApplicationBuilder</code>的
+<code>public ConfigurableApplicationContext run(String... args)</code>这个函数（函数3）中有调用函数1，通过不断调试追踪，函数3是被
+<code>BootstrapApplicationListener</code>调用，这个Listener监听<code>ApplicationEnvironmentPreparedEvent</code>事件。
+可见在此期间肯定产生了这个事件，但是这个Listener是如何注册被调用的？我们再回到函数2：prepareEnvironment，</p>
+
+<pre><code class="language-java">// 函数2 SpringApplication
+private ConfigurableEnvironment prepareEnvironment(
+			SpringApplicationRunListeners listeners,
+			ApplicationArguments applicationArguments) {
+		// Create and configure the environment
+		ConfigurableEnvironment environment = getOrCreateEnvironment();
+		configureEnvironment(environment, applicationArguments.getSourceArgs());
+		listeners.environmentPrepared(environment);
+		if (!this.webEnvironment) {
+			environment = new EnvironmentConverter(getClassLoader())
+					.convertToStandardEnvironmentIfNecessary(environment);
+		}
+		return environment;
+	}
+</code></pre>
+
+<p>可以看到有个继承自<code>SpringApplicationRunListener</code>的listener集合，通过找哪个地方用到这个类，
+在一个spring.factories（后续再说这个）中发现了<code>EventPublishingRunListener</code>，这个类的<code>environmentPrepared</code>
+方法广播了<code>ApplicationEnvironmentPreparedEvent</code>，因此BootstrapApplicationListener监听到事件之后执行后续动作。</p>
+
+<p>这里会有一个疑问，这些listener是如何加载到的，其实就是前面说的<code>spring.factories</code>，函数1中<code>getRunListeners(args)</code>
+就是去加载listener，通过<code>SpringFactoriesLoader</code>加载这个配置文件<code>META-INF/spring.factories</code>，并解析出其中的类进行加载
+，其实这个配置文件很有用，后面还会用到。</p>
+
+<p>继续前面的内容，BootstrapApplicationListener重新调用函数1，目的是为了插入一些spring cloud相关初始化需要的环境，
+这里的细节就不表了，主要应该是一些相关的配置类。我们关心的如何将远程配置加载到spring中。通过调试，找到了<code>PropertySourceBootstrapConfiguration</code>，
+可见这是一个取代了原来spring boot中的PropertySource配置的配置类，其中有个initialize函数，我们可以一窥究竟。</p>
+
+<pre><code class="language-java">// 函数4  BootstrapApplicationListener
+@Override
+public void initialize(ConfigurableApplicationContext applicationContext) {
+    CompositePropertySource composite = new CompositePropertySource(
+            BOOTSTRAP_PROPERTY_SOURCE_NAME);
+    AnnotationAwareOrderComparator.sort(this.propertySourceLocators);
+    boolean empty = true;
+    ConfigurableEnvironment environment = applicationContext.getEnvironment();
+    for (PropertySourceLocator locator : this.propertySourceLocators) {
+        PropertySource&lt;?&gt; source = null;
+        source = locator.locate(environment);
+        if (source == null) {
+            continue;
+        }
+        logger.info(&quot;Located property source: &quot; + source);
+        composite.addPropertySource(source);
+        empty = false;
+    }
+    if (!empty) {
+        MutablePropertySources propertySources = environment.getPropertySources();
+        String logConfig = environment.resolvePlaceholders(&quot;${logging.config:}&quot;);
+        LogFile logFile = LogFile.get(environment);
+        if (propertySources.contains(BOOTSTRAP_PROPERTY_SOURCE_NAME)) {
+            propertySources.remove(BOOTSTRAP_PROPERTY_SOURCE_NAME);
+        }
+        insertPropertySources(propertySources, composite);
+        reinitializeLoggingSystem(environment, logConfig, logFile);
+        setLogLevels(environment);
+        handleIncludedProfiles(environment);
+    }
+}
+</code></pre>
+
+<p>这里引入了<code>propertySourceLocator</code>看名字就知道用他们来取得propertySource，并且可以有很多个Locator，
+最后加入到<code>CompositePropertySource</code>（组合PropertySource），再来看看有那些<code>PropertySourceLocator</code>，
+一下子就发现了<code>ConfigServicePropertySourceLocator</code>，这应该就是从configServer中获取配置的地方。
+果不其然。</p>
+
+<pre><code class="language-java">@Override
+	@Retryable(interceptor = &quot;configServerRetryInterceptor&quot;)
+	public org.springframework.core.env.PropertySource&lt;?&gt; locate(
+			org.springframework.core.env.Environment environment) {
+		ConfigClientProperties properties = this.defaultProperties.override(environment);
+		CompositePropertySource composite = new CompositePropertySource(&quot;configService&quot;);
+		RestTemplate restTemplate = this.restTemplate == null ? getSecureRestTemplate(properties)
+				: this.restTemplate;
+		...
+		try {
+			...
+
+			// Try all the labels until one works
+			for (String label : labels) {
+				Environment result = getRemoteEnvironment(restTemplate,
+						properties, label.trim(), state);
+				if (result != null) {
+					...
+
+					if (result.getPropertySources() != null) { // result.getPropertySources() can be null if using xml
+						for (PropertySource source : result.getpro()) {
+							@SuppressWarnings(&quot;unchecked&quot;)
+							Map&lt;String, Object&gt; map = (Map&lt;String, Object&gt;) source
+									.getSource();
+							composite.addPropertySource(new MapPropertySource(source
+									.getName(), map));
+						}
+					}
+
+					...
+					return composite;
+				}
+			}
+		}
+		...
+	}
+</code></pre>
+
+<p>通过RestTemplate向configServer发送http请求获取配置，将获取到的PropertySources组装成env的PropertySource后返回，
+更加详细的获取过程就在函数<code>getRemoteEnvironment(restTemplate, properties, label.trim(), state);</code>
+这里不细说。那么如果我们想扩展配置的获取方式，可以新增加一个像<code>ConfigServicePropertySourceLocator</code>的locator，
+那么我最后确实是这么做的。先找到配置<code>ConfigServicePropertySourceLocator</code>的类<code>ConfigServiceBootstrapConfiguration</code>
+我扩展了config的功能，于是叫<code>ExtendConfigServiceBootstrapConfiguration</code>，那获取配置的locator就叫<code>ExtendConfigServicePropertySourceLocator</code>，
+当然也需要些额外的配置项<code>ExtendConfigClientProperties</code>。最后为了能加载这些配置类，加了<code>spring.factories</code></p>
+
+<pre><code># Bootstrap components
+org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+com.dianwoda.cloud.config.client.ExtendConfigServiceBootstrapConfiguration
+</code></pre>
+
+<h3 id="批量刷新共有配置">批量刷新共有配置</h3>
+
+<p>spring cloud config在刷新的时候有点不爽的地方，当没有destination的时候会configServer会转成<code>*:**</code>，这是对所有应用生效，
+另外如果想对某一类应用更新的话destination规则比较死板，虽然支持通配符的destination，但是如果我想对不同名字的应用，
+但是使用了同一个共有配置仓库的应用更新的话就没有办法，于是就在对官方的bus下手进行魔改，当然前提也是要搞清楚是怎么回事才能改。</p>
+
+<p><img src="https://o364p1r5a.qnssl.com/2017/10/spring-cloud-config-bus.png" alt="spring-cloud-config-bus" /></p>
+
+<p>利用spring-cloud-starter-stream-kafka的整合，利用注解，将kafka消息转化为<code>RemoteApplicationEvent</code></p>
+
+<pre><code class="language-java">@StreamListener(SpringCloudBusClient.INPUT)
+public void acceptRemote(RemoteApplicationEvent event) {
+    if (event instanceof AckRemoteApplicationEvent) {
+        if (this.bus.getTrace().isEnabled() &amp;&amp; !this.serviceMatcher.isFromSelf(event)
+                &amp;&amp; this.applicationEventPublisher != null) {
+            this.applicationEventPublisher.publishEvent(event);
+        }
+        // If it's an ACK we are finished processing at this point
+        return;
+    }
+    if (this.serviceMatcher.isForSelf(event)
+            &amp;&amp; this.applicationEventPublisher != null) {
+        if (!this.serviceMatcher.isFromSelf(event)) {
+            this.applicationEventPublisher.publishEvent(event);
+        }
+        if (this.bus.getAck().isEnabled()) {
+            AckRemoteApplicationEvent ack = new AckRemoteApplicationEvent(this,
+                    this.serviceMatcher.getServiceId(),
+                    this.bus.getAck().getDestinationService(),
+                    event.getDestinationService(), event.getId(), event.getClass());
+            this.cloudBusOutboundChannel
+                    .send(MessageBuilder.withPayload(ack).build());
+            this.applicationEventPublisher.publishEvent(ack);
+        }
+    }
+    if (this.bus.getTrace().isEnabled() &amp;&amp; this.applicationEventPublisher != null) {
+        // We are set to register sent events so publish it for local consumption,
+        // irrespective of the origin
+        this.applicationEventPublisher.publishEvent(new SentApplicationEvent(this,
+                event.getOriginService(), event.getDestinationService(),
+                event.getId(), event.getClass()));
+    }
+}
+</code></pre>
+
+<p>通过ServiceMatcher来判断是不是给自己的消息，是的话就发布出去，触发后续流程，不是的话直接ack，
+利用这一点，用切面覆盖了isForSelf函数，最后就可以由自己控制何种情况下接受，何种情况下拒绝。</p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Payne Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2017-10-22</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/invoke-c-or-c-plus-plus-in-python/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Python 调用C/C&#43;&#43;</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/container-core-technical-details/">
+            <span class="next-text nav-default">容器核心技术详解</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'fliaping';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:xavierrpayne@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/xupingxx" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/paynexu/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/fliaping" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.fliaping.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2015 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">fliaping</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-63276498-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

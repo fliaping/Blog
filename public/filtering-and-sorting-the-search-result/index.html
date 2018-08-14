@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>搜索结果的筛选和排序 - Fliaping&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Payne Xu" />
+  <meta name="description" content="实现对搜索结果的筛选和排序，需要利用solr的sort功能和facet功能，这两个是垂直搜索中比较常用的功能。对于如何使用这两个功能，其实在索引建好之后我们并不需要做太多的工作就能使用，只用在查询的时候指定相关的参数，Solr会根据参数来执行相应的查询，获得相应的结果。
+因为项目中使用SolrJ作为Solr的客户端，并通过servlet提供对外的服务接口，本文将以介绍如何用SolrJ来实现，此外也会涉及利用HTTP接口的参数使用。
+
+" />
+
+  <meta name="keywords" content="fliaping, Payne.Xu" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.46" />
+
+
+<link rel="canonical" href="https://blog.fliaping.com/filtering-and-sorting-the-search-result/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="搜索结果的筛选和排序" />
+<meta property="og:description" content="实现对搜索结果的筛选和排序，需要利用solr的sort功能和facet功能，这两个是垂直搜索中比较常用的功能。对于如何使用这两个功能，其实在索引建好之后我们并不需要做太多的工作就能使用，只用在查询的时候指定相关的参数，Solr会根据参数来执行相应的查询，获得相应的结果。
+
+因为项目中使用SolrJ作为Solr的客户端，并通过servlet提供对外的服务接口，本文将以介绍如何用SolrJ来实现，此外也会涉及利用HTTP接口的参数使用。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.fliaping.com/filtering-and-sorting-the-search-result/" />
+
+
+
+<meta property="article:published_time" content="2016-06-12T05:17:25&#43;00:00"/>
+
+<meta property="article:modified_time" content="2016-06-12T05:17:25&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="搜索结果的筛选和排序">
+<meta itemprop="description" content="实现对搜索结果的筛选和排序，需要利用solr的sort功能和facet功能，这两个是垂直搜索中比较常用的功能。对于如何使用这两个功能，其实在索引建好之后我们并不需要做太多的工作就能使用，只用在查询的时候指定相关的参数，Solr会根据参数来执行相应的查询，获得相应的结果。
+
+因为项目中使用SolrJ作为Solr的客户端，并通过servlet提供对外的服务接口，本文将以介绍如何用SolrJ来实现，此外也会涉及利用HTTP接口的参数使用。
+
+">
+
+
+<meta itemprop="datePublished" content="2016-06-12T05:17:25&#43;00:00" />
+<meta itemprop="dateModified" content="2016-06-12T05:17:25&#43;00:00" />
+<meta itemprop="wordCount" content="1572">
+
+
+
+<meta itemprop="keywords" content="搜索引擎," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="搜索结果的筛选和排序"/>
+<meta name="twitter:description" content="实现对搜索结果的筛选和排序，需要利用solr的sort功能和facet功能，这两个是垂直搜索中比较常用的功能。对于如何使用这两个功能，其实在索引建好之后我们并不需要做太多的工作就能使用，只用在查询的时候指定相关的参数，Solr会根据参数来执行相应的查询，获得相应的结果。
+
+因为项目中使用SolrJ作为Solr的客户端，并通过servlet提供对外的服务接口，本文将以介绍如何用SolrJ来实现，此外也会涉及利用HTTP接口的参数使用。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Fliaping&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Fliaping&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">搜索结果的筛选和排序</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-06-12 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+            
+          </div>
+        <span class="more-meta"> 约 1572 字 </span>
+        <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#结果排序">结果排序</a></li>
+<li><a href="#结果过滤">结果过滤</a>
+<ul>
+<li><a href="#利用facetfield进行分类">利用FacetField进行分类</a></li>
+<li><a href="#利用rangefacet划分区间">利用RangeFacet划分区间</a></li>
+<li><a href="#用facetquery根据函数查询">用FacetQuery根据函数查询</a></li>
+</ul></li>
+<li><a href="#参考链接">参考链接</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p>实现对搜索结果的筛选和排序，需要利用solr的sort功能和facet功能，这两个是垂直搜索中比较常用的功能。对于如何使用这两个功能，其实在索引建好之后我们并不需要做太多的工作就能使用，只用在查询的时候指定相关的参数，Solr会根据参数来执行相应的查询，获得相应的结果。</p>
+
+<p>因为项目中使用SolrJ作为Solr的客户端，并通过servlet提供对外的服务接口，本文将以介绍如何用SolrJ来实现，此外也会涉及利用HTTP接口的参数使用。</p>
+
+<p></p>
+
+<h1 id="结果排序">结果排序</h1>
+
+<p>但字段排序来说相对简单，通过改变sort参数的值即可，对于根据多字段，然后利用不同字段的权值来进行排序，相对来说复杂点。</p>
+
+<p><strong>对于单字段排序</strong>，在HTTP参数中，例如加上：</p>
+
+<pre><code>&amp;sort=geodist() asc
+</code></pre>
+
+<p>这即是按照距离升序排列，其中geodist()为solr中的距离函数，得到point点到文档中所标记坐标的距离。</p>
+
+<p><strong>对于多字段参与的排序，即Solr权重</strong></p>
+
+<p>Solr利用Lucene的权重算法，也就是通过一个公式计算每个Documents的得分，然后按得分高低排序，公式如下：</p>
+
+<p><img src="https://o364p1r5a.qnssl.com/blog/14658258239201.jpg" alt="" /></p>
+
+<p>其中：</p>
+
+<p><code>Tf</code> Term frequency，就是条目出现的次数。
+<code>Idf</code> Inverse document frequency，就是用来描述在一个搜索关键字中，不同字词的稀有程度。比如搜索The Cat in the Hat，那么很明显The和in远没有Cat和Hat重要。
+<code>Boosting</code> 这个是我们设置权重的重点，例如在景点结果排序的时候，不光想考虑距离，还想考虑评分、评论人数等，而boosting是不同的Filed有不同权重，之后根据公式计算得分。所以可以看到，我们并不能直接影响solr搜索结果的排序，需要改变权重，进而改变不同Document的得分，从而影响排序。</p>
+
+<p>其中还有很多因子和公式的解释，有兴趣的同学可以参考Solr in action这本书，里面有比较详细的解释。</p>
+
+<p>前一节讲到Query Parser有三种：Standard、Dismax、Extended Dismax，这里权重排序使用到了Dismax。</p>
+
+<p>在HTTP参数中，例如：</p>
+
+<pre><code>&amp;defType=dismax&amp;qf=sight_name^10+sight_coordinate^5
+</code></pre>
+
+<p>此外还可以设置bf设置其他Field的权重，可以使用很多Function Query，我没有用这个，所以不能细讲。</p>
+
+<pre><code>&amp;bf=sum(div(sight_score,0.01),if(exists(near_hotels),20000,0))
+</code></pre>
+
+<p>这里简单了解下，比如div,代表相除、exists代表如果near_hotels如果不为空那么设置它的权重为20000，为空则为0。记住最后要sum起来，因为从上面的公式可以看出来，boosting是一个变量，所以最好要有一个和值。</p>
+
+<p>项目中实现了距离排序、评分排序、评论数量排序、关键词最佳匹配、综合排序</p>
+
+<pre><code class="language-java">//设置排序
+String sortOrder = notNull(request.getParameter(UrlP.sort_order.name()),SortOrder.distance.get()); //默认距离排序
+
+
+if (SortOrder.distance.is(sortOrder)) { //距离排序
+  solrQuery.setSort(&quot;geodist()&quot;, SolrQuery.ORDER.asc);
+
+}else if (SortOrder.score.is(sortOrder)){ //评分排序
+
+  solrQuery.setSort(&quot;sight_score&quot;, SolrQuery.ORDER.desc);
+
+}else if (SortOrder.comment.is(sortOrder)){ //评论数量排序
+  solrQuery.setSort(&quot;sight_comment_num&quot;, SolrQuery.ORDER.desc);
+
+}else if (SortOrder.keyword.is(sortOrder)){ //关键词最佳匹配
+  // 关键词最佳匹配
+  solrQuery.set(&quot;defType&quot;,&quot;dismax&quot;);
+  solrQuery.set(&quot;qf&quot;,&quot;sight_name^2 sight_intro^1 sight_comments^0.8&quot;);
+
+}else if (SortOrder.best.is(sortOrder)){ //综合排序
+  //  &amp;defType=dismax&amp;qf=sight_name^10+sight_coordinate^5
+  solrQuery.set(&quot;defType&quot;,&quot;dismax&quot;);
+  solrQuery.set(&quot;qf&quot;,&quot;sight_name^2 sight_intro^1&quot;);
+  //solrQuery.set(&quot;bf&quot;, &quot;sum(div(sight_score,0.01),if(exists(near_hotels),20000,0))&quot;);
+  solrQuery.addSort(&quot;geodist()&quot;, SolrQuery.ORDER.asc);
+  solrQuery.addSort(&quot;sight_score&quot;, SolrQuery.ORDER.desc);
+}
+</code></pre>
+
+<h1 id="结果过滤">结果过滤</h1>
+
+<h2 id="利用facetfield进行分类">利用FacetField进行分类</h2>
+
+<p>这个比较简单，只用传入要分类的字段即可，例如</p>
+
+<pre><code>&amp;facet=true&amp;facet.field=sight_type
+</code></pre>
+
+<p>这样就会对sight_type进行facet，列出这个字段不重复的值</p>
+
+<h2 id="利用rangefacet划分区间">利用RangeFacet划分区间</h2>
+
+<p>如果想对某一数值字段进行范围划分，需要用到<code>facet.range</code>，例如：</p>
+
+<pre><code>&amp;facet=true&amp;facet.range=sight_score
+&amp;f.sight_score.facet.range.start=1
+&amp;f.sight_score.facet.range.end=5.1
+&amp;f.sight_score.facet.range.gap=1
+</code></pre>
+
+<p>这需要划分的字段是sight_score，并且设置划分的起始值为1，终止值为5.1，间隔为1，也就是说划分出来的区间为 [1,2)，[2,3)，[3,4)，[4,5.1)，因为区间是右开的，所以终止值要多一点。</p>
+
+<h2 id="用facetquery根据函数查询">用FacetQuery根据函数查询</h2>
+
+<p>如果我们想对距离进行区间划分，这时不能再用RangeFacet功能，只能利用FacetQuery来通过函数查询。</p>
+
+<p>例如：<code>facet.query={!frange l=0 u=5}geodist()</code> 表示先根据geodist()函数得到距离，然后限制距离是1-5KM的景点。</p>
+
+<pre><code class="language-java">//设置facet
+solrQuery.setFacet(true)
+      .setFacetMissing(true);
+//景点类型facet
+solrQuery.addFacetField(new String[]{&quot;sight_type&quot;});
+
+//评分范围facet
+solrQuery.add(&quot;facet.range&quot;,&quot;sight_score&quot;);
+
+solrQuery.add(&quot;f.sight_score.facet.range.start&quot;,&quot;1&quot;)
+      .add(&quot;f.sight_score.facet.range.end&quot;,&quot;5.1&quot;)
+      .add(&quot;f.sight_score.facet.range.gap&quot;,&quot;1&quot;);
+
+//距离范围facet
+solrQuery.addFacetQuery(&quot;{!frange l=0 u=5}geodist()&quot;)
+      .addFacetQuery(&quot;{!frange l=5.001 u=50}geodist()&quot;)
+      .addFacetQuery(&quot;{!frange l=50.001 u=500}geodist()&quot;)
+      .addFacetQuery(&quot;{!frange l=500.001 u=5000}geodist()&quot;);
+</code></pre>
+
+<h1 id="参考链接">参考链接</h1>
+
+<ul>
+<li><a href="http://www.cnblogs.com/edwinchen/p/3977366.html">Solr高亮与Field权重</a></li>
+</ul>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Payne Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2016-06-12</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/">搜索引擎</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/the-introduction-of-solrcloud/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">SolrCloud基础</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/various-of-query-and-explanation-of-parameter/">
+            <span class="next-text nav-default">各种查询及参数说明</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'fliaping';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:xavierrpayne@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/xupingxx" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/paynexu/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/fliaping" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.fliaping.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2015 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">fliaping</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-63276498-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

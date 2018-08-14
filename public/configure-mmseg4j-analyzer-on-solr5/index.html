@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Solr整合中文分词器mmseg4j - Fliaping&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Payne Xu" />
+  <meta name="description" content="分词的基础概念 为什么要进行分词  中文分词(Chinese Word Segmentation) 指的是将一个汉字序列切分成一个一个单独的词。
+ 分词就是将连续的字序列按照一定的规范重新组合成词序列的过程。我们知道，在英文的行文中，单词之间是以空格作为自然分界符的，而中文只是字、句和段能通过明显的分界符来简单划界，唯独词没有一个形式上的分界符，虽然英文也同样存在短语的划分问题，不过在词这一层上，中文比之英文要复杂的多、困难的多。
+
+" />
+
+  <meta name="keywords" content="fliaping, Payne.Xu" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.46" />
+
+
+<link rel="canonical" href="https://blog.fliaping.com/configure-mmseg4j-analyzer-on-solr5/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Solr整合中文分词器mmseg4j" />
+<meta property="og:description" content="分词的基础概念
+
+为什么要进行分词
+
+
+中文分词(Chinese Word Segmentation) 指的是将一个汉字序列切分成一个一个单独的词。
+
+
+分词就是将连续的字序列按照一定的规范重新组合成词序列的过程。我们知道，在英文的行文中，单词之间是以空格作为自然分界符的，而中文只是字、句和段能通过明显的分界符来简单划界，唯独词没有一个形式上的分界符，虽然英文也同样存在短语的划分问题，不过在词这一层上，中文比之英文要复杂的多、困难的多。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.fliaping.com/configure-mmseg4j-analyzer-on-solr5/" />
+
+
+
+<meta property="article:published_time" content="2016-05-19T03:51:25&#43;00:00"/>
+
+<meta property="article:modified_time" content="2016-05-19T03:51:25&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Solr整合中文分词器mmseg4j">
+<meta itemprop="description" content="分词的基础概念
+
+为什么要进行分词
+
+
+中文分词(Chinese Word Segmentation) 指的是将一个汉字序列切分成一个一个单独的词。
+
+
+分词就是将连续的字序列按照一定的规范重新组合成词序列的过程。我们知道，在英文的行文中，单词之间是以空格作为自然分界符的，而中文只是字、句和段能通过明显的分界符来简单划界，唯独词没有一个形式上的分界符，虽然英文也同样存在短语的划分问题，不过在词这一层上，中文比之英文要复杂的多、困难的多。
+
+">
+
+
+<meta itemprop="datePublished" content="2016-05-19T03:51:25&#43;00:00" />
+<meta itemprop="dateModified" content="2016-05-19T03:51:25&#43;00:00" />
+<meta itemprop="wordCount" content="3150">
+
+
+
+<meta itemprop="keywords" content="搜索引擎,Solr," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Solr整合中文分词器mmseg4j"/>
+<meta name="twitter:description" content="分词的基础概念
+
+为什么要进行分词
+
+
+中文分词(Chinese Word Segmentation) 指的是将一个汉字序列切分成一个一个单独的词。
+
+
+分词就是将连续的字序列按照一定的规范重新组合成词序列的过程。我们知道，在英文的行文中，单词之间是以空格作为自然分界符的，而中文只是字、句和段能通过明显的分界符来简单划界，唯独词没有一个形式上的分界符，虽然英文也同样存在短语的划分问题，不过在词这一层上，中文比之英文要复杂的多、困难的多。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Fliaping&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Fliaping&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Solr整合中文分词器mmseg4j</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-05-19 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+            
+              <a href="/categories/solr/"> Solr </a>
+            
+          </div>
+        <span class="more-meta"> 约 3150 字 </span>
+        <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#分词的基础概念">分词的基础概念</a>
+<ul>
+<li><a href="#为什么要进行分词">为什么要进行分词</a></li>
+<li><a href="#分词方法">分词方法</a></li>
+</ul></li>
+<li><a href="#常用分词器介绍">常用分词器介绍</a></li>
+<li><a href="#整合mmseg4j到solr5-5">整合mmseg4j到Solr5.5</a>
+<ul>
+<li><a href="#下载-mmseg4j-solr-https-github-com-chenlb-mmseg4j-solr">下载：<a href="https://github.com/chenlb/mmseg4j-solr">mmseg4j-solr</a></a></li>
+<li><a href="#放置jar包到正确位置">放置jar包到正确位置</a></li>
+<li><a href="#创建一个solrcore">创建一个SolrCore</a></li>
+<li><a href="#修改配置文件">修改配置文件</a></li>
+<li><a href="#停用词字典">停用词字典</a></li>
+<li><a href="#增加词库">增加词库</a></li>
+<li><a href="#complex和maxword两种类型的区别">complex和maxword两种类型的区别</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <h1 id="分词的基础概念">分词的基础概念</h1>
+
+<h2 id="为什么要进行分词">为什么要进行分词</h2>
+
+<blockquote>
+<p>中文分词(Chinese Word Segmentation) 指的是将一个汉字序列切分成一个一个单独的词。</p>
+</blockquote>
+
+<p>分词就是将连续的字序列按照一定的规范重新组合成词序列的过程。我们知道，在英文的行文中，单词之间是以空格作为自然分界符的，而中文只是字、句和段能通过明显的分界符来简单划界，唯独词没有一个形式上的分界符，虽然英文也同样存在短语的划分问题，不过在词这一层上，中文比之英文要复杂的多、困难的多。</p>
+
+<p></p>
+
+<h2 id="分词方法">分词方法</h2>
+
+<ol>
+<li><p>基于字符串匹配的分词方法（机械分词法）：将待分字串与词典进行匹配</p>
+
+<ul>
+<li>正向最大匹配法 （由左到右的方向）</li>
+<li>逆向最大匹配法（由右到左的方向）</li>
+<li>最小切分法（每句话切分的词数最少）</li>
+<li>双向最大匹配法（进行由左到右、由右到左两次扫描）
+<img src="https://o364p1r5a.qnssl.com/blog/Chinese-Word-Segmentation-arithmetic.png" alt="Chinese-Word-Segmentation-arithmeti" /></li>
+</ul></li>
+
+<li><p>基于理解(Semantic)的分词法：在分词的同时引入句法和语义信息处理歧义</p></li>
+
+<li><p>基于统计的分词方法：相邻字频率越高越成词；多用于新词识别(补充词典)</p></li>
+
+<li><p>复合分词法（上述3种方法的综合运用和相互补充）</p></li>
+</ol>
+
+<p>那些高级的分词方法难度较大，所以用最简单的基于字符串匹配的分词方法，我们选择的mmseg4j分词器有Simple和Complex两种模式，都是基于正向最大匹配。</p>
+
+<h1 id="常用分词器介绍">常用分词器介绍</h1>
+
+<ul>
+<li>mmseg4j 用 Chih-Hao Tsai 的 MMSeg 算法(<a href="http://technology.chtsai.org/mmseg/">http://technology.chtsai.org/mmseg/</a> )实现的中文分词器，并实现 lucene 的 analyzer 和 solr 的TokenizerFactory 以方便在Lucene和Solr中使用，并且最后更新时间为2015年，支持Solr5。</li>
+<li>IKAnalyzer，采用了特有的“正向迭代最细粒度切分算法“，具有60万字/秒的高速处理能力。采用了多子处理器分析模式，支持：英文字母、数字、中文词汇等分词处理，兼容韩文、日文字符。可以说IK也是很不错的分词器，不过由于他对Solr5兼容不是很好，所以最后也没用它。</li>
+<li>paoding，Paoding&rsquo;s Knives 中文分词具有极高效率和高扩展性 。引入隐喻，采用完全的面向对象设计，构思先进。但是已经很久不更新了。</li>
+</ul>
+
+<p>下表出自<a href="http://www.cnblogs.com/wgp13x/p/3748764.html">中文分词器性能比较</a>
+<img src="https://o364p1r5a.qnssl.com/blog/14636338894868.jpg" alt="" /></p>
+
+<h1 id="整合mmseg4j到solr5-5">整合mmseg4j到Solr5.5</h1>
+
+<h2 id="下载-mmseg4j-solr-https-github-com-chenlb-mmseg4j-solr">下载：<a href="https://github.com/chenlb/mmseg4j-solr">mmseg4j-solr</a></h2>
+
+<p>有很多个版本，支持Solr5的为<code>mmseg4j-solr-2.3.0.jar</code>，如果你在代码中使用还可以用maven仓库来直接添加依赖。要想整合进Solr，就需要另外的包<code>mmseg4j-core-1.10.jar</code>，其实<code>mmseg4j-core</code>这个包才是分词器的核心，<code>mmseg4j-solr</code>只是兼容Solr的接口。</p>
+
+<h2 id="放置jar包到正确位置">放置jar包到正确位置</h2>
+
+<p>将这两个包放进servlet的类库目录中，这里的路径就是<code>$Solr.Install.Dir/server/solr-webapp/webapp/WEB-INF/lib</code>。如果你用的是Tomcat作为servlet，那么可以路径就应该是<code>$TomcatDir/webapps/solr/WEB-INF/lib</code>。</p>
+
+<h2 id="创建一个solrcore">创建一个SolrCore</h2>
+
+<p>首先保证Solr正常启动了，下面有三中创建方法。</p>
+
+<ul>
+<li>方法一：在命令行中新建。转到<code>$Solr.Install.Dir</code>,输入一下命令：</li>
+</ul>
+
+<pre><code class="language-bash">bin/solr create -c trip
+</code></pre>
+
+<p>成功可以看到如下输出日志</p>
+
+<pre><code class="language-bash">Copying configuration to new core instance directory:
+/Users/Payne/Workspace/GraduateProject/Solr/solr-5.5.0/server/solr/trip
+
+Creating new core 'trip' using command:
+http://localhost:8983/solr/admin/cores?action=CREATE&amp;name=trip&amp;instanceDir=trip
+
+{
+  &quot;responseHeader&quot;:{
+    &quot;status&quot;:0,
+    &quot;QTime&quot;:1217},
+  &quot;core&quot;:&quot;trip&quot;}
+</code></pre>
+
+<ul>
+<li>方法二：在管理界面创建，首先在你的<code>$SolrHome</code>目录下建立要创建Core的文件夹，然后把同目录下的<code>configsets/basic_configs/conf</code>文件夹copy到你新建的Core文件夹中，之后再管理界面就可新建了，如下图所示。</li>
+</ul>
+
+<p><img src="https://o364p1r5a.qnssl.com/blog/create-new-core-useing-admin-ui.png" alt="create-new-core-useing-admin-ui" />
+* 方法三：在方法二copy完成配置文件的基础上，可以通过URL-API来创建，假如我要创建一个名为trip的core，可以用如下的链接</p>
+
+<pre><code class="language-html">http://localhost:8983/solr/admin/cores?action=CREATE&amp;name=trip&amp;instanceDir=trip
+</code></pre>
+
+<p>如果创建成功页面中会返回</p>
+
+<pre><code class="language-xml">&lt;response&gt;
+  &lt;lst name=&quot;responseHeader&quot;&gt;
+    &lt;int name=&quot;status&quot;&gt;0&lt;/int&gt;
+    &lt;int name=&quot;QTime&quot;&gt;275&lt;/int&gt;
+  &lt;/lst&gt;
+  &lt;str name=&quot;core&quot;&gt;trip&lt;/str&gt;
+&lt;/response&gt;
+</code></pre>
+
+<p>其实命令行创建就是把这个方法自动化的</p>
+
+<h2 id="修改配置文件">修改配置文件</h2>
+
+<p>找到Core的配置文件夹，就是方法二中复制过来的那个，修改文件<code>$SolrHome/trip/conf/managed-schema</code>(在5.0前，该文件是shcema.xml，当然可以将该文件重命名为schema.xml,但不建议这么做），加入下面的内容并重启Solr，即可在Solr Admin 的console中看到新增的这些field了。</p>
+
+<pre><code class="language-xml">&lt;!-- mmseg4j--&gt;
+    &lt;field name=&quot;mmseg4j_complex_name&quot; type=&quot;text_mmseg4j_complex&quot; indexed=&quot;true&quot; stored=&quot;true&quot;/&gt;
+    &lt;field name=&quot;mmseg4j_maxword_name&quot; type=&quot;text_mmseg4j_maxword&quot; indexed=&quot;true&quot; stored=&quot;true&quot;/&gt;
+    &lt;field name=&quot;mmseg4j_simple_name&quot; type=&quot;text_mmseg4j_simple&quot; indexed=&quot;true&quot; stored=&quot;true&quot;/&gt;
+
+    &lt;fieldType name=&quot;text_mmseg4j_complex&quot; class=&quot;solr.TextField&quot; positionIncrementGap=&quot;100&quot; &gt;
+       &lt;analyzer&gt;
+          &lt;tokenizer class=&quot;com.chenlb.mmseg4j.solr.MMSegTokenizerFactory&quot; mode=&quot;complex&quot; dicPath=&quot;/Users/Payne/Workspace/GitHub/trip-search/SolrHome/trip/conf&quot;/&gt;
+          &lt;filter class=&quot;solr.StopFilterFactory&quot; ignoreCase=&quot;true&quot; words=&quot;stopwords.txt&quot; /&gt;
+        &lt;/analyzer&gt;
+    &lt;/fieldType&gt;
+    &lt;fieldType name=&quot;text_mmseg4j_maxword&quot; class=&quot;solr.TextField&quot; positionIncrementGap=&quot;100&quot; &gt;
+         &lt;analyzer&gt;
+           &lt;tokenizer class=&quot;com.chenlb.mmseg4j.solr.MMSegTokenizerFactory&quot; mode=&quot;max-word&quot; dicPath=&quot;/Users/Payne/Workspace/GitHub/trip-search/SolrHome/trip/conf&quot;/&gt;
+           &lt;filter class=&quot;solr.StopFilterFactory&quot; ignoreCase=&quot;true&quot; words=&quot;stopwords.txt&quot; /&gt;
+         &lt;/analyzer&gt;
+     &lt;/fieldType&gt;
+     &lt;fieldType name=&quot;text_mmseg4j_simple&quot; class=&quot;solr.TextField&quot; positionIncrementGap=&quot;100&quot; &gt;
+        &lt;analyzer&gt;
+           &lt;tokenizer class=&quot;com.chenlb.mmseg4j.solr.MMSegTokenizerFactory&quot; mode=&quot;simple&quot; dicPath=&quot;/Users/Payne/Workspace/GitHub/trip-search/SolrHome/trip/conf&quot;/&gt;
+           &lt;filter class=&quot;solr.StopFilterFactory&quot; ignoreCase=&quot;true&quot; words=&quot;stopwords.txt&quot; /&gt;
+         &lt;/analyzer&gt;
+     &lt;/fieldType&gt;
+&lt;!-- mmseg4j--&gt;
+</code></pre>
+
+<p>这里要注意<code>dicPath</code>，是这个<code>tokenizer</code>的词库文件的路径，最好用绝对位置。</p>
+
+<p>重启Solr 后，即可在新创建的trip这个core的Analysis中看到mmseg4j新增的field。
+<img src="https://o364p1r5a.qnssl.com/blog/show-mmseg4j-field-added.png" alt="show-mmseg4j-field-added" /></p>
+
+<h2 id="停用词字典">停用词字典</h2>
+
+<p>概念：
+&gt;在信息检索中，为节省存储空间和提高搜索效率，在处理自然语言数据（或文本）之前或之后会自动过滤掉某些字或词，这些字或词即被称为Stop Words(停用词)。</p>
+
+<p>停用词分为两类：功能词和词汇词。在这里我们不做区分，主要是屏蔽一些如&rdquo;是，的，地，得&rdquo;等一些功能性的词汇。</p>
+
+<p>编辑配置目录中的<code>stopwords.txt</code>文件，添加停用词，每个词占一行。添加了如下停用词之后（记得要重启Solr哦）,对<code>九寨沟的水真是美丽极了</code>这句话分词的结果如图所示，看到所分出来的词<code>的，真是</code>在停用词文件中有匹配，所以被屏蔽掉了。</p>
+
+<pre><code>是
+的
+啊
+哈
+嗯
+真是
+</code></pre>
+
+<p><img src="https://o364p1r5a.qnssl.com/blog/the-water-of-jiuzhaogou-is-so-beautiful.png" alt="the-water-of-jiuzhaogou-is-so-beautifu" /></p>
+
+<h2 id="增加词库">增加词库</h2>
+
+<p>mmseg4j默认是使用mmseg4j-core-1.10.0.jar中的words.dic,总共只有不到15万的中文词，另外我做的是旅游搜索，所以会有很多地名、经典名之类的专有词，所以，我们还需要另外增加词库。这些词库已经有很多现成的资源可以供我们使用，各大输入法厂商都有专有名词包供我们下载，但它们一般都是私有的二进制格式，不是文本文件，所幸有人做了词库转换软件，我们可以下载输入法的词库文件然后转成文本。</p>
+
+<ul>
+<li>深蓝词库转换：<a href="https://github.com/studyzy/imewlconverter">imewlconverter-github</a>，<a href="http://www.onlinedown.net/soft/577118.htm">下载</a></li>
+<li>搜狗词库：<a href="http://pinyin.sogou.com/dict/">细胞词库</a></li>
+<li>百度词库：<a href="http://shurufa.baidu.com/dict.html">词库</a></li>
+</ul>
+
+<p>将做好的词库文件命名为<code>word.dic</code>，放在前面<code>dicPath</code>配置的文件夹下，我这里就放在SolrHome的conf目录下。(名字一定要是word.dic)</p>
+
+<p>重启Solr，再次进行Analysis，这次关闭了详细参数的显示。
+<img src="https://o364p1r5a.qnssl.com/blog/14636499218731.jpg" alt="" /></p>
+
+<p>至此，已经完成mmseg4j的整合。</p>
+
+<h2 id="complex和maxword两种类型的区别">complex和maxword两种类型的区别</h2>
+
+<p>引用自: <a href="http://josh-persistence.iteye.com/blog/2249791">Solr 5.x的搭建（Solr自带的Jetty Server）与mmseg4j中文分词</a></p>
+
+<p>我们假定我们的分词库中存在着”林书豪“，”书豪“，”林书“3个词。
+在mmseg4j-complex算法中，&rdquo;林书豪&rdquo;会被完整分词为&rdquo;林书豪&rdquo;，而mmseg4j-maxword中由于只支持两个字的分词，“林书豪”会被分词为“林书”，“书豪”。这也就以为这如果你选的是mmseg4j-complex算法，你要搜索出含有“林书豪”的内容，则你必须完整的输入“林书豪”才会能够搜得出结果，而在mmseg4j-maxword算法中，你只需要输入“林书”或者“书豪”就可以得出想要的结果了。</p>
+
+<p>所以在实际开发过程中，我们常常需要在精度和广度之间得出权衡的时候，可以选择性的丰富词库，更改词库，比我我希望输入“林书”或者“书豪”的时候就可以得到我想要的结果，那么我就可以在词库中加入“林书”和“书豪”，并且使用mmseg4j-maxword算法，但是我希望的是输入完整的林书豪才能得到我希望的搜索结果，那么就需要使用mmseg4j-complex算法，而且词库中需要加入“林书豪”。</p>
+
+<p><strong>注意：</strong></p>
+
+<ul>
+<li>在words.dic中分词的顺序是很重要的，比如对于上面的例子“林书豪来中国了”，如果选择mmseg4j-complex算法，并且在词库的最后加入“来中国”，那么你可以看到分词的结果为后面的”来中国“将替代前面的“中国”。</li>
+</ul>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Payne Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2016-05-19</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/">搜索引擎</a>
+          
+          <a href="/tags/solr/">Solr</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/the-detail-about-parameters-of-solr5-config-files/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Solr5配置文件参数解析</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/solr-5.5-running-on-tomcat8/">
+            <span class="next-text nav-default">Solr5.5集成到Tomcat8</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'fliaping';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:xavierrpayne@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/xupingxx" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/paynexu/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/fliaping" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.fliaping.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2015 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">fliaping</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-63276498-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

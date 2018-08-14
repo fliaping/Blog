@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/</link>
+    <description>Recent content on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 14 Aug 2018 20:42:55 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Spring cloud gateway通过nginx代理报错问题</title>
+      <link>https://blog.fliaping.com/problem-of-nginx-proxy-spring-gateway/</link>
+      <pubDate>Tue, 14 Aug 2018 20:42:55 +0800</pubDate>
+      
+      <guid>https://blog.fliaping.com/problem-of-nginx-proxy-spring-gateway/</guid>
+      <description>背景 不久前在一个项目中使用了spring cloud gateway, 开发测试中没出现什么问题,当上线之后就一直在报错,错误内容如下: 2018-08-13 11:56:49,853 ERROR [] [reactor-http-server-epoll-7] org.springframework.web.server.adapter.HttpWebHandlerAdapter:handleFailure:213 Unhandled failure: Connection has been closed, response already set (status=304)</description>
+    </item>
+    
+    <item>
+      <title>事件驱动与协程概念</title>
+      <link>https://blog.fliaping.com/the-conception-of-event-drive-and-coroutine/</link>
+      <pubDate>Sun, 01 Jul 2018 03:11:06 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-conception-of-event-drive-and-coroutine/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://o364p1r5a.qnssl.com/2018/06/xiyangyang.png&#34; alt=&#34;xiyangyang&#34; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在一个完美的世界中，不存在战争和饥饿，所有的API都将使用异步方式编写，兔兔和小羊羔将会在阳光明媚的绿色草地上手牵手地跳舞&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>网易云音乐Linux客户端GUI不能显示问题排查</title>
+      <link>https://blog.fliaping.com/analysis-of-the-problem-that-netease-music-linux-client-cant-show-gui/</link>
+      <pubDate>Sat, 05 May 2018 06:51:02 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/analysis-of-the-problem-that-netease-music-linux-client-cant-show-gui/</guid>
+      <description>OS: ubuntu 17.10,ubuntu 18.04 网易云音乐版本：netease-cloud-music_1.1.0_amd64_ubuntu.deb 症状 启动了页面弹不出来，命令行也</description>
+    </item>
+    
+    <item>
+      <title>Archives</title>
+      <link>https://blog.fliaping.com/archives-post/</link>
+      <pubDate>Sat, 31 Mar 2018 23:28:52 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/archives-post/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>从日志配置文件读取了解java9模块化和类加载机制的改变</title>
+      <link>https://blog.fliaping.com/learn-java9-modular-and-classload-from-the-problem-of-log-config-file/</link>
+      <pubDate>Sat, 31 Mar 2018 07:50:07 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/learn-java9-modular-and-classload-from-the-problem-of-log-config-file/</guid>
+      <description>前言 Java9出来大半年了，Java10也发布了，Java11半年后就来了，将成为了一个LTS长期支持版，从Java9开始的模块化是java</description>
+    </item>
+    
+    <item>
+      <title>2017年总结及2018年计划</title>
+      <link>https://blog.fliaping.com/the-summery-of-2017-and-the-plan-of-2018/</link>
+      <pubDate>Sun, 24 Dec 2017 07:22:44 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-summery-of-2017-and-the-plan-of-2018/</guid>
+      <description>又到了一年一度的总结计划，我是拖了又拖，完全是难以面对，看看年初的计划，划掉没有做到的事项，全篇都是横线。一种无尽的挫败感和懊悔油然而生，不</description>
+    </item>
+    
+    <item>
+      <title>通用人工智能 AGI 的一点感想</title>
+      <link>https://blog.fliaping.com/some-thought-about-artificial-general-intelligence/</link>
+      <pubDate>Sat, 09 Dec 2017 07:11:04 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/some-thought-about-artificial-general-intelligence/</guid>
+      <description>利用现在非常火爆的AI算法，例如深度神经网络，蒙特卡洛搜索树这类算法，特定领域的智能貌似就在不远的未来，也许就几十年。但是对于通用人工智能A</description>
+    </item>
+    
+    <item>
+      <title>利用容器技术在一个宿主机上运行LEDE(OpenWrt)</title>
+      <link>https://blog.fliaping.com/run-lede-on-a-fake-docker/</link>
+      <pubDate>Mon, 04 Dec 2017 02:31:48 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/run-lede-on-a-fake-docker/</guid>
+      <description>在阅读本文之前，可以先了解下另外一篇文章容器核心技术详解。 容器技术所用到的技术主要是Linux Namespace和cgroup，目前最成功的</description>
+    </item>
+    
+    <item>
+      <title>安装ubuntu17.10后的相关软件问题</title>
+      <link>https://blog.fliaping.com/some-software-problems-after-install-ubuntu-17-10/</link>
+      <pubDate>Sun, 03 Dec 2017 20:11:43 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/some-software-problems-after-install-ubuntu-17-10/</guid>
+      <description>字体 sudo apt-get install ttf-wqy-microhei #文泉驿-微米黑 sudo apt-get install ttf-wqy-zenhei #文泉驿-正黑 sudo apt-get install xfonts-wqy #文泉驿-点阵宋体 自带google的思源黑体 Noto Sans CJK WPS 1.到优麒麟下载wps64位，</description>
+    </item>
+    
+    <item>
+      <title>Python 调用C/C&#43;&#43;</title>
+      <link>https://blog.fliaping.com/invoke-c-or-c-plus-plus-in-python/</link>
+      <pubDate>Fri, 03 Nov 2017 23:26:00 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/invoke-c-or-c-plus-plus-in-python/</guid>
+      <description>Python3 中提供了 ctypes 模块，它支持与 C 兼容的数据类型，可以用来加载 C/C++ 动态库。 C代码 test.h extern int add(int, int); test.c #include &amp;quot;test.h&amp;quot; int add(int arg1, int arg2) { return arg1 + arg2; } C++代码 test.h class Foo { public: int add(int arg1, int arg2)</description>
+    </item>
+    
+    <item>
+      <title>Spring Could Config Client 增强</title>
+      <link>https://blog.fliaping.com/spring-could-config-client-enhance/</link>
+      <pubDate>Sun, 22 Oct 2017 07:15:23 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/spring-could-config-client-enhance/</guid>
+      <description>config-client-enhance 对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置， 并修改spring-cloud-bus</description>
+    </item>
+    
+    <item>
+      <title>容器核心技术详解</title>
+      <link>https://blog.fliaping.com/container-core-technical-details/</link>
+      <pubDate>Sun, 08 Oct 2017 05:56:11 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/container-core-technical-details/</guid>
+      <description>最近看了docker用到的技术，于是在公司分享了一下，对于Linux内核比较关心的同学肯定早就知道这些知识了，但是我一直对内核不怎么了解，这</description>
+    </item>
+    
+    <item>
+      <title>Connecting Android Devices with Linux</title>
+      <link>https://blog.fliaping.com/connecting-android-devices-with-linux/</link>
+      <pubDate>Sun, 24 Sep 2017 06:11:58 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/connecting-android-devices-with-linux/</guid>
+      <description>结合自身的实际，在Linux上连接Android的需求其实可以分为一下几类： 手机的通知可以在Linux上弹窗提示 能方便的在手机和Linux之</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://blog.fliaping.com/about/</link>
+      <pubDate>Sat, 19 Aug 2017 01:39:24 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/about/</guid>
+      <description>TODO Reading List 计算机相关书籍 netty in action 数据结构与算法分析 TCP/IP详解 编程珠玑 深入理解计算机系统 经典论文 Dapper, a Large-Scale Distributed Systems Tracing Infrastructure（Da</description>
+    </item>
+    
+    <item>
+      <title>http2总结及简单实践</title>
+      <link>https://blog.fliaping.com/http2-summary-and-simple-practicing/</link>
+      <pubDate>Sun, 13 Aug 2017 02:32:00 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/http2-summary-and-simple-practicing/</guid>
+      <description>HTTP发展历史 在总结http2之前先来回顾下http的发展历史。以下三张图片来自Jerry Qu HTTP/0.9 (1991) HTTP/1.0 (1996) HTTP/1.1 (1999) HTTP通信过程 众所周知，http</description>
+    </item>
+    
+    <item>
+      <title>重新迁回阿里云</title>
+      <link>https://blog.fliaping.com/re-move-back-to-alibaba-cloud-for-my-vps/</link>
+      <pubDate>Thu, 10 Aug 2017 18:41:46 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/re-move-back-to-alibaba-cloud-for-my-vps/</guid>
+      <description>历史 细细数来，最开始在大学开始买了阿里云9.9的学生机，后来毕业之后就没有这优惠了，用了好几个月的45元的阿里云。然后有了个读研的GF，准备</description>
+    </item>
+    
+    <item>
+      <title>【翻译】http status code 304</title>
+      <link>https://blog.fliaping.com/the-http-status-code-304/</link>
+      <pubDate>Tue, 04 Jul 2017 13:45:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-http-status-code-304/</guid>
+      <description>在研究http2的是时候，无意中发现http code为304，对此不解，故搜之，发现该文，顺便翻译一下。奈何英文水平有限，词不达意，望阅者见</description>
+    </item>
+    
+    <item>
+      <title>md5使用问题记录</title>
+      <link>https://blog.fliaping.com/recoding-the-problem-of-md5/</link>
+      <pubDate>Wed, 28 Jun 2017 03:48:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/recoding-the-problem-of-md5/</guid>
+      <description>java后端用到md5来生产token，于是在网上找个了示例，跑了一下，看起来没什么问题。服务的调用方是python，一起测了一下，也没啥问</description>
+    </item>
+    
+    <item>
+      <title>easyvpn-linux使用</title>
+      <link>https://blog.fliaping.com/to-use-easyvpn-on-linux/</link>
+      <pubDate>Sat, 24 Jun 2017 03:48:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/to-use-easyvpn-on-linux/</guid>
+      <description>公司vpn用的是easyvpn，就是这个sangfor-深信服，但是linux的连接方式是通过网页，在浏览器中执行java，也就是apple</description>
+    </item>
+    
+    <item>
+      <title>OpenWrt编译USB有线网卡RTL8152B驱动</title>
+      <link>https://blog.fliaping.com/compile-usb-wired-adapter-rtl8152b-driver-in-openwrt/</link>
+      <pubDate>Sat, 08 Apr 2017 14:25:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/compile-usb-wired-adapter-rtl8152b-driver-in-openwrt/</guid>
+      <description>路由器用的TP-Link WR13U（ar71xx），只有一个RJ-45口，我用来作为WAN口，局域网只能通过无线连接，所以局域网网速比较差，</description>
+    </item>
+    
+    <item>
+      <title>树莓派3简明配置</title>
+      <link>https://blog.fliaping.com/the-brief-configuration-of-raspberrypi-3/</link>
+      <pubDate>Sat, 08 Apr 2017 12:33:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-brief-configuration-of-raspberrypi-3/</guid>
+      <description>&lt;h1 id=&#34;系统安装&#34;&gt;系统安装&lt;/h1&gt;
+
+&lt;p&gt;首先选择一个系统，Linux有很多发行版都是支持raspberry-pi的，每个人有自己的喜好，如果是想深入学习Linux（或者说喜欢折腾）的，ArchLinux和Gentoo是不错的选择，但是若目的不再于此，选择官方系统可能是比较好的选择。另外像Ubuntu Meta也挺不错。&lt;/p&gt;
+
+&lt;h2 id=&#34;使用-noobs-安装&#34;&gt;使用 noobs 安装&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;有显示器：格式化 sd 卡为 fat32格式，将 &lt;a href=&#34;https://www.raspberrypi.org/downloads/noobs/&#34;&gt;noobs&lt;/a&gt;解压拷贝到 sd 卡，插上sd 卡上电，HDMI 连接显示器按照步骤安装就可以。&lt;/li&gt;
+&lt;li&gt;无显示器：recovery.cmdline 加入silentinstall&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;直接安装&#34;&gt;直接安装&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;官方系统Raspbain&lt;/strong&gt;
+1. 直接将系统刻录到SD卡
+Mac和Linux一般使用dd命令即可，Windows需要一些刻录软件，例如UltalISO，以及一些装机软件，如大白菜都可以完成刻录工作。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo dd bs=4M if=raspbian.img of=/dev/sdb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;插入内存卡，开机
+官方系统会自动扩展文件系统，如果没有自动扩展，开机之后也可以使用raspi-config和扩展以及另外的一些配置&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo raspi-config
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>java常用JSON库注意事项总结</title>
+      <link>https://blog.fliaping.com/the-attention-of-json-serialization-and-deserialization-in-java/</link>
+      <pubDate>Mon, 27 Feb 2017 08:47:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-attention-of-json-serialization-and-deserialization-in-java/</guid>
+      <description>如果想将对象进行网络传输，就需要序列话和反序列化。主要分为以文本为介质和以二进制为介质。以文本为介质最广泛的是 xml 和 json ，但是 xml 过于冗长，jso</description>
+    </item>
+    
+    <item>
+      <title>Java静态代码块的执行</title>
+      <link>https://blog.fliaping.com/the-execute-of-java-static-code-block/</link>
+      <pubDate>Mon, 23 Jan 2017 12:58:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-execute-of-java-static-code-block/</guid>
+      <description>&lt;h1 id=&#34;问题及总结&#34;&gt;问题及总结&lt;/h1&gt;
+
+&lt;p&gt;关于静态代码块其实是面试时老生常谈的问题，虽然面试时问了我也大概知道，但是在用的时候还是踩了个小坑。我想通过调用类的静态变量来触发静态代码块的调用，但是没有成功。&lt;/p&gt;
+
+&lt;p&gt;总结下静态代码块能执行的条件：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;第一次初始化对象&lt;/li&gt;
+&lt;li&gt;第一次调用静态方法&lt;/li&gt;
+&lt;li&gt;第一次调用静态代码块下面的静态变量&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>关于走弯路的思考</title>
+      <link>https://blog.fliaping.com/the-thought-after-a-detours/</link>
+      <pubDate>Sat, 17 Dec 2016 12:06:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-thought-after-a-detours/</guid>
+      <description>&lt;p&gt;前天写了一篇总结了从大三暑假到目前的情况，昨天晚上又和一位年长的人聊了一会。这段时间有些感悟，算是来做个记录。&lt;/p&gt;
+
+&lt;p&gt;从我目前的角度看，我这段时间是走了不少弯路，人们也许会说年轻人就是要走些弯路，但我觉得那不过是给你走了弯路之后的安慰，我们当然需要这些安慰，但是接受安慰之后是要平静下来，思考我们为什么会走弯路，这样才能有提高。就算这样我也不能保证以后不走弯路，但是学会思考、总结原因，总是能推动自己往更好的方向发展。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>我的应届工作经历</title>
+      <link>https://blog.fliaping.com/my-experience-of-first-job-after-graduated-from-university/</link>
+      <pubDate>Thu, 15 Dec 2016 01:18:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/my-experience-of-first-job-after-graduated-from-university/</guid>
+      <description>&lt;p&gt;早就想把我之前的经历写出来，一是自己的总结，二是分享出来。不过也好，这次有更多要分享的东西。希望能给看到的人一些启发，避免遇到像我这样的情况。&lt;/p&gt;
+
+&lt;p&gt;当然我知道这样写出来可能被认识的人看到，尤其是那些一直觉得我不错的人，可能会让人大跌眼镜。甚至是后面找下一份工作时被面试官看到。但这就是我，就是我真实的一面，如果自己都不能正视最真实的自己，那不就是自欺欺人。&lt;/p&gt;
+
+&lt;p&gt;首先简单介绍下情况，新疆某211计科专业，在校期间参加校内的某个软件开发社团，大学很多时间就是在这个社团的办公室度过的。学习成绩的话，从大一的中等水平到后面的第二名，算是也不差吧。我的情况大概就是适用于普通高校里愿意上进的普通人吧，对于厉害的人无参考价值。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>不同平台下的RSA加解密及认证</title>
+      <link>https://blog.fliaping.com/rsa-encryption-and-decryption-in-different-platform/</link>
+      <pubDate>Tue, 22 Nov 2016 11:36:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/rsa-encryption-and-decryption-in-different-platform/</guid>
+      <description>&lt;p&gt;RSA是目前(2016)用途最为广泛的非对称加密方法，广泛应用于加解密以及认证，例如：ssh登录、加密通信、https等很多方面。但是不同平台对其支持时，在实现上有少许的不同，这些不同可能会阻碍我们使用，尤其是在跨平台的时候，如果不知道其中的细节，往往会失败，本文以作者用过的几个语言做一些实例。&lt;/p&gt;
+
+&lt;p&gt;代码：&lt;a href=&#34;https://github.com/fliaping/tools_code/tree/master/RSA&#34;&gt;https://github.com/fliaping/tools_code/tree/master/RSA&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;目前只有 JAVA 和 PHP 的互通，后续可能进行一些补充。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>利用wifidog实现微信wifi连接</title>
+      <link>https://blog.fliaping.com/the-implements-of-weixin-wifi-by-using-wifidog-gateway/</link>
+      <pubDate>Sun, 14 Aug 2016 07:51:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-implements-of-weixin-wifi-by-using-wifidog-gateway/</guid>
+      <description>&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+
+&lt;p&gt;大家如果有用公共场合wifi的习惯，想必都有过如下的体验。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://o364p1r5a.qnssl.com/blog/14711616774040.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这就是利用微信身份来进行wifi连接认证，主要目的是商家为了吸引顾客，推广其公众号。别的也不多说，下面就来讲一讲怎么实现这样的wifi认证方式。&lt;/p&gt;
+
+&lt;p&gt;本篇文章要讲的是portal型路由设备（具体就是OpenWrt路由）的改造实现。在进行改造之前请务必要看微信公众平台开发文档的&lt;a href=&#34;http://mp.weixin.qq.com/wiki/11/3ccabd900dbb942dff317c11db70e157.html&#34;&gt;微信连wifi&lt;/a&gt;,后面提到的相关设涉及微信公众平台开发的相关术语、参数不再一一解释。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>借助Docker技术的Solr集群实现</title>
+      <link>https://blog.fliaping.com/the-solrcloud-with-docker/</link>
+      <pubDate>Sun, 12 Jun 2016 09:01:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-solrcloud-with-docker/</guid>
+      <description>&lt;p&gt;在本项目中，为了更好的模拟真实的生产环境，对于SolrCloud技术不采用伪集群方式，而是真正实现一个搜索集群，当然由于笔者只是学生，没有资金租用多台服务器来搭建集群，因此借助于Docker的容器技术在一台服务器上虚拟出逻辑上的六台主机。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://o364p1r5a.qnssl.com/blog/trip-search-six-docker.png&#34; alt=&#34;trip-search-six-docke&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SolrCloud基础</title>
+      <link>https://blog.fliaping.com/the-introduction-of-solrcloud/</link>
+      <pubDate>Sun, 12 Jun 2016 08:02:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-introduction-of-solrcloud/</guid>
+      <description>&lt;p&gt;本节是SolrCloud基础理论知识，我也是从网上学习到，这里只是进行一些整理。参考的博客比本文更好，更有深度，有耐心的请看参考的原文&amp;ndash; &lt;a href=&#34;http://josh-persistence.iteye.com/blog/2234411&#34;&gt;SolrCloud之分布式索引及与Zookeeper的集成&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;solrcloud基本概念&#34;&gt;SolrCloud基本概念&lt;/h1&gt;
+
+&lt;p&gt;SolrCloud模式下有Cluster，Node，Collection，Shard，LeaderCore，ReplicationCore等重要概念。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>搜索结果的筛选和排序</title>
+      <link>https://blog.fliaping.com/filtering-and-sorting-the-search-result/</link>
+      <pubDate>Sun, 12 Jun 2016 05:17:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/filtering-and-sorting-the-search-result/</guid>
+      <description>&lt;p&gt;实现对搜索结果的筛选和排序，需要利用solr的sort功能和facet功能，这两个是垂直搜索中比较常用的功能。对于如何使用这两个功能，其实在索引建好之后我们并不需要做太多的工作就能使用，只用在查询的时候指定相关的参数，Solr会根据参数来执行相应的查询，获得相应的结果。&lt;/p&gt;
+
+&lt;p&gt;因为项目中使用SolrJ作为Solr的客户端，并通过servlet提供对外的服务接口，本文将以介绍如何用SolrJ来实现，此外也会涉及利用HTTP接口的参数使用。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>各种查询及参数说明</title>
+      <link>https://blog.fliaping.com/various-of-query-and-explanation-of-parameter/</link>
+      <pubDate>Sat, 11 Jun 2016 09:14:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/various-of-query-and-explanation-of-parameter/</guid>
+      <description>&lt;p&gt;Solr默认有三种查询解析器（Query Parser）：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Standard Query Parser&lt;/li&gt;
+&lt;li&gt;DisMax Query Parser&lt;/li&gt;
+&lt;li&gt;Extended DisMax Query Parser (eDisMax)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;第一种是标准的Parser，最后一种是最强大的。&lt;/p&gt;
+
+&lt;p&gt;本文中所提到的参数并不能包含Solr所有参数，具体的使用和更详细的参数请参考官方文档。
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>基于webmagic爬虫框架的数据抓取</title>
+      <link>https://blog.fliaping.com/crawl-web-page-by-using-webmagic-crawler-framework/</link>
+      <pubDate>Thu, 26 May 2016 05:44:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/crawl-web-page-by-using-webmagic-crawler-framework/</guid>
+      <description>&lt;p&gt;有人可能会有疑问，Heritrix用的好好的，干嘛还要换别的呢？Heritrix固然很好，成熟、稳定、有管理界面、监控、多线程、开箱即用。但这真的适合我们这种垂直爬虫吗？我觉得未必，用Heritrix，你可以通过配置文件来确定接受规则和URL的发现规则，然后直接构建运行就好了。然而对于我来说，它的配置文件中的那些选项说的并不是那么清楚，相关文档也都是很简单的，想用一些复杂的规则都不知道这样对不对，至少要等到好久抓出来东西了，发现多抓了或者少抓了，你才发现配置文件写错了。并且配置文件中的项目也是老多的，这么多东西把人搞的头晕目眩。&lt;/p&gt;
+
+&lt;p&gt;好吧，总的来讲,如果你是爬虫老手，对Heritrix的架构了解比较清晰的，Heritrix是个很好的选择。但是对于一个新手，我觉得webmagic更加灵活高效。就拿我的体验来讲，当初用Heritrix抓了3天才抓了七千多数据（可能是我配置文件写的不好），而用webmagic一个白天就抓了一万三的数据。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Solr空间搜索配置及实践</title>
+      <link>https://blog.fliaping.com/solr-spatial-search-config-and-application/</link>
+      <pubDate>Wed, 25 May 2016 09:51:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/solr-spatial-search-config-and-application/</guid>
+      <description>&lt;p&gt;前面讲了空间搜索的两个常用原理，应该还算是比较容易理解的，毕竟只是算法，并不需要我们来实现，我们通过简单地配置就可以用上Solr的空间搜索的功能。下面就来讲讲如何配置空间搜索。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>空间搜索原理及相关算法</title>
+      <link>https://blog.fliaping.com/spatial-search-theory-and-algorithm/</link>
+      <pubDate>Wed, 25 May 2016 09:17:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/spatial-search-theory-and-algorithm/</guid>
+      <description>&lt;p&gt;既然涉及的是旅游搜索，那就不能少了空间搜索的内容。现在移动设备之广泛想必不必多说。根据eMarketer的新&lt;a href=&#34;http://www.chinabgao.com/stat/stats/39758.html&#34;&gt;数据&lt;/a&gt;，2015年全球智能手机用户将达到19.1亿，2016年该指数将增长12.6%达到21.6亿。智能手机都会带有GPS模块，现在一个APP不获取下用户位置都觉得是吃亏，不过这也用户隐私的侵犯也很严重，尤其是在Android生态圈中，不过现在各大手机厂商的系统都对这一块做了一些限制。&lt;/p&gt;
+
+&lt;p&gt;空间搜索，又名Spatial Search，基于空间搜索技术，可以做到：&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>基于Ionic的客户端设计</title>
+      <link>https://blog.fliaping.com/the-design-of-client-based-on-ionic-for-searchapp/</link>
+      <pubDate>Mon, 23 May 2016 10:27:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-design-of-client-based-on-ionic-for-searchapp/</guid>
+      <description>&lt;p&gt;客户端的设计，利用的是Hybrid APP的构建技术，核心是HTML5技术，下面先简单介绍下Hybrid应用的以及Ionic框架。&lt;/p&gt;
+
+&lt;h1 id=&#34;技术介绍&#34;&gt;技术介绍&lt;/h1&gt;
+
+&lt;h2 id=&#34;hybrid-app介绍&#34;&gt;Hybrid App介绍&lt;/h2&gt;
+
+&lt;p&gt;移动app可以大致被分为三种，native、hybrid和web app。如果使用native app，你可以使用设备和操作系统的所有能力，同时，平台的性能负荷最小。然而，构建web app可以让你的代码跨平台，使得开发时间和成本大大减少。而hybrid app把这两者的优点都结合起来，使用一套共同代码，在许多不同的平台上部署类似原生的app。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>搜索服务API</title>
+      <link>https://blog.fliaping.com/the-bridge-between-solr-and-users-was-implemented-by-using-webservice/</link>
+      <pubDate>Mon, 23 May 2016 02:11:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-bridge-between-solr-and-users-was-implemented-by-using-webservice/</guid>
+      <description>&lt;p&gt;这篇文章主要是关于solr和普通用户之间的桥梁&lt;code&gt;SearchService&lt;/code&gt;,简单了解下整过工作流程.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://o364p1r5a.qnssl.com/blog/14639907128551.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>利用jsoup提取网页中有用信息</title>
+      <link>https://blog.fliaping.com/using-jsoup-to-extract-html-file/</link>
+      <pubDate>Sun, 22 May 2016 11:09:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/using-jsoup-to-extract-html-file/</guid>
+      <description>&lt;p&gt;Java 程序在解析 HTML 文档时，最常用的是 htmlparser 这个开源项目。但现在你有更好的选择，那就是Jsoup。&lt;/p&gt;
+
+&lt;p&gt;jsoup 是一款 Java 的 HTML 解析器，可直接解析某个 URL 地址、HTML 文本内容。它提供了一套非常省力的 API，可通过 DOM，CSS 以及类似于 jQuery 的操作方法来取出和操作数据。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Solr5配置文件参数解析</title>
+      <link>https://blog.fliaping.com/the-detail-about-parameters-of-solr5-config-files/</link>
+      <pubDate>Fri, 20 May 2016 04:49:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-detail-about-parameters-of-solr5-config-files/</guid>
+      <description>&lt;p&gt;Solr5的主要配置文件有&lt;code&gt;solrconfig.xml&lt;/code&gt;和&lt;code&gt;managed-schema&lt;/code&gt;，另外一些还有&lt;code&gt;solr.xml&lt;/code&gt;,&lt;code&gt;数据导入配置&lt;/code&gt;,&lt;code&gt;ZooKeeper配置&lt;/code&gt;等。&lt;/p&gt;
+
+&lt;p&gt;这里详细介绍两个主要的配置文件。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Solr整合中文分词器mmseg4j</title>
+      <link>https://blog.fliaping.com/configure-mmseg4j-analyzer-on-solr5/</link>
+      <pubDate>Thu, 19 May 2016 03:51:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/configure-mmseg4j-analyzer-on-solr5/</guid>
+      <description>&lt;h1 id=&#34;分词的基础概念&#34;&gt;分词的基础概念&lt;/h1&gt;
+
+&lt;h2 id=&#34;为什么要进行分词&#34;&gt;为什么要进行分词&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;中文分词(Chinese Word Segmentation) 指的是将一个汉字序列切分成一个一个单独的词。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;分词就是将连续的字序列按照一定的规范重新组合成词序列的过程。我们知道，在英文的行文中，单词之间是以空格作为自然分界符的，而中文只是字、句和段能通过明显的分界符来简单划界，唯独词没有一个形式上的分界符，虽然英文也同样存在短语的划分问题，不过在词这一层上，中文比之英文要复杂的多、困难的多。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Solr5.5集成到Tomcat8</title>
+      <link>https://blog.fliaping.com/solr-5.5-running-on-tomcat8/</link>
+      <pubDate>Wed, 18 May 2016 07:08:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/solr-5.5-running-on-tomcat8/</guid>
+      <description>&lt;p&gt;也许你不熟悉Jetty，或者觉得它性能不行，你想在Tomcat上运行Solr，没问题，理论上只要是servlet容器都可以运行Solr。不过问题是从solr5开始官方不再支持Tomcat的集成，所以可以有些配置问题需要自己来解决。于是我进行了一次尝试，solr4本来是比较容易的，Solr5就出现一些问题，由于对Tomcat了解也不是很深，除运行的时候Solr管理界面有些小问题外，基本可以正常使用。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>使用Heritrix抓取数据</title>
+      <link>https://blog.fliaping.com/crawl-web-page-by-using-heritrix/</link>
+      <pubDate>Wed, 18 May 2016 05:14:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/crawl-web-page-by-using-heritrix/</guid>
+      <description>&lt;p&gt;Heritrix 是一个由 java 开发的、开源的网络爬虫，用户可以使用它来从网上抓取想要的资源。其最出色之处在于它良好的可扩展性，方便用户实现自己的抓取逻辑。最重要是对于一般的抓取，你是不用碰任何代码的，只要写好配置文件就可以了，简直就是某些人的福音。不过对于一个真正的程序员，代码可是他们的整个生命啊.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Solr基础知识及安装</title>
+      <link>https://blog.fliaping.com/introduction-of-solr-and-how-to-install-it/</link>
+      <pubDate>Tue, 17 May 2016 03:41:13 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/introduction-of-solr-and-how-to-install-it/</guid>
+      <description>&lt;h1 id=&#34;solr的身世&#34;&gt;Solr的身世&lt;/h1&gt;
+
+&lt;p&gt;引用&lt;a href=&#34;https://lucene.apache.org/solr/&#34;&gt;Solr官网&lt;/a&gt;的slogan,blazing-fast一词可见一斑。
+&amp;gt; Solr is the popular, blazing-fast, open source enterprise search platform built on Apache Lucene™.&lt;/p&gt;
+
+&lt;p&gt;再来看看它的&lt;a href=&#34;https://lucene.apache.org/solr/features.html&#34;&gt;特性&lt;/a&gt;
+&lt;img src=&#34;https://o364p1r5a.qnssl.com/blog/14634817034224.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>垂直搜索引擎基础知识</title>
+      <link>https://blog.fliaping.com/introduction-of-vertical-search-engine/</link>
+      <pubDate>Sun, 15 May 2016 11:55:14 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/introduction-of-vertical-search-engine/</guid>
+      <description>&lt;h1 id=&#34;引言-废话&#34;&gt;引言/废话&lt;/h1&gt;
+
+&lt;p&gt;搜索引擎是大家平时使用最广泛的网络应用之一，它是普通网民接触互联网的入口，也是网络信息的搜集系统，其重要性不言而喻。我认为一个优秀的搜索服务应该实现一些基本的要求：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;准确回应用户搜索目的&lt;/li&gt;
+&lt;li&gt;提供公正的结果排序&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;然而，目前最大的中文搜索引擎，在经历了&lt;a href=&#34;https://zh.wikipedia.org/wiki/百度贴吧#2016.E5.B9.B4.E8.A1.80.E5.8F.8B.E7.97.85.E5.90.A7.E4.BA.8B.E4.BB.B6&#34;&gt;血友病吧事件&lt;/a&gt;、&lt;a href=&#34;https://zh.wikipedia.org/zh/魏则西事件&#34;&gt;魏则西事件&lt;/a&gt;之后,网民已经失去对其的信任，甚至很多人产生了厌恶之情，且不说是否有人落井下石，或者说是罪有应得，总之，它带给大家的是不好的用户体验。吐槽到此为止，从这里开始我们进入正题。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>【总述】用Solr构建垂直搜索引擎</title>
+      <link>https://blog.fliaping.com/create-your-vertical-search-engine-with-solr/</link>
+      <pubDate>Sun, 15 May 2016 07:08:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/create-your-vertical-search-engine-with-solr/</guid>
+      <description>用Solr构建垂直搜索系列文章 入门知识部分 垂直搜索引擎基础知识 Solr基础知识及安装 Solr5.5 集成 Tomcat8 搜集信息部分 使用Heritrix抓取数据 利用js</description>
+    </item>
+    
+    <item>
+      <title>基于Docker的开源视频分享系统解决方案</title>
+      <link>https://blog.fliaping.com/a-solution-of-open-source-video-sharing-system-based-on-docker/</link>
+      <pubDate>Sun, 24 Apr 2016 04:29:19 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/a-solution-of-open-source-video-sharing-system-based-on-docker/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;序言&lt;/strong&gt;：
+学校之前有个视频分享站点，用的是CC视频的系统，买的源码，后来服务器被黑掉了，存储服务器被格了，好几T的视频都没了，挺心疼人的。绊倒还是要站起来的，准备重新搭建视频系统，可是CC的系统已经太老了，对环境要求很苛刻，要求系统是redhat 5.4，php版本不能大于5.2，还有mysql也有特定要求，最重要的是所有的软件需要编译安装，视频转码那些软件不太好搞。之前搭建这个系统的师哥过来没搞定，把这个坑留给我，在准备跳下去的时候还是回来了，我感觉可能解决不了。于是转投其他系统，国内真心没啥好用的，都是CMS，是从各大视频网站抓链接，什么转码、截图都没有。CC视频也变成了纯粹的云服务了。国外有些很不错的，像Vimp，Melody，但免费版的功能有很多限制，也跳过坑，最后找到开源的clipbucket。&lt;/p&gt;
+
+&lt;p&gt;另外，本项目托管在 &lt;a href=&#34;https://github.com/fliaping/mytube&#34;&gt;mytube - github&lt;/a&gt; ，后续更新以此为准。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>导入Mysql数据到Solr中</title>
+      <link>https://blog.fliaping.com/how-to-import-data-from-mysql-by-using-solr-dataimporthandler/</link>
+      <pubDate>Wed, 06 Apr 2016 04:40:39 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/how-to-import-data-from-mysql-by-using-solr-dataimporthandler/</guid>
+      <description>&lt;p&gt;一般存储数据都会用到数据库，之前十几年关系型数据库大行其道，现在非关系性数据库（NoSql）如日中天，随着数据越来越来越多，人们发现关系型数据库的性能已经不能满足需要，经历了一番挣扎，从主-从（读-写）分离，到分库分表，虽然维持了一段时间，但是数据量很快就上来了，于是NoSql越来越显示出其在大数据时代的价值。&lt;/p&gt;
+
+&lt;p&gt;咳咳，不过这篇文章讲的却是从最流行的关系型数据库中导入数据到Solr，没办法，笔者还没用过NoSql，所以还是老老实实讲Mysql，哈哈。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>解决新疆地区百度网盘分享链接不能用</title>
+      <link>https://blog.fliaping.com/solving-the-problem-of-baidu-sharing-links-can-not-be-use-in-xinjiang/</link>
+      <pubDate>Thu, 10 Mar 2016 03:41:00 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/solving-the-problem-of-baidu-sharing-links-can-not-be-use-in-xinjiang/</guid>
+      <description>&lt;h1 id=&#34;写在前面&#34;&gt;写在前面&lt;/h1&gt;
+
+&lt;p&gt;新疆的网络封锁，我在之前一篇 &lt;a href=&#34;http://blog.xvping.cn/2016/03/01/github%E5%9C%A8%E6%96%B0%E7%96%86%E7%94%A8%E4%B8%8D%E4%BA%86%E7%9A%84%E9%97%AE%E9%A2%98/&#34;&gt;Github在新疆用不了的问题&lt;/a&gt; 中也讲过了,政治问题不再重提。可是我们只能看内地的小伙伴快乐地分享文件，我们只能出来 &lt;strong&gt;Error400&lt;/strong&gt;，岂不痛哉！！下面方法要求有一定的 &lt;strong&gt;接入国际互联网&lt;/strong&gt; 的技能。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://o364p1r5a.qnssl.com/blog/fuck-baidu-yunpan.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;fuck-百度云盘&#34;&gt;Fuck 百度云盘&lt;/h1&gt;
+
+&lt;p&gt;那么怎么才能正确打开百度云的分享链接呢？&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ghost博客系统的一些笔记</title>
+      <link>https://blog.fliaping.com/some-notes-ablout-my-ghost-blog/</link>
+      <pubDate>Fri, 04 Mar 2016 12:19:40 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/some-notes-ablout-my-ghost-blog/</guid>
+      <description>&lt;p&gt;我决定将博客分开，&lt;a href=&#34;https://xvping.cn&#34;&gt;主站&lt;/a&gt; 用Ghost，是技术无关的内容，记录一些生活、想法，而&lt;a href=&#34;http://blog.xvping.cn/&#34;&gt;Payne&amp;rsquo;s Blog&lt;/a&gt; 是用的Hexo，都是我的原创技术博客。&lt;/p&gt;
+
+&lt;p&gt;简单写一下，有时间再详细补充
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>github在新疆用不了的问题</title>
+      <link>https://blog.fliaping.com/solving-the-problem-of-github-can-not-be-use-in-xinjaing/</link>
+      <pubDate>Tue, 01 Mar 2016 15:04:33 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/solving-the-problem-of-github-can-not-be-use-in-xinjaing/</guid>
+      <description>&lt;p&gt;新疆一直是GFW的实验区，甚至国内的很多网站也跟着遭殃，百度网盘分享链接、酷我、唱吧、github挂掉，再接着CSDN、cnblog相继挂掉，这里也不想探讨原因，大家都懂的。可怜了在新疆上学的孩子，本来新疆的师资力量都够烂了，还要增高学生的信息获取门槛。虽然我就要离开这个地方，但依然为在新疆上学的孩子感到悲伤。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;本来在中国的学生在信息获取上处于劣势，在新疆上学的学生更是悲惨。作为搞技术的还好，通过与墙斗争能提高技术水平。但大多数只能被禁锢，但最让人胆颤的是很多人&lt;strong&gt;被禁锢而不以为然&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Android文件夹链接方法(ln不能用)</title>
+      <link>https://blog.fliaping.com/the-method-to-create-link-for-directory/</link>
+      <pubDate>Thu, 25 Feb 2016 10:48:43 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-method-to-create-link-for-directory/</guid>
+      <description>&lt;p&gt;在android中，当用ln命令来建立文件夹软连接的时候，出现以下错误&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;quot;link failed Function not implemented&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;xda论坛一位解释了&lt;a href=&#34;http://forum.xda-developers.com/showthread.php?t=1122710#2&#34;&gt;原因&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;symlinks (ln -s) doesn&amp;rsquo;t work because /sdcard is fat32. It doesn&amp;rsquo;t support symlink. You can indeed mount the external_sd underneat /sdcard, but as you say, it&amp;rsquo;s lost after reboot. You have to do it everytime you boot.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>学习如何用hexo写博客的站点汇总</title>
+      <link>https://blog.fliaping.com/some-links-to-learn-how-to-use-hexo/</link>
+      <pubDate>Sat, 26 Dec 2015 18:15:40 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/some-links-to-learn-how-to-use-hexo/</guid>
+      <description>&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+
+&lt;p&gt;　　已经确定用hexo作为我的技术博客系统，但现在对它还不是很熟，所以需要经常翻看一些牛人的文章，所以对他们的内容进行汇总，方便我自己翻看。&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;题外话:&lt;br /&gt;
+　　我刚开始用的博客是Wordpress，各种换主题，各种搞主机，然后看上了ghost,也就接触了markdown，写过几篇文章，但主机在国外，速度比较慢所以体验很差，也就不怎么想写。&lt;br /&gt;
+　　然后就是接触了hexo，又是经历了找主题，改主题的过程，折腾到现在我觉得一个博客最重要的是内容，其次才是外观，一个再漂亮的主题没有一篇文章是不会有人看的，并且也是没有用的，所以找一个差不多的主题，然后开始写吧！&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;链接汇总&#34;&gt;链接汇总&lt;/h1&gt;
+
+&lt;p&gt;　　下面就把我自己找到的资料进行汇总，只是相关链接，后面我会专门整理出几篇文章.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;因为我用的mac，所以相关资料中可能Windows平台的比较少&lt;/strong&gt;
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>hexo使用技巧汇总</title>
+      <link>https://blog.fliaping.com/some-tips-for-using-hexo/</link>
+      <pubDate>Sat, 26 Dec 2015 12:45:44 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/some-tips-for-using-hexo/</guid>
+      <description>&lt;!--toc--&gt;
+
+&lt;h2 id=&#34;为文章添加目录&#34;&gt;为文章添加目录&lt;/h2&gt;
+
+&lt;p&gt;在需要目录出现的地方放置一个标记，这样会自动生成一个嵌套的包含所有标题的列表。默认的标记是 [TOC]&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-markdown&#34;&gt;&amp;lt;!--toc--&amp;gt;
+# Header 1
+
+## Header 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>在ubuntu下安装shadowsocks多用户版</title>
+      <link>https://blog.fliaping.com/how-to-insall-manyuser-shadowsocks-on-ubuntu/</link>
+      <pubDate>Thu, 24 Dec 2015 17:53:24 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/how-to-insall-manyuser-shadowsocks-on-ubuntu/</guid>
+      <description>&lt;p&gt;###环境说明
+系统：AWS ubuntu 14.04 x64
+##安装shadowsocks支持
+1.首先更新软件源&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.安装Python&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install python-pip python-m2crypto 
+pip install cymysql
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>shadowsocks在centos编译安装</title>
+      <link>https://blog.fliaping.com/how-to-compile-and-install-shadowsocks-on-centos/</link>
+      <pubDate>Wed, 23 Dec 2015 07:23:17 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/how-to-compile-and-install-shadowsocks-on-centos/</guid>
+      <description>&lt;p&gt;现在新疆把python 的软件库都封了，pip都安不上，那只好自己编译安装了。系统为centos6 x64
+###1.安装编译环境&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;yum install gcc glib2-devel openssl-devel pcre-devel bzip2-devel gzip-devel zlib-devel 
+
+yum install build-essential autoconf libtool gcc -y 
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>仿百度文库，office转pdf核心转换功能</title>
+      <link>https://blog.fliaping.com/the-simulation-of-baidu-wenku-about-converting-office-document-to-pdf-on-server/</link>
+      <pubDate>Thu, 01 May 2014 09:30:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-simulation-of-baidu-wenku-about-converting-office-document-to-pdf-on-server/</guid>
+      <description>&lt;p&gt;这是我两年前写的东西，现在转移过来，进行稍微的整理。&lt;/p&gt;
+
+&lt;p&gt;在我现在看来，当时简直就是不知所云，当时可以拿自己是新手来当借口，可现在呢？如果工作中做不好事情，能拿我是应届生来当借口吗？&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

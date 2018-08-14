@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ionic on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/tags/ionic/</link>
+    <description>Recent content in Ionic on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 23 May 2016 10:27:25 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/tags/ionic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>基于Ionic的客户端设计</title>
+      <link>https://blog.fliaping.com/the-design-of-client-based-on-ionic-for-searchapp/</link>
+      <pubDate>Mon, 23 May 2016 10:27:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-design-of-client-based-on-ionic-for-searchapp/</guid>
+      <description>&lt;p&gt;客户端的设计，利用的是Hybrid APP的构建技术，核心是HTML5技术，下面先简单介绍下Hybrid应用的以及Ionic框架。&lt;/p&gt;
+
+&lt;h1 id=&#34;技术介绍&#34;&gt;技术介绍&lt;/h1&gt;
+
+&lt;h2 id=&#34;hybrid-app介绍&#34;&gt;Hybrid App介绍&lt;/h2&gt;
+
+&lt;p&gt;移动app可以大致被分为三种，native、hybrid和web app。如果使用native app，你可以使用设备和操作系统的所有能力，同时，平台的性能负荷最小。然而，构建web app可以让你的代码跨平台，使得开发时间和成本大大减少。而hybrid app把这两者的优点都结合起来，使用一套共同代码，在许多不同的平台上部署类似原生的app。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

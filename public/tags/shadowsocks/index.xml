@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shadowsocks on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/tags/shadowsocks/</link>
+    <description>Recent content in Shadowsocks on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 24 Dec 2015 17:53:24 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/tags/shadowsocks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在ubuntu下安装shadowsocks多用户版</title>
+      <link>https://blog.fliaping.com/how-to-insall-manyuser-shadowsocks-on-ubuntu/</link>
+      <pubDate>Thu, 24 Dec 2015 17:53:24 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/how-to-insall-manyuser-shadowsocks-on-ubuntu/</guid>
+      <description>&lt;p&gt;###环境说明
+系统：AWS ubuntu 14.04 x64
+##安装shadowsocks支持
+1.首先更新软件源&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.安装Python&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install python-pip python-m2crypto 
+pip install cymysql
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>shadowsocks在centos编译安装</title>
+      <link>https://blog.fliaping.com/how-to-compile-and-install-shadowsocks-on-centos/</link>
+      <pubDate>Wed, 23 Dec 2015 07:23:17 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/how-to-compile-and-install-shadowsocks-on-centos/</guid>
+      <description>&lt;p&gt;现在新疆把python 的软件库都封了，pip都安不上，那只好自己编译安装了。系统为centos6 x64
+###1.安装编译环境&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;yum install gcc glib2-devel openssl-devel pcre-devel bzip2-devel gzip-devel zlib-devel 
+
+yum install build-essential autoconf libtool gcc -y 
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

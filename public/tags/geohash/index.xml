@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GeoHash on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/tags/geohash/</link>
+    <description>Recent content in GeoHash on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 25 May 2016 09:51:25 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/tags/geohash/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Solr空间搜索配置及实践</title>
+      <link>https://blog.fliaping.com/solr-spatial-search-config-and-application/</link>
+      <pubDate>Wed, 25 May 2016 09:51:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/solr-spatial-search-config-and-application/</guid>
+      <description>&lt;p&gt;前面讲了空间搜索的两个常用原理，应该还算是比较容易理解的，毕竟只是算法，并不需要我们来实现，我们通过简单地配置就可以用上Solr的空间搜索的功能。下面就来讲讲如何配置空间搜索。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>空间搜索原理及相关算法</title>
+      <link>https://blog.fliaping.com/spatial-search-theory-and-algorithm/</link>
+      <pubDate>Wed, 25 May 2016 09:17:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/spatial-search-theory-and-algorithm/</guid>
+      <description>&lt;p&gt;既然涉及的是旅游搜索，那就不能少了空间搜索的内容。现在移动设备之广泛想必不必多说。根据eMarketer的新&lt;a href=&#34;http://www.chinabgao.com/stat/stats/39758.html&#34;&gt;数据&lt;/a&gt;，2015年全球智能手机用户将达到19.1亿，2016年该指数将增长12.6%达到21.6亿。智能手机都会带有GPS模块，现在一个APP不获取下用户位置都觉得是吃亏，不过这也用户隐私的侵犯也很严重，尤其是在Android生态圈中，不过现在各大手机厂商的系统都对这一块做了一些限制。&lt;/p&gt;
+
+&lt;p&gt;空间搜索，又名Spatial Search，基于空间搜索技术，可以做到：&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Fliaping&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="fliaping" />
+  <meta name="description" content="fliaping&#39;s notes, idea" />
+  <meta name="keywords" content="fliaping, Payne.Xu" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.46" />
+
+
+<link rel="canonical" href="https://blog.fliaping.com/" />
+<link href="https://blog.fliaping.com/index.xml" rel="alternate" type="application/rss+xml" title="Fliaping&#39;s Blog" />
+  <link href="https://blog.fliaping.com/index.xml" rel="feed" type="application/rss+xml" title="Fliaping&#39;s Blog" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Fliaping&#39;s Blog" />
+<meta property="og:description" content="fliaping&#39;s notes, idea" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://blog.fliaping.com/" />
+
+
+
+<meta property="og:updated_time" content="2018-08-14T20:42:55&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Fliaping&#39;s Blog">
+<meta itemprop="description" content="fliaping&#39;s notes, idea">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Fliaping&#39;s Blog"/>
+<meta name="twitter:description" content="fliaping&#39;s notes, idea"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Fliaping&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Fliaping&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          
+  <section id="posts" class="posts">
+    
+    
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/problem-of-nginx-proxy-spring-gateway/">Spring cloud gateway通过nginx代理报错问题</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-14 </span>
+      <div class="post-category">
+          
+            <a href="/categories/spring-cloud-gateway/"> spring-cloud-gateway </a>
+          
+        </div>
+      <span class="more-meta"> 约 1087 字 </span>
+      <span class="more-meta"> 预计阅读 3 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      背景 不久前在一个项目中使用了spring cloud gateway, 开发测试中没出现什么问题,当上线之后就一直在报错,错误内容如下: 2018-08-13 11:56:49,853 ERROR [] [reactor-http-server-epoll-7] org.springframework.web.server.adapter.HttpWebHandlerAdapter:handleFailure:213 Unhandled failure: Connection has been closed, response already set (status=304)
+    </div>
+    <div class="read-more">
+      <a href="/problem-of-nginx-proxy-spring-gateway/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/the-conception-of-event-drive-and-coroutine/">事件驱动与协程概念</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-07-01 </span>
+      
+      <span class="more-meta"> 约 3647 字 </span>
+      <span class="more-meta"> 预计阅读 8 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p><img src="https://o364p1r5a.qnssl.com/2018/06/xiyangyang.png" alt="xiyangyang" /></p>
+
+<blockquote>
+<p>在一个完美的世界中，不存在战争和饥饿，所有的API都将使用异步方式编写，兔兔和小羊羔将会在阳光明媚的绿色草地上手牵手地跳舞</p>
+</blockquote>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/the-conception-of-event-drive-and-coroutine/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/analysis-of-the-problem-that-netease-music-linux-client-cant-show-gui/">网易云音乐Linux客户端GUI不能显示问题排查</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-05-05 </span>
+      
+      <span class="more-meta"> 约 1002 字 </span>
+      <span class="more-meta"> 预计阅读 2 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      OS: ubuntu 17.10,ubuntu 18.04 网易云音乐版本：netease-cloud-music_1.1.0_amd64_ubuntu.deb 症状 启动了页面弹不出来，命令行也
+    </div>
+    <div class="read-more">
+      <a href="/analysis-of-the-problem-that-netease-music-linux-client-cant-show-gui/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/learn-java9-modular-and-classload-from-the-problem-of-log-config-file/">从日志配置文件读取了解java9模块化和类加载机制的改变</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-03-31 </span>
+      
+      <span class="more-meta"> 约 6162 字 </span>
+      <span class="more-meta"> 预计阅读 13 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      前言 Java9出来大半年了，Java10也发布了，Java11半年后就来了，将成为了一个LTS长期支持版，从Java9开始的模块化是java
+    </div>
+    <div class="read-more">
+      <a href="/learn-java9-modular-and-classload-from-the-problem-of-log-config-file/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/the-summery-of-2017-and-the-plan-of-2018/">2017年总结及2018年计划</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2017-12-24 </span>
+      
+      <span class="more-meta"> 约 1940 字 </span>
+      <span class="more-meta"> 预计阅读 4 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      又到了一年一度的总结计划，我是拖了又拖，完全是难以面对，看看年初的计划，划掉没有做到的事项，全篇都是横线。一种无尽的挫败感和懊悔油然而生，不
+    </div>
+    <div class="read-more">
+      <a href="/the-summery-of-2017-and-the-plan-of-2018/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/some-thought-about-artificial-general-intelligence/">通用人工智能 AGI 的一点感想</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2017-12-09 </span>
+      <div class="post-category">
+          
+            <a href="/categories/ai/"> AI </a>
+          
+            <a href="/categories/idea/"> idea </a>
+          
+        </div>
+      <span class="more-meta"> 约 1554 字 </span>
+      <span class="more-meta"> 预计阅读 4 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      利用现在非常火爆的AI算法，例如深度神经网络，蒙特卡洛搜索树这类算法，特定领域的智能貌似就在不远的未来，也许就几十年。但是对于通用人工智能A
+    </div>
+    <div class="read-more">
+      <a href="/some-thought-about-artificial-general-intelligence/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/run-lede-on-a-fake-docker/">利用容器技术在一个宿主机上运行LEDE(OpenWrt)</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2017-12-04 </span>
+      
+      <span class="more-meta"> 约 1475 字 </span>
+      <span class="more-meta"> 预计阅读 3 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      在阅读本文之前，可以先了解下另外一篇文章容器核心技术详解。 容器技术所用到的技术主要是Linux Namespace和cgroup，目前最成功的
+    </div>
+    <div class="read-more">
+      <a href="/run-lede-on-a-fake-docker/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/some-software-problems-after-install-ubuntu-17-10/">安装ubuntu17.10后的相关软件问题</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2017-12-03 </span>
+      
+      <span class="more-meta"> 约 505 字 </span>
+      <span class="more-meta"> 预计阅读 2 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      字体 sudo apt-get install ttf-wqy-microhei #文泉驿-微米黑 sudo apt-get install ttf-wqy-zenhei #文泉驿-正黑 sudo apt-get install xfonts-wqy #文泉驿-点阵宋体 自带google的思源黑体 Noto Sans CJK WPS 1.到优麒麟下载wps64位，
+    </div>
+    <div class="read-more">
+      <a href="/some-software-problems-after-install-ubuntu-17-10/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/invoke-c-or-c-plus-plus-in-python/">Python 调用C/C&#43;&#43;</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2017-11-03 </span>
+      
+      <span class="more-meta"> 约 142 字 </span>
+      <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      Python3 中提供了 ctypes 模块，它支持与 C 兼容的数据类型，可以用来加载 C/C++ 动态库。 C代码 test.h extern int add(int, int); test.c #include &quot;test.h&quot; int add(int arg1, int arg2) { return arg1 + arg2; } C++代码 test.h class Foo { public: int add(int arg1, int arg2)
+    </div>
+    <div class="read-more">
+      <a href="/invoke-c-or-c-plus-plus-in-python/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/spring-could-config-client-enhance/">Spring Could Config Client 增强</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2017-10-22 </span>
+      
+      <span class="more-meta"> 约 4414 字 </span>
+      <span class="more-meta"> 预计阅读 9 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      config-client-enhance 对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置， 并修改spring-cloud-bus
+    </div>
+    <div class="read-more">
+      <a href="/spring-could-config-client-enhance/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+  </section>
+  
+  <nav class="pagination">
+    
+    
+      <a class="next" href="/page/2/">
+        <span class="next-text">下一页</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+  </nav>
+
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:xavierrpayne@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/xupingxx" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/paynexu/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/fliaping" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.fliaping.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2015 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">fliaping</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-63276498-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

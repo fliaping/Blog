@@ -21,7 +21,7 @@ Java9出来大半年了，Java10也发布了，Java11半年后就来了，将成
 ```
 ERROR StatusLogger No Log4j 2 configuration file found. Using default configuration (logging only errors to the console), or user programmatically provided configurations. Set system property 'log4j2.debug' to show Log4j 2 internal initialization logging. See https://logging.apache.org/log4j/2.x/manual/configuration.html for instructions on how to configure Log4j 2
 ```
-
+<!--more-->
 ## 错误分析
 这错误明显就是log4j2的日志的配置文件没找到呀，来看看它是怎么找配置文件的:
 

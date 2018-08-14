@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Fliaping&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="fliaping" />
+  <meta name="description" content="fliaping&#39;s notes, idea" />
+  <meta name="keywords" content="fliaping, Payne.Xu" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.46" />
+
+
+<link rel="canonical" href="https://blog.fliaping.com/" />
+<link href="https://blog.fliaping.com/index.xml" rel="alternate" type="application/rss+xml" title="Fliaping&#39;s Blog" />
+  <link href="https://blog.fliaping.com/index.xml" rel="feed" type="application/rss+xml" title="Fliaping&#39;s Blog" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Fliaping&#39;s Blog" />
+<meta property="og:description" content="fliaping&#39;s notes, idea" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://blog.fliaping.com/" />
+
+
+
+<meta property="og:updated_time" content="2016-05-25T09:51:25&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Fliaping&#39;s Blog">
+<meta itemprop="description" content="fliaping&#39;s notes, idea">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Fliaping&#39;s Blog"/>
+<meta name="twitter:description" content="fliaping&#39;s notes, idea"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Fliaping&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Fliaping&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          
+  <section id="posts" class="posts">
+    
+    
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/solr-spatial-search-config-and-application/">Solr空间搜索配置及实践</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-05-25 </span>
+      <div class="post-category">
+          
+            <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+          
+            <a href="/categories/solr/"> Solr </a>
+          
+            <a href="/categories/geohash/"> GeoHash </a>
+          
+        </div>
+      <span class="more-meta"> 约 2598 字 </span>
+      <span class="more-meta"> 预计阅读 6 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>前面讲了空间搜索的两个常用原理，应该还算是比较容易理解的，毕竟只是算法，并不需要我们来实现，我们通过简单地配置就可以用上Solr的空间搜索的功能。下面就来讲讲如何配置空间搜索。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/solr-spatial-search-config-and-application/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/spatial-search-theory-and-algorithm/">空间搜索原理及相关算法</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-05-25 </span>
+      <div class="post-category">
+          
+            <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+          
+            <a href="/categories/geohash/"> GeoHash </a>
+          
+        </div>
+      <span class="more-meta"> 约 2455 字 </span>
+      <span class="more-meta"> 预计阅读 5 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>既然涉及的是旅游搜索，那就不能少了空间搜索的内容。现在移动设备之广泛想必不必多说。根据eMarketer的新<a href="http://www.chinabgao.com/stat/stats/39758.html">数据</a>，2015年全球智能手机用户将达到19.1亿，2016年该指数将增长12.6%达到21.6亿。智能手机都会带有GPS模块，现在一个APP不获取下用户位置都觉得是吃亏，不过这也用户隐私的侵犯也很严重，尤其是在Android生态圈中，不过现在各大手机厂商的系统都对这一块做了一些限制。</p>
+
+<p>空间搜索，又名Spatial Search，基于空间搜索技术，可以做到：</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/spatial-search-theory-and-algorithm/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/the-design-of-client-based-on-ionic-for-searchapp/">基于Ionic的客户端设计</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-05-23 </span>
+      <div class="post-category">
+          
+            <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+          
+            <a href="/categories/ionic/"> Ionic </a>
+          
+        </div>
+      <span class="more-meta"> 约 2749 字 </span>
+      <span class="more-meta"> 预计阅读 6 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>客户端的设计，利用的是Hybrid APP的构建技术，核心是HTML5技术，下面先简单介绍下Hybrid应用的以及Ionic框架。</p>
+
+<h1 id="技术介绍">技术介绍</h1>
+
+<h2 id="hybrid-app介绍">Hybrid App介绍</h2>
+
+<p>移动app可以大致被分为三种，native、hybrid和web app。如果使用native app，你可以使用设备和操作系统的所有能力，同时，平台的性能负荷最小。然而，构建web app可以让你的代码跨平台，使得开发时间和成本大大减少。而hybrid app把这两者的优点都结合起来，使用一套共同代码，在许多不同的平台上部署类似原生的app。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/the-design-of-client-based-on-ionic-for-searchapp/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/the-bridge-between-solr-and-users-was-implemented-by-using-webservice/">搜索服务API</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-05-23 </span>
+      <div class="post-category">
+          
+            <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+          
+        </div>
+      <span class="more-meta"> 约 522 字 </span>
+      <span class="more-meta"> 预计阅读 2 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>这篇文章主要是关于solr和普通用户之间的桥梁<code>SearchService</code>,简单了解下整过工作流程.</p>
+
+<p><img src="https://o364p1r5a.qnssl.com/blog/14639907128551.jpg" alt="" /></p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/the-bridge-between-solr-and-users-was-implemented-by-using-webservice/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/using-jsoup-to-extract-html-file/">利用jsoup提取网页中有用信息</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-05-22 </span>
+      <div class="post-category">
+          
+            <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+          
+            <a href="/categories/jsoup/"> jsoup </a>
+          
+        </div>
+      <span class="more-meta"> 约 1399 字 </span>
+      <span class="more-meta"> 预计阅读 3 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Java 程序在解析 HTML 文档时，最常用的是 htmlparser 这个开源项目。但现在你有更好的选择，那就是Jsoup。</p>
+
+<p>jsoup 是一款 Java 的 HTML 解析器，可直接解析某个 URL 地址、HTML 文本内容。它提供了一套非常省力的 API，可通过 DOM，CSS 以及类似于 jQuery 的操作方法来取出和操作数据。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/using-jsoup-to-extract-html-file/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/the-detail-about-parameters-of-solr5-config-files/">Solr5配置文件参数解析</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-05-20 </span>
+      <div class="post-category">
+          
+            <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+          
+            <a href="/categories/solr/"> Solr </a>
+          
+        </div>
+      <span class="more-meta"> 约 5546 字 </span>
+      <span class="more-meta"> 预计阅读 12 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Solr5的主要配置文件有<code>solrconfig.xml</code>和<code>managed-schema</code>，另外一些还有<code>solr.xml</code>,<code>数据导入配置</code>,<code>ZooKeeper配置</code>等。</p>
+
+<p>这里详细介绍两个主要的配置文件。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/the-detail-about-parameters-of-solr5-config-files/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/configure-mmseg4j-analyzer-on-solr5/">Solr整合中文分词器mmseg4j</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-05-19 </span>
+      <div class="post-category">
+          
+            <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+          
+            <a href="/categories/solr/"> Solr </a>
+          
+        </div>
+      <span class="more-meta"> 约 3150 字 </span>
+      <span class="more-meta"> 预计阅读 7 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="分词的基础概念">分词的基础概念</h1>
+
+<h2 id="为什么要进行分词">为什么要进行分词</h2>
+
+<blockquote>
+<p>中文分词(Chinese Word Segmentation) 指的是将一个汉字序列切分成一个一个单独的词。</p>
+</blockquote>
+
+<p>分词就是将连续的字序列按照一定的规范重新组合成词序列的过程。我们知道，在英文的行文中，单词之间是以空格作为自然分界符的，而中文只是字、句和段能通过明显的分界符来简单划界，唯独词没有一个形式上的分界符，虽然英文也同样存在短语的划分问题，不过在词这一层上，中文比之英文要复杂的多、困难的多。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/configure-mmseg4j-analyzer-on-solr5/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/solr-5.5-running-on-tomcat8/">Solr5.5集成到Tomcat8</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-05-18 </span>
+      <div class="post-category">
+          
+            <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+          
+            <a href="/categories/solr/"> Solr </a>
+          
+        </div>
+      <span class="more-meta"> 约 1035 字 </span>
+      <span class="more-meta"> 预计阅读 3 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>也许你不熟悉Jetty，或者觉得它性能不行，你想在Tomcat上运行Solr，没问题，理论上只要是servlet容器都可以运行Solr。不过问题是从solr5开始官方不再支持Tomcat的集成，所以可以有些配置问题需要自己来解决。于是我进行了一次尝试，solr4本来是比较容易的，Solr5就出现一些问题，由于对Tomcat了解也不是很深，除运行的时候Solr管理界面有些小问题外，基本可以正常使用。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/solr-5.5-running-on-tomcat8/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/crawl-web-page-by-using-heritrix/">使用Heritrix抓取数据</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-05-18 </span>
+      <div class="post-category">
+          
+            <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+          
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E6%8A%93%E5%8F%96/"> 数据抓取 </a>
+          
+        </div>
+      <span class="more-meta"> 约 3962 字 </span>
+      <span class="more-meta"> 预计阅读 8 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Heritrix 是一个由 java 开发的、开源的网络爬虫，用户可以使用它来从网上抓取想要的资源。其最出色之处在于它良好的可扩展性，方便用户实现自己的抓取逻辑。最重要是对于一般的抓取，你是不用碰任何代码的，只要写好配置文件就可以了，简直就是某些人的福音。不过对于一个真正的程序员，代码可是他们的整个生命啊.</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/crawl-web-page-by-using-heritrix/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/introduction-of-solr-and-how-to-install-it/">Solr基础知识及安装</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-05-17 </span>
+      <div class="post-category">
+          
+            <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+          
+        </div>
+      <span class="more-meta"> 约 2218 字 </span>
+      <span class="more-meta"> 预计阅读 5 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="solr的身世">Solr的身世</h1>
+
+<p>引用<a href="https://lucene.apache.org/solr/">Solr官网</a>的slogan,blazing-fast一词可见一斑。
+&gt; Solr is the popular, blazing-fast, open source enterprise search platform built on Apache Lucene™.</p>
+
+<p>再来看看它的<a href="https://lucene.apache.org/solr/features.html">特性</a>
+<img src="https://o364p1r5a.qnssl.com/blog/14634817034224.jpg" alt="" /></p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/introduction-of-solr-and-how-to-install-it/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    
+  </section>
+  
+  <nav class="pagination">
+    
+      <a class="prev" href="/page/3/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text">上一页</span>
+      </a>
+    
+      <a class="next" href="/page/5/">
+        <span class="next-text">下一页</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+  </nav>
+
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:xavierrpayne@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/xupingxx" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/paynexu/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/fliaping" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.fliaping.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2015 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">fliaping</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-63276498-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

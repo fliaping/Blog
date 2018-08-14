@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Openwrt on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/categories/openwrt/</link>
+    <description>Recent content in Openwrt on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 08 Apr 2017 14:25:25 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/categories/openwrt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OpenWrt编译USB有线网卡RTL8152B驱动</title>
+      <link>https://blog.fliaping.com/compile-usb-wired-adapter-rtl8152b-driver-in-openwrt/</link>
+      <pubDate>Sat, 08 Apr 2017 14:25:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/compile-usb-wired-adapter-rtl8152b-driver-in-openwrt/</guid>
+      <description>路由器用的TP-Link WR13U（ar71xx），只有一个RJ-45口，我用来作为WAN口，局域网只能通过无线连接，所以局域网网速比较差，</description>
+    </item>
+    
+    <item>
+      <title>利用wifidog实现微信wifi连接</title>
+      <link>https://blog.fliaping.com/the-implements-of-weixin-wifi-by-using-wifidog-gateway/</link>
+      <pubDate>Sun, 14 Aug 2016 07:51:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-implements-of-weixin-wifi-by-using-wifidog-gateway/</guid>
+      <description>&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+
+&lt;p&gt;大家如果有用公共场合wifi的习惯，想必都有过如下的体验。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://o364p1r5a.qnssl.com/blog/14711616774040.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这就是利用微信身份来进行wifi连接认证，主要目的是商家为了吸引顾客，推广其公众号。别的也不多说，下面就来讲一讲怎么实现这样的wifi认证方式。&lt;/p&gt;
+
+&lt;p&gt;本篇文章要讲的是portal型路由设备（具体就是OpenWrt路由）的改造实现。在进行改造之前请务必要看微信公众平台开发文档的&lt;a href=&#34;http://mp.weixin.qq.com/wiki/11/3ccabd900dbb942dff317c11db70e157.html&#34;&gt;微信连wifi&lt;/a&gt;,后面提到的相关设涉及微信公众平台开发的相关术语、参数不再一一解释。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

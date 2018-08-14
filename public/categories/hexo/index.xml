@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hexo on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/categories/hexo/</link>
+    <description>Recent content in Hexo on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 26 Dec 2015 18:15:40 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/categories/hexo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>学习如何用hexo写博客的站点汇总</title>
+      <link>https://blog.fliaping.com/some-links-to-learn-how-to-use-hexo/</link>
+      <pubDate>Sat, 26 Dec 2015 18:15:40 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/some-links-to-learn-how-to-use-hexo/</guid>
+      <description>&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+
+&lt;p&gt;　　已经确定用hexo作为我的技术博客系统，但现在对它还不是很熟，所以需要经常翻看一些牛人的文章，所以对他们的内容进行汇总，方便我自己翻看。&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;题外话:&lt;br /&gt;
+　　我刚开始用的博客是Wordpress，各种换主题，各种搞主机，然后看上了ghost,也就接触了markdown，写过几篇文章，但主机在国外，速度比较慢所以体验很差，也就不怎么想写。&lt;br /&gt;
+　　然后就是接触了hexo，又是经历了找主题，改主题的过程，折腾到现在我觉得一个博客最重要的是内容，其次才是外观，一个再漂亮的主题没有一篇文章是不会有人看的，并且也是没有用的，所以找一个差不多的主题，然后开始写吧！&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;链接汇总&#34;&gt;链接汇总&lt;/h1&gt;
+
+&lt;p&gt;　　下面就把我自己找到的资料进行汇总，只是相关链接，后面我会专门整理出几篇文章.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;因为我用的mac，所以相关资料中可能Windows平台的比较少&lt;/strong&gt;
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>hexo使用技巧汇总</title>
+      <link>https://blog.fliaping.com/some-tips-for-using-hexo/</link>
+      <pubDate>Sat, 26 Dec 2015 12:45:44 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/some-tips-for-using-hexo/</guid>
+      <description>&lt;!--toc--&gt;
+
+&lt;h2 id=&#34;为文章添加目录&#34;&gt;为文章添加目录&lt;/h2&gt;
+
+&lt;p&gt;在需要目录出现的地方放置一个标记，这样会自动生成一个嵌套的包含所有标题的列表。默认的标记是 [TOC]&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-markdown&#34;&gt;&amp;lt;!--toc--&amp;gt;
+# Header 1
+
+## Header 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

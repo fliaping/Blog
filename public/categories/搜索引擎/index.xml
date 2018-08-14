@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>搜索引擎 on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</link>
+    <description>Recent content in 搜索引擎 on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 12 Jun 2016 09:01:25 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>借助Docker技术的Solr集群实现</title>
+      <link>https://blog.fliaping.com/the-solrcloud-with-docker/</link>
+      <pubDate>Sun, 12 Jun 2016 09:01:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-solrcloud-with-docker/</guid>
+      <description>&lt;p&gt;在本项目中，为了更好的模拟真实的生产环境，对于SolrCloud技术不采用伪集群方式，而是真正实现一个搜索集群，当然由于笔者只是学生，没有资金租用多台服务器来搭建集群，因此借助于Docker的容器技术在一台服务器上虚拟出逻辑上的六台主机。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://o364p1r5a.qnssl.com/blog/trip-search-six-docker.png&#34; alt=&#34;trip-search-six-docke&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SolrCloud基础</title>
+      <link>https://blog.fliaping.com/the-introduction-of-solrcloud/</link>
+      <pubDate>Sun, 12 Jun 2016 08:02:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-introduction-of-solrcloud/</guid>
+      <description>&lt;p&gt;本节是SolrCloud基础理论知识，我也是从网上学习到，这里只是进行一些整理。参考的博客比本文更好，更有深度，有耐心的请看参考的原文&amp;ndash; &lt;a href=&#34;http://josh-persistence.iteye.com/blog/2234411&#34;&gt;SolrCloud之分布式索引及与Zookeeper的集成&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;solrcloud基本概念&#34;&gt;SolrCloud基本概念&lt;/h1&gt;
+
+&lt;p&gt;SolrCloud模式下有Cluster，Node，Collection，Shard，LeaderCore，ReplicationCore等重要概念。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>搜索结果的筛选和排序</title>
+      <link>https://blog.fliaping.com/filtering-and-sorting-the-search-result/</link>
+      <pubDate>Sun, 12 Jun 2016 05:17:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/filtering-and-sorting-the-search-result/</guid>
+      <description>&lt;p&gt;实现对搜索结果的筛选和排序，需要利用solr的sort功能和facet功能，这两个是垂直搜索中比较常用的功能。对于如何使用这两个功能，其实在索引建好之后我们并不需要做太多的工作就能使用，只用在查询的时候指定相关的参数，Solr会根据参数来执行相应的查询，获得相应的结果。&lt;/p&gt;
+
+&lt;p&gt;因为项目中使用SolrJ作为Solr的客户端，并通过servlet提供对外的服务接口，本文将以介绍如何用SolrJ来实现，此外也会涉及利用HTTP接口的参数使用。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>各种查询及参数说明</title>
+      <link>https://blog.fliaping.com/various-of-query-and-explanation-of-parameter/</link>
+      <pubDate>Sat, 11 Jun 2016 09:14:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/various-of-query-and-explanation-of-parameter/</guid>
+      <description>&lt;p&gt;Solr默认有三种查询解析器（Query Parser）：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Standard Query Parser&lt;/li&gt;
+&lt;li&gt;DisMax Query Parser&lt;/li&gt;
+&lt;li&gt;Extended DisMax Query Parser (eDisMax)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;第一种是标准的Parser，最后一种是最强大的。&lt;/p&gt;
+
+&lt;p&gt;本文中所提到的参数并不能包含Solr所有参数，具体的使用和更详细的参数请参考官方文档。
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>基于webmagic爬虫框架的数据抓取</title>
+      <link>https://blog.fliaping.com/crawl-web-page-by-using-webmagic-crawler-framework/</link>
+      <pubDate>Thu, 26 May 2016 05:44:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/crawl-web-page-by-using-webmagic-crawler-framework/</guid>
+      <description>&lt;p&gt;有人可能会有疑问，Heritrix用的好好的，干嘛还要换别的呢？Heritrix固然很好，成熟、稳定、有管理界面、监控、多线程、开箱即用。但这真的适合我们这种垂直爬虫吗？我觉得未必，用Heritrix，你可以通过配置文件来确定接受规则和URL的发现规则，然后直接构建运行就好了。然而对于我来说，它的配置文件中的那些选项说的并不是那么清楚，相关文档也都是很简单的，想用一些复杂的规则都不知道这样对不对，至少要等到好久抓出来东西了，发现多抓了或者少抓了，你才发现配置文件写错了。并且配置文件中的项目也是老多的，这么多东西把人搞的头晕目眩。&lt;/p&gt;
+
+&lt;p&gt;好吧，总的来讲,如果你是爬虫老手，对Heritrix的架构了解比较清晰的，Heritrix是个很好的选择。但是对于一个新手，我觉得webmagic更加灵活高效。就拿我的体验来讲，当初用Heritrix抓了3天才抓了七千多数据（可能是我配置文件写的不好），而用webmagic一个白天就抓了一万三的数据。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Solr空间搜索配置及实践</title>
+      <link>https://blog.fliaping.com/solr-spatial-search-config-and-application/</link>
+      <pubDate>Wed, 25 May 2016 09:51:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/solr-spatial-search-config-and-application/</guid>
+      <description>&lt;p&gt;前面讲了空间搜索的两个常用原理，应该还算是比较容易理解的，毕竟只是算法，并不需要我们来实现，我们通过简单地配置就可以用上Solr的空间搜索的功能。下面就来讲讲如何配置空间搜索。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>空间搜索原理及相关算法</title>
+      <link>https://blog.fliaping.com/spatial-search-theory-and-algorithm/</link>
+      <pubDate>Wed, 25 May 2016 09:17:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/spatial-search-theory-and-algorithm/</guid>
+      <description>&lt;p&gt;既然涉及的是旅游搜索，那就不能少了空间搜索的内容。现在移动设备之广泛想必不必多说。根据eMarketer的新&lt;a href=&#34;http://www.chinabgao.com/stat/stats/39758.html&#34;&gt;数据&lt;/a&gt;，2015年全球智能手机用户将达到19.1亿，2016年该指数将增长12.6%达到21.6亿。智能手机都会带有GPS模块，现在一个APP不获取下用户位置都觉得是吃亏，不过这也用户隐私的侵犯也很严重，尤其是在Android生态圈中，不过现在各大手机厂商的系统都对这一块做了一些限制。&lt;/p&gt;
+
+&lt;p&gt;空间搜索，又名Spatial Search，基于空间搜索技术，可以做到：&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>基于Ionic的客户端设计</title>
+      <link>https://blog.fliaping.com/the-design-of-client-based-on-ionic-for-searchapp/</link>
+      <pubDate>Mon, 23 May 2016 10:27:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-design-of-client-based-on-ionic-for-searchapp/</guid>
+      <description>&lt;p&gt;客户端的设计，利用的是Hybrid APP的构建技术，核心是HTML5技术，下面先简单介绍下Hybrid应用的以及Ionic框架。&lt;/p&gt;
+
+&lt;h1 id=&#34;技术介绍&#34;&gt;技术介绍&lt;/h1&gt;
+
+&lt;h2 id=&#34;hybrid-app介绍&#34;&gt;Hybrid App介绍&lt;/h2&gt;
+
+&lt;p&gt;移动app可以大致被分为三种，native、hybrid和web app。如果使用native app，你可以使用设备和操作系统的所有能力，同时，平台的性能负荷最小。然而，构建web app可以让你的代码跨平台，使得开发时间和成本大大减少。而hybrid app把这两者的优点都结合起来，使用一套共同代码，在许多不同的平台上部署类似原生的app。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>搜索服务API</title>
+      <link>https://blog.fliaping.com/the-bridge-between-solr-and-users-was-implemented-by-using-webservice/</link>
+      <pubDate>Mon, 23 May 2016 02:11:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-bridge-between-solr-and-users-was-implemented-by-using-webservice/</guid>
+      <description>&lt;p&gt;这篇文章主要是关于solr和普通用户之间的桥梁&lt;code&gt;SearchService&lt;/code&gt;,简单了解下整过工作流程.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://o364p1r5a.qnssl.com/blog/14639907128551.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>利用jsoup提取网页中有用信息</title>
+      <link>https://blog.fliaping.com/using-jsoup-to-extract-html-file/</link>
+      <pubDate>Sun, 22 May 2016 11:09:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/using-jsoup-to-extract-html-file/</guid>
+      <description>&lt;p&gt;Java 程序在解析 HTML 文档时，最常用的是 htmlparser 这个开源项目。但现在你有更好的选择，那就是Jsoup。&lt;/p&gt;
+
+&lt;p&gt;jsoup 是一款 Java 的 HTML 解析器，可直接解析某个 URL 地址、HTML 文本内容。它提供了一套非常省力的 API，可通过 DOM，CSS 以及类似于 jQuery 的操作方法来取出和操作数据。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Solr5配置文件参数解析</title>
+      <link>https://blog.fliaping.com/the-detail-about-parameters-of-solr5-config-files/</link>
+      <pubDate>Fri, 20 May 2016 04:49:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/the-detail-about-parameters-of-solr5-config-files/</guid>
+      <description>&lt;p&gt;Solr5的主要配置文件有&lt;code&gt;solrconfig.xml&lt;/code&gt;和&lt;code&gt;managed-schema&lt;/code&gt;，另外一些还有&lt;code&gt;solr.xml&lt;/code&gt;,&lt;code&gt;数据导入配置&lt;/code&gt;,&lt;code&gt;ZooKeeper配置&lt;/code&gt;等。&lt;/p&gt;
+
+&lt;p&gt;这里详细介绍两个主要的配置文件。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Solr整合中文分词器mmseg4j</title>
+      <link>https://blog.fliaping.com/configure-mmseg4j-analyzer-on-solr5/</link>
+      <pubDate>Thu, 19 May 2016 03:51:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/configure-mmseg4j-analyzer-on-solr5/</guid>
+      <description>&lt;h1 id=&#34;分词的基础概念&#34;&gt;分词的基础概念&lt;/h1&gt;
+
+&lt;h2 id=&#34;为什么要进行分词&#34;&gt;为什么要进行分词&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;中文分词(Chinese Word Segmentation) 指的是将一个汉字序列切分成一个一个单独的词。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;分词就是将连续的字序列按照一定的规范重新组合成词序列的过程。我们知道，在英文的行文中，单词之间是以空格作为自然分界符的，而中文只是字、句和段能通过明显的分界符来简单划界，唯独词没有一个形式上的分界符，虽然英文也同样存在短语的划分问题，不过在词这一层上，中文比之英文要复杂的多、困难的多。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Solr5.5集成到Tomcat8</title>
+      <link>https://blog.fliaping.com/solr-5.5-running-on-tomcat8/</link>
+      <pubDate>Wed, 18 May 2016 07:08:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/solr-5.5-running-on-tomcat8/</guid>
+      <description>&lt;p&gt;也许你不熟悉Jetty，或者觉得它性能不行，你想在Tomcat上运行Solr，没问题，理论上只要是servlet容器都可以运行Solr。不过问题是从solr5开始官方不再支持Tomcat的集成，所以可以有些配置问题需要自己来解决。于是我进行了一次尝试，solr4本来是比较容易的，Solr5就出现一些问题，由于对Tomcat了解也不是很深，除运行的时候Solr管理界面有些小问题外，基本可以正常使用。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>使用Heritrix抓取数据</title>
+      <link>https://blog.fliaping.com/crawl-web-page-by-using-heritrix/</link>
+      <pubDate>Wed, 18 May 2016 05:14:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/crawl-web-page-by-using-heritrix/</guid>
+      <description>&lt;p&gt;Heritrix 是一个由 java 开发的、开源的网络爬虫，用户可以使用它来从网上抓取想要的资源。其最出色之处在于它良好的可扩展性，方便用户实现自己的抓取逻辑。最重要是对于一般的抓取，你是不用碰任何代码的，只要写好配置文件就可以了，简直就是某些人的福音。不过对于一个真正的程序员，代码可是他们的整个生命啊.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Solr基础知识及安装</title>
+      <link>https://blog.fliaping.com/introduction-of-solr-and-how-to-install-it/</link>
+      <pubDate>Tue, 17 May 2016 03:41:13 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/introduction-of-solr-and-how-to-install-it/</guid>
+      <description>&lt;h1 id=&#34;solr的身世&#34;&gt;Solr的身世&lt;/h1&gt;
+
+&lt;p&gt;引用&lt;a href=&#34;https://lucene.apache.org/solr/&#34;&gt;Solr官网&lt;/a&gt;的slogan,blazing-fast一词可见一斑。
+&amp;gt; Solr is the popular, blazing-fast, open source enterprise search platform built on Apache Lucene™.&lt;/p&gt;
+
+&lt;p&gt;再来看看它的&lt;a href=&#34;https://lucene.apache.org/solr/features.html&#34;&gt;特性&lt;/a&gt;
+&lt;img src=&#34;https://o364p1r5a.qnssl.com/blog/14634817034224.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>垂直搜索引擎基础知识</title>
+      <link>https://blog.fliaping.com/introduction-of-vertical-search-engine/</link>
+      <pubDate>Sun, 15 May 2016 11:55:14 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/introduction-of-vertical-search-engine/</guid>
+      <description>&lt;h1 id=&#34;引言-废话&#34;&gt;引言/废话&lt;/h1&gt;
+
+&lt;p&gt;搜索引擎是大家平时使用最广泛的网络应用之一，它是普通网民接触互联网的入口，也是网络信息的搜集系统，其重要性不言而喻。我认为一个优秀的搜索服务应该实现一些基本的要求：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;准确回应用户搜索目的&lt;/li&gt;
+&lt;li&gt;提供公正的结果排序&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;然而，目前最大的中文搜索引擎，在经历了&lt;a href=&#34;https://zh.wikipedia.org/wiki/百度贴吧#2016.E5.B9.B4.E8.A1.80.E5.8F.8B.E7.97.85.E5.90.A7.E4.BA.8B.E4.BB.B6&#34;&gt;血友病吧事件&lt;/a&gt;、&lt;a href=&#34;https://zh.wikipedia.org/zh/魏则西事件&#34;&gt;魏则西事件&lt;/a&gt;之后,网民已经失去对其的信任，甚至很多人产生了厌恶之情，且不说是否有人落井下石，或者说是罪有应得，总之，它带给大家的是不好的用户体验。吐槽到此为止，从这里开始我们进入正题。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>【总述】用Solr构建垂直搜索引擎</title>
+      <link>https://blog.fliaping.com/create-your-vertical-search-engine-with-solr/</link>
+      <pubDate>Sun, 15 May 2016 07:08:25 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/create-your-vertical-search-engine-with-solr/</guid>
+      <description>用Solr构建垂直搜索系列文章 入门知识部分 垂直搜索引擎基础知识 Solr基础知识及安装 Solr5.5 集成 Tomcat8 搜集信息部分 使用Heritrix抓取数据 利用js</description>
+    </item>
+    
+    <item>
+      <title>导入Mysql数据到Solr中</title>
+      <link>https://blog.fliaping.com/how-to-import-data-from-mysql-by-using-solr-dataimporthandler/</link>
+      <pubDate>Wed, 06 Apr 2016 04:40:39 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/how-to-import-data-from-mysql-by-using-solr-dataimporthandler/</guid>
+      <description>&lt;p&gt;一般存储数据都会用到数据库，之前十几年关系型数据库大行其道，现在非关系性数据库（NoSql）如日中天，随着数据越来越来越多，人们发现关系型数据库的性能已经不能满足需要，经历了一番挣扎，从主-从（读-写）分离，到分库分表，虽然维持了一段时间，但是数据量很快就上来了，于是NoSql越来越显示出其在大数据时代的价值。&lt;/p&gt;
+
+&lt;p&gt;咳咳，不过这篇文章讲的却是从最流行的关系型数据库中导入数据到Solr，没办法，笔者还没用过NoSql，所以还是老老实实讲Mysql，哈哈。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

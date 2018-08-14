@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gfw on Fliaping&#39;s Blog</title>
+    <link>https://blog.fliaping.com/tags/gfw/</link>
+    <description>Recent content in Gfw on Fliaping&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 10 Mar 2016 03:41:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.fliaping.com/tags/gfw/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>解决新疆地区百度网盘分享链接不能用</title>
+      <link>https://blog.fliaping.com/solving-the-problem-of-baidu-sharing-links-can-not-be-use-in-xinjiang/</link>
+      <pubDate>Thu, 10 Mar 2016 03:41:00 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/solving-the-problem-of-baidu-sharing-links-can-not-be-use-in-xinjiang/</guid>
+      <description>&lt;h1 id=&#34;写在前面&#34;&gt;写在前面&lt;/h1&gt;
+
+&lt;p&gt;新疆的网络封锁，我在之前一篇 &lt;a href=&#34;http://blog.xvping.cn/2016/03/01/github%E5%9C%A8%E6%96%B0%E7%96%86%E7%94%A8%E4%B8%8D%E4%BA%86%E7%9A%84%E9%97%AE%E9%A2%98/&#34;&gt;Github在新疆用不了的问题&lt;/a&gt; 中也讲过了,政治问题不再重提。可是我们只能看内地的小伙伴快乐地分享文件，我们只能出来 &lt;strong&gt;Error400&lt;/strong&gt;，岂不痛哉！！下面方法要求有一定的 &lt;strong&gt;接入国际互联网&lt;/strong&gt; 的技能。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://o364p1r5a.qnssl.com/blog/fuck-baidu-yunpan.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;fuck-百度云盘&#34;&gt;Fuck 百度云盘&lt;/h1&gt;
+
+&lt;p&gt;那么怎么才能正确打开百度云的分享链接呢？&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>github在新疆用不了的问题</title>
+      <link>https://blog.fliaping.com/solving-the-problem-of-github-can-not-be-use-in-xinjaing/</link>
+      <pubDate>Tue, 01 Mar 2016 15:04:33 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/solving-the-problem-of-github-can-not-be-use-in-xinjaing/</guid>
+      <description>&lt;p&gt;新疆一直是GFW的实验区，甚至国内的很多网站也跟着遭殃，百度网盘分享链接、酷我、唱吧、github挂掉，再接着CSDN、cnblog相继挂掉，这里也不想探讨原因，大家都懂的。可怜了在新疆上学的孩子，本来新疆的师资力量都够烂了，还要增高学生的信息获取门槛。虽然我就要离开这个地方，但依然为在新疆上学的孩子感到悲伤。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;本来在中国的学生在信息获取上处于劣势，在新疆上学的学生更是悲惨。作为搞技术的还好，通过与墙斗争能提高技术水平。但大多数只能被禁锢，但最让人胆颤的是很多人&lt;strong&gt;被禁锢而不以为然&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>在ubuntu下安装shadowsocks多用户版</title>
+      <link>https://blog.fliaping.com/how-to-insall-manyuser-shadowsocks-on-ubuntu/</link>
+      <pubDate>Thu, 24 Dec 2015 17:53:24 +0000</pubDate>
+      
+      <guid>https://blog.fliaping.com/how-to-insall-manyuser-shadowsocks-on-ubuntu/</guid>
+      <description>&lt;p&gt;###环境说明
+系统：AWS ubuntu 14.04 x64
+##安装shadowsocks支持
+1.首先更新软件源&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.安装Python&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;apt-get install python-pip python-m2crypto 
+pip install cymysql
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

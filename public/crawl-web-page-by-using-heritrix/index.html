@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>使用Heritrix抓取数据 - Fliaping&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Payne Xu" />
+  <meta name="description" content="Heritrix 是一个由 java 开发的、开源的网络爬虫，用户可以使用它来从网上抓取想要的资源。其最出色之处在于它良好的可扩展性，方便用户实现自己的抓取逻辑。最重要是对于一般的抓取，你是不用碰任何代码的，只要写好配置文件就可以了，简直就是某些人的福音。不过对于一个真正的程序员，代码可是他们的整个生命啊.
+
+" />
+
+  <meta name="keywords" content="fliaping, Payne.Xu" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.46" />
+
+
+<link rel="canonical" href="https://blog.fliaping.com/crawl-web-page-by-using-heritrix/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="使用Heritrix抓取数据" />
+<meta property="og:description" content="Heritrix 是一个由 java 开发的、开源的网络爬虫，用户可以使用它来从网上抓取想要的资源。其最出色之处在于它良好的可扩展性，方便用户实现自己的抓取逻辑。最重要是对于一般的抓取，你是不用碰任何代码的，只要写好配置文件就可以了，简直就是某些人的福音。不过对于一个真正的程序员，代码可是他们的整个生命啊.
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.fliaping.com/crawl-web-page-by-using-heritrix/" />
+
+
+
+<meta property="article:published_time" content="2016-05-18T05:14:25&#43;00:00"/>
+
+<meta property="article:modified_time" content="2016-05-18T05:14:25&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="使用Heritrix抓取数据">
+<meta itemprop="description" content="Heritrix 是一个由 java 开发的、开源的网络爬虫，用户可以使用它来从网上抓取想要的资源。其最出色之处在于它良好的可扩展性，方便用户实现自己的抓取逻辑。最重要是对于一般的抓取，你是不用碰任何代码的，只要写好配置文件就可以了，简直就是某些人的福音。不过对于一个真正的程序员，代码可是他们的整个生命啊.
+
+">
+
+
+<meta itemprop="datePublished" content="2016-05-18T05:14:25&#43;00:00" />
+<meta itemprop="dateModified" content="2016-05-18T05:14:25&#43;00:00" />
+<meta itemprop="wordCount" content="3962">
+
+
+
+<meta itemprop="keywords" content="搜索引擎,数据抓取," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用Heritrix抓取数据"/>
+<meta name="twitter:description" content="Heritrix 是一个由 java 开发的、开源的网络爬虫，用户可以使用它来从网上抓取想要的资源。其最出色之处在于它良好的可扩展性，方便用户实现自己的抓取逻辑。最重要是对于一般的抓取，你是不用碰任何代码的，只要写好配置文件就可以了，简直就是某些人的福音。不过对于一个真正的程序员，代码可是他们的整个生命啊.
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Fliaping&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Fliaping&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">使用Heritrix抓取数据</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-05-18 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"> 搜索引擎 </a>
+            
+              <a href="/categories/%E6%95%B0%E6%8D%AE%E6%8A%93%E5%8F%96/"> 数据抓取 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3962 字 </span>
+        <span class="more-meta"> 预计阅读 8 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#原理及特点">原理及特点</a></li>
+<li><a href="#安装及使用">安装及使用</a>
+<ul>
+<li><a href="#系统要求">系统要求：</a></li>
+<li><a href="#配置">配置</a></li>
+<li><a href="#运行">运行</a></li>
+</ul></li>
+<li><a href="#创建抓取任务">创建抓取任务</a></li>
+<li><a href="#heritrix处理流程">Heritrix处理流程</a></li>
+<li><a href="#参数解释及配置">参数解释及配置</a></li>
+<li><a href="#附录-各个bean的介绍">附录(各个bean的介绍)：</a></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p>Heritrix 是一个由 java 开发的、开源的网络爬虫，用户可以使用它来从网上抓取想要的资源。其最出色之处在于它良好的可扩展性，方便用户实现自己的抓取逻辑。最重要是对于一般的抓取，你是不用碰任何代码的，只要写好配置文件就可以了，简直就是某些人的福音。不过对于一个真正的程序员，代码可是他们的整个生命啊.</p>
+
+<p></p>
+
+<h1 id="原理及特点">原理及特点</h1>
+
+<p>深度遍历网站的资源，将这些资源抓取到本地，分析网站每一个有效的URL，并提交Http请求，从而获得相应结果，生成本地文件及相应的日志信息等。</p>
+
+<p><strong>特点：</strong>Heritrix 是个 &ldquo;Archival crawler&rdquo; &ndash; 用来获取完整的、精确的、站点内容的深度复制。包括获取图像以及其他非文本内容。抓取并存储相关的内容。对内容来者不拒，不对页面进行内容上的修改（可以通过配置进行过滤）。重新爬行对相同的URL不针对先前的进行替换。爬虫通过Web用户界面启动、监控、调整，允许弹性的定义要获取的URL。</p>
+
+<p><strong>优点：</strong>Heritrix的爬虫定制参数多</p>
+
+<p><strong>缺点：</strong>单实例的爬虫，之间不能进行合作。在有限的机器资源的情况下，却要复杂的操作。只有官方支持，仅仅在Linux上进行了测试。每个爬虫是单独进行工作的，没有对更新进行修订。在硬件和系统失败时，恢复能力很差。很少的时间用来优化性能。</p>
+
+<h1 id="安装及使用">安装及使用</h1>
+
+<p>下载及文档: <a href="https://webarchive.jira.com/wiki/display/Heritrix/">https://webarchive.jira.com/wiki/display/Heritrix/</a></p>
+
+<p>写这篇文章时最新版本为3.2.0，安装方法非常简单，我参考的是官方的文档<a href="https://webarchive.jira.com/wiki/display/Heritrix/Heritrix+3.0+and+3.1+User+Guide">Heritrix 3.0 and 3.1 User Guide</a>，因为是基于JAVA的，只要有正确的java环境就很容易运行起来。</p>
+
+<h2 id="系统要求">系统要求：</h2>
+
+<ul>
+<li><strong>系统：</strong>官方只支持Linux，别的系统理论上也是可以的，我用的是OSX也是OK的；</li>
+<li><strong>JDK：</strong>官方要求JDK1.6，但我在Linux上用过Openjdk1.7也是OK的，甚至MAC上JDK1.8也没问题，不过推荐还是按照官方要求。怎么安装多个版本的JDK？这不用再说了吧。</li>
+<li>内存什么的要1G吧，Java Heap默认256M，对于爬虫应该不够，可能会出现out-of-memory异常，可以用JAVA_OPTS来配置jvm的内存。</li>
+</ul>
+
+<h2 id="配置">配置</h2>
+
+<p>解压就不用说了，完了之后直接配置使用就行，当然前提JDK环境已经有了。</p>
+
+<ol>
+<li>配置环境变量JAVA_HOME,配过的请忽略
+<br /></li>
+</ol>
+
+<pre><code class="language-bash">  export JAVA_HOME=/usr/local/java/jre
+</code></pre>
+
+<ol>
+<li>配置环境变量HERITRIX_HOME，就是设置Heritrix的主目录
+<br /></li>
+</ol>
+
+<pre><code class="language-bash">  export HERITRIX_HOME=/PATH/TO/HERITRIX(替换成解压出来的路径)
+</code></pre>
+
+<ol>
+<li>为启动文件设置执行权限
+<br /></li>
+</ol>
+
+<pre><code class="language-bash">  chmod u+x $HERITRIX_HOME/bin/heritrix
+</code></pre>
+
+<ol>
+<li>设置JVM的内存占用,这里是1G，也可以更高
+<br /></li>
+</ol>
+
+<pre><code class="language-bash">  export JAVA_OPTS=-Xmx1024M
+</code></pre>
+
+<h2 id="运行">运行</h2>
+
+<pre><code class="language-bash">$HERITRIX_HOME/bin/heritrix -a admin:admin
+</code></pre>
+
+<p>上面的这条命令就启动了Heritrix，并设置登陆web管理页面的用户名及密码都为admin。当然很有别的参数可以用，查看帮助就好了。</p>
+
+<pre><code class="language-bash">$HERITRIX_HOME/bin/heritrix --help
+</code></pre>
+
+<p><strong>登陆管理界面：</strong><a href="https://localhost:8443">https://localhost:8443</a></p>
+
+<p>一定注意是<strong>https</strong>链接，但因为没有证书，所以会出现安全警告，忽略继续访问就可以的。
+<img src="https://o364p1r5a.qnssl.com/blog/herirtix3.2-home-page.png" alt="herirtix3.2-home-page" /></p>
+
+<h1 id="创建抓取任务">创建抓取任务</h1>
+
+<p>在『Add Job Directory』这一项中可以创建新任务或者添加已存在的任务。如下图所示我添加了一个叫做tripsearch的任务。
+<img src="https://o364p1r5a.qnssl.com/blog/Add-Job-Directory-tripsearch.png" alt="Add-Job-Directory-tripsearch" />
+点击这个tripsearch就可以进入这个任务的详情页面，如下图所示：
+<img src="https://o364p1r5a.qnssl.com/blog/the-detail-page-of-tripsearch-job-.png" alt="the-detail-page-of-tripsearch-job-" />
+看到上面那些菜单项，最重要的是Configuration，通过一个名为crawler-beans.cxml的配置文件控制整个抓取过程。另外还有些控制按钮，这里也来说下。</p>
+
+<ul>
+<li>build : 构建任务实例</li>
+<li>launch : 启动抓取</li>
+<li>pause : 暂停抓取</li>
+<li>unpause : 从暂停中恢复</li>
+<li>checkpoint : 建立检查点（这个时候会将之前抓到的数据封包备份，如同数据库的checkpoint）</li>
+<li>terminate : 终止抓取任务</li>
+<li>teardown : 删除任务实例</li>
+</ul>
+
+<p>正常的启动流程是：改好配置文件 -&gt; build -&gt; launch。</p>
+
+<h1 id="heritrix处理流程">Heritrix处理流程</h1>
+
+<p>Heritrix内部按模块划分成一个个处理器，一个个处理器有序排列，构成处理器链，而处理器链也有序排列。大致可划分为3个处理器链，每个处理器链中又有多个处理器模块。每个URL任务从头走到尾巴，经过各个处理器的处理。
+<img src="https://o364p1r5a.qnssl.com/blog/14635628989934.png" alt="" /></p>
+
+<p><code>Candidate Chain</code> 主要负责筛选要抓取的URL，然后把它放入抓取队列中。<code>Fetch Chain</code> 主要负责抓取网页内容，提取和解析出内容中的URL。<code>Disposition Chain</code> 主要负责将抓取的内容存储下来，把新的解析出的URL再发送回 <code>Candidate Chain</code> .</p>
+
+<h1 id="参数解释及配置">参数解释及配置</h1>
+
+<p>可以说 <code>crawler-beans.cxml</code> 可以主导整个Heritrix的抓取，采用spring来管理.里面的配置都是一个个bean,通过修改配置文件
+<code>crawler-beans.cxml</code> 即可完成几乎所有的需求。</p>
+
+<p>我是要抓取携程各个景点页面，对不多的几个地方进行修改即可实现目标了。</p>
+
+<p>1.　修改任务元数据</p>
+
+<pre><code class="language-xml"> &lt;bean id=&quot;simpleOverrides&quot; class=&quot;org.springframework.beans.factory.config.PropertyOverrideConfigurer&quot;&gt;
+  &lt;property name=&quot;properties&quot;&gt;
+   &lt;value&gt;
+# This Properties map is specified in the Java 'property list' text format
+# http://java.sun.com/javase/6/docs/api/java/util/Properties.html#load%28java.io.Reader%29
+
+metadata.operatorContactUrl=https://stu-ali.xvping.cn:8443
+metadata.jobName=XP Crawl
+metadata.description=XP crawl for Searching engine
+
+##..more?..##
+   &lt;/value&gt;
+  &lt;/property&gt;
+ &lt;/bean&gt;
+</code></pre>
+
+<p>通过文章后面附录中对各个Bean的介绍，simpleOverrides的作用是设置基本的一些任务元数据，我修改的这3个分别是操作人员的联系URL、任务的名字和任务的描述。这些信息在请求页面的时候会带上，告诉对方自己的身份描述信息。身份信息在robots.txt协议中有一定作用，网站可以通过设置该协议来拒绝特定的爬虫。协议具体细节请自行查询。包括是否遵守爬虫的robots.txt协议也可以在metadata里配置。</p>
+
+<p>2.　设置种子站点
+　　种子站点：爬虫从这些页面开始解析出来URL并加入待爬列表中。</p>
+
+<pre><code class="language-xml"> &lt;bean id=&quot;longerOverrides&quot; class=&quot;org.springframework.beans.factory.config.PropertyOverrideConfigurer&quot;&gt;
+  &lt;property name=&quot;properties&quot;&gt;
+   &lt;props&gt;
+    &lt;prop key=&quot;seeds.textSource.value&quot;&gt;
+
+# URLS HERE
+http://you.ctrip.com/sitemap/spotdis/c0
+http://you.ctrip.com/sitemap/spots.html
+
+    &lt;/prop&gt;
+   &lt;/props&gt;
+  &lt;/property&gt;
+ &lt;/bean&gt;
+</code></pre>
+
+<p>3.　定制爬取范围</p>
+
+<p>Heritrix提供了一种URL匹配的规则模式&ndash; SURT。</p>
+
+<pre><code class="language-xml"> &lt;bean id=&quot;acceptSurts&quot; class=&quot;org.archive.modules.deciderules.surt.SurtPrefixedDecideRule&quot;&gt;
+  &lt;!-- &lt;property name=&quot;decision&quot; value=&quot;ACCEPT&quot;/&gt; --&gt;
+  &lt;!-- &lt;property name=&quot;seedsAsSurtPrefixes&quot; value=&quot;true&quot; /&gt; --&gt;
+  &lt;!-- &lt;property name=&quot;alsoCheckVia&quot; value=&quot;false&quot; /&gt; --&gt;
+  &lt;!-- &lt;property name=&quot;surtsSourceFile&quot; value=&quot;&quot; /&gt; --&gt;
+  &lt;!-- &lt;property name=&quot;surtsDumpFile&quot; value=&quot;${launchId}/surts.dump&quot; /&gt; --&gt;
+   &lt;property name=&quot;surtsSource&quot;&gt;
+        &lt;bean class=&quot;org.archive.spring.ConfigString&quot;&gt;
+         &lt;property name=&quot;value&quot;&gt;
+          &lt;value&gt;
+           # example.com
+           # http://www.example.edu/path1/
+           # +http://(org,example,
+      +http://you.ctrip.com/sight/
+      +http://you.ctrip.com/countrysightlist/
+      -http://(com,qq,
+      -http://(com,gtimg,
+      -http://(com,c-ctrip,
+      -http://(com,ctrip,m,
+      -http://(cn,sinaimg,
+          &lt;/value&gt;
+         &lt;/property&gt;
+        &lt;/bean&gt;
+       &lt;/property&gt;
+ &lt;/bean&gt;
+</code></pre>
+
+<p>通过官方文档中的<a href="https://webarchive.jira.com/wiki/display/ARIH/SURT+Rules">SURT Rules</a>，<code>+</code> 表示符合后面表达式的接受，<code>-</code> 表示符合后面表达式的拒绝。表达式<code>http://(com,qq,</code>表示qq.com下的所有子域名都匹配；<code>http://(com,qq,www,)</code>只匹配www.qq.com,不包含子域名；<code>http://(com,ctrip,you,)/sight/</code>表示匹配you.ctrip.com子域名，并且路径为sight下的页面，注意最后的斜杠(slash)不能少。</p>
+
+<p>4.　配置ACCEPT和REJECT规则</p>
+
+<p>每一个规则都由一个Bean来配置。一起组成如下的规则序列。</p>
+
+<pre><code class="language-xml">&lt;!-- SCOPE: rules for which discovered URIs to crawl; order is very
+      important because last decision returned other than 'NONE' wins. --&gt;
+ &lt;bean id=&quot;scope&quot; class=&quot;org.archive.modules.deciderules.DecideRuleSequence&quot;&gt;
+  &lt;!-- &lt;property name=&quot;logToFile&quot; value=&quot;false&quot; /&gt; --&gt;
+  &lt;property name=&quot;rules&quot;&gt;
+   &lt;list&gt;
+    &lt;!-- Begin by REJECTing all... --&gt;
+    &lt;bean class=&quot;org.archive.modules.deciderules.RejectDecideRule&quot; /&gt;
+    &lt;!-- ...then ACCEPT those within configured/seed-implied SURT prefixes... --&gt;
+    &lt;ref bean=&quot;acceptSurts&quot; /&gt;
+    &lt;!-- ...but REJECT those more than a configured link-hop-count from start... --&gt;
+    &lt;bean class=&quot;org.archive.modules.deciderules.TooManyHopsDecideRule&quot;&gt;
+     &lt;!-- &lt;property name=&quot;maxHops&quot; value=&quot;20&quot; /&gt; --&gt;
+    &lt;/bean&gt;
+    &lt;!-- ...but ACCEPT those more than a configured link-hop-count from start... --&gt;
+    &lt;bean class=&quot;org.archive.modules.deciderules.TransclusionDecideRule&quot;&gt;
+     &lt;!-- &lt;property name=&quot;maxTransHops&quot; value=&quot;2&quot; /&gt; --&gt;
+     &lt;!-- &lt;property name=&quot;maxSpeculativeHops&quot; value=&quot;1&quot; /&gt; --&gt;
+    &lt;/bean&gt;
+    &lt;!-- ...but REJECT those from a configurable (initially empty) set of REJECT SURTs... --&gt;
+    &lt;bean class=&quot;org.archive.modules.deciderules.surt.SurtPrefixedDecideRule&quot;&gt;
+          &lt;property name=&quot;decision&quot; value=&quot;REJECT&quot;/&gt;
+          &lt;property name=&quot;seedsAsSurtPrefixes&quot; value=&quot;false&quot;/&gt;
+          &lt;property name=&quot;surtsDumpFile&quot; value=&quot;${launchId}/negative-surts.dump&quot; /&gt;
+     &lt;!-- &lt;property name=&quot;surtsSource&quot;&gt;
+           &lt;bean class=&quot;org.archive.spring.ConfigFile&quot;&gt;
+            &lt;property name=&quot;path&quot; value=&quot;negative-surts.txt&quot; /&gt;
+           &lt;/bean&gt;
+          &lt;/property&gt; --&gt;
+    &lt;/bean&gt;
+    &lt;!-- ...and REJECT those from a configurable (initially empty) set of URI regexes... --&gt;
+    &lt;bean class=&quot;org.archive.modules.deciderules.MatchesListRegexDecideRule&quot;&gt;
+          &lt;property name=&quot;decision&quot; value=&quot;REJECT&quot;/&gt;
+          &lt;property name=&quot;listLogicalOr&quot; value=&quot;true&quot; /&gt;
+          &lt;property name=&quot;regexList&quot;&gt;
+           &lt;list&gt;
+             &lt;value&gt;.*\.jpg&lt;/value&gt;
+                &lt;value&gt;.*\.png&lt;/value&gt;
+                &lt;value&gt;.*\.gif&lt;/value&gt;
+             &lt;value&gt;.*\.css&lt;/value&gt;
+           &lt;/list&gt;
+          &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;!-- ...and REJECT those with suspicious repeating path-segments... --&gt;
+    &lt;bean class=&quot;org.archive.modules.deciderules.PathologicalPathDecideRule&quot;&gt;
+     &lt;!-- &lt;property name=&quot;maxRepetitions&quot; value=&quot;2&quot; /&gt; --&gt;
+    &lt;/bean&gt;
+    &lt;!-- ...and REJECT those with more than threshold number of path-segments... --&gt;
+    &lt;bean class=&quot;org.archive.modules.deciderules.TooManyPathSegmentsDecideRule&quot;&gt;
+     &lt;!-- &lt;property name=&quot;maxPathDepth&quot; value=&quot;20&quot; /&gt; --&gt;
+    &lt;/bean&gt;
+    &lt;!-- ...but always ACCEPT those marked as prerequisitee for another URI... --&gt;
+    &lt;bean class=&quot;org.archive.modules.deciderules.PrerequisiteAcceptDecideRule&quot;&gt;
+    &lt;/bean&gt;
+    &lt;!-- ...but always REJECT those with unsupported URI schemes --&gt;
+    &lt;bean class=&quot;org.archive.modules.deciderules.SchemeNotInSetDecideRule&quot;&gt;
+    &lt;/bean&gt;
+   &lt;/list&gt;
+  &lt;/property&gt;
+ &lt;/bean&gt;
+</code></pre>
+
+<p>一个URL要按顺序由上到下经过各条规则，最终来决定是否接受这个URL，所以规则顺序就非常重要。在经过一条规则的时候，根据规则是拒绝型还是接受型来做不同的处理。如果是拒绝型，则在接受队列中找到符合规则的URL，取出放入拒绝队列中。反之，如果是接受型，则在拒绝队列中找到符合规则的URL，放入接受队列。最终，经过所有规则后，只保留接受队列里的URL。</p>
+
+<p>第一条规则先拒绝所有的URL，然后第二条就是之前配置的SURT规则，接受指定URL路径下的页面。下面的规则就不一一列举了。为了避免已经拒绝了的非所需域名下的链接在之后的接受规则中又被纳入接受队列，注释掉了之后的关于接受的规则。（当然可以把域名过滤的这个规则放在最后一条，最后再过滤掉不符合所需域名的URL）</p>
+
+<p>5.　存储相关</p>
+
+<p>最后是关于写入压缩后的网页内容到硬盘的相关配置。Disposition中的Writer处理器就是处理内容的写入，默认使用的是WarcWriter，warc是Web页面内容的压缩后的格式。Heritrix会把每次请求获得的相关的数据和每次请求的元数据，一条条写入warc文件，并且再用gz做压缩。相关内容的配置如下。</p>
+
+<pre><code class="language-xml">&lt;bean id=&quot;warcWriter&quot; class=&quot;org.archive.modules.writer.WARCWriterProcessor&quot;&gt;
+</code></pre>
+
+<p>在上面的Bean可以配置压缩文件的文件名，最大容量，存储路径等等。还有执行的规则，可以拒绝掉不符合规则的内容的存储。warc文件最大容量可以不要设置太大，便于之后我们对数据的处理。一般用默认就行，这里不细说。</p>
+
+<h1 id="附录-各个bean的介绍">附录(各个bean的介绍)：</h1>
+
+<blockquote>
+<ol>
+<li><p>bean id=simpleOverrides
+class=org.springframework.beans.factory.config.PropertyOverrideConfigurer
+字面上的意思为简单的覆盖,的确这里只是简单的覆盖.设置最基本的信息.如抓取任务名字
+(metadata.jobName),操作URL(metadata.operatorContactUrl),描述信息
+(metadata.description)</p></li>
+
+<li><p>bean id=metadata
+class=org.archive.modules.CrawlMetadata
+如同simpleOverrides</p></li>
+
+<li><p>bean id=seeds
+class=org.archive.modules.seeds.TextSeedModule
+种子配置,可以从文件中读取种子,也可以直接设置种子</p></li>
+
+<li><p>bean id=scope
+class=org.archive.modules.deciderules.DecideRuleSequence
+URL规则控制,可以决定哪些URL要抓取,哪些URL拒绝,URL抓取深度等</p></li>
+
+<li><p>bean id=candidateScoper
+class=org.archive.crawler.prefetch.CandidateScoper
+URL范围控制,通过该范围的URL Heritrix方可接受,成为CrawlURI</p></li>
+
+<li><p>bean id=preparer
+class=org.archive.crawler.prefetch.FrontierPreparer
+url预处理,如设置URL的抓取深度,队列,成本控制等</p></li>
+
+<li><p>bean id=candidateProcessors
+class=org.archive.modules.CandidateChain
+处理器,引用candidateScoper去控制URL是否可以成为CrawlURI,preparer去设置深度,队列,成本控制等</p></li>
+
+<li><p>bean id=preselector
+class=org.archive.crawler.prefetch.Preselector
+预先选择器,这里会过滤掉一部分URL.如blockByRegex为拒绝正则,allowByRegex为允许正则</p></li>
+
+<li><p>bean id=preconditions
+class=org.archive.crawler.prefetch.PreconditionEnforcer
+先决条件设置,如设置IP有效期,爬虫协议文件robots.txt有效期</p></li>
+
+<li><p>bean id=fetchDns
+class=org.archive.modules.fetcher.FetchDNS
+解析DNS,获得IP</p></li>
+
+<li><p>bean id=fetchHttp
+class=org.archive.modules.fetcher.FetchHTTP
+核心模块,获取URL内容,设置状态</p></li>
+
+<li><p>bean id=extractorHttp
+class=org.archive.modules.extractor.ExtractorHTTP
+核心模块,抽取URL,抽取出新的URL再次运行,如此爬虫才可以一直爬下去</p></li>
+
+<li><p>bean id=extractorHtml
+class=org.archive.modules.extractor.ExtractorHTML
+抽取HTML,包含JSP,ASP等,这里也会抽取JS,CSS等</p></li>
+
+<li><p>bean id=extractorCss
+class=org.archive.modules.extractor.ExtractorCSS
+抽取CSS,无需单独配置,ExtractorHTML会调用</p></li>
+
+<li><p>bean id=extractorJs
+class=org.archive.modules.extractor.ExtractorJS
+抽取JS,无需单独配置,ExtractorHTML会调用</p></li>
+</ol>
+</blockquote>
+
+<h1 id="参考资料">参考资料</h1>
+
+<ol>
+<li><a href="http://blog.wuzx.me/archives/368">搜索引擎搭建——Heritrix</a></li>
+<li><a href="http://guoyunsky.iteye.com/blog/1744461">配置文件crawler-beans.cxml介绍</a></li>
+<li><a href="http://guoyunsky.iteye.com/category/82971">guoyunsky写的搜索引擎-爬虫-Heritrix系列</a></li>
+<li><a href="https://webarchive.jira.com/wiki/display/Heritrix/Heritrix+3.0+and+3.1+User+Guide">Heritrix 3.0 and 3.1 User Guide</a></li>
+</ol>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Payne Xu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2016-05-18</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/">搜索引擎</a>
+          
+          <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8A%93%E5%8F%96/">数据抓取</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/solr-5.5-running-on-tomcat8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Solr5.5集成到Tomcat8</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/introduction-of-solr-and-how-to-install-it/">
+            <span class="next-text nav-default">Solr基础知识及安装</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'fliaping';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:xavierrpayne@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/xupingxx" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/paynexu/" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/fliaping" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.fliaping.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2015 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">fliaping</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-63276498-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
