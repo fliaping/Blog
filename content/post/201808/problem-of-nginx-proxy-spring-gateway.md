@@ -8,6 +8,8 @@ slug: "problem-of-nginx-proxy-spring-gateway"
 tags: ["nginx","gateway"]
 
 ---
+![spring cloud gateway](https://o364p1r5a.qnssl.com/18-8-14/26795044.jpg)
+<!-- more -->
 
 ## 背景
 
