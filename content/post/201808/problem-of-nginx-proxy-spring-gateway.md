@@ -8,12 +8,14 @@ slug: "problem-of-nginx-proxy-spring-gateway"
 tags: ["nginx","gateway"]
 
 ---
+
 ![spring cloud gateway](https://o364p1r5a.qnssl.com/18-8-14/26795044.jpg)
-<!-- more -->
 
 ## 背景
 
-不久前在一个项目中使用了[spring cloud gateway](https://cloud.spring.io/spring-cloud-gateway/), 开发测试中没出现什么问题,当上线之后就一直在报错,错误内容如下:
+在不久前的一个项目中使用了[spring cloud gateway](https://cloud.spring.io/spring-cloud-gateway/), 开发测试中没出现什么问题,当上线之后就一直在报错,错误内容如下:
+
+<!--more-->
 
 ```
 2018-08-13 11:56:49,853 ERROR [] [reactor-http-server-epoll-7] org.springframework.web.server.adapter.HttpWebHandlerAdapter:handleFailure:213 Unhandled failure: Connection has been closed, response already set (status=304)
