@@ -3,7 +3,7 @@ title: "{{ replace .TranslationBaseName "-" " " | title }}"
 date: {{ .Date }}
 draft: true
 categories: ["cat"]
-slug: "{{.TranslationBaseName}}"
+slug: "type the permlink"
 tags: ["tag"]
 author: "Payne Xu"
 
