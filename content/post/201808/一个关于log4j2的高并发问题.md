@@ -1,6 +1,6 @@
 ---
 title: "一个关于log4j2的高并发问题"
-date: 2018-08-15T16:41:16+08:00
+date: 2018-08-21T15:46:16+08:00
 draft: false
 categories: ["高并发"]
 slug: "a-high-concurrency-problem-of-log4j2"
@@ -320,9 +320,11 @@ jvm对待反射有两种方式：
 
 **那么为什么log4j2不能加载到生成类`sun.reflect.GeneratedMethodAccessor<N>`呢？**
 
-要回答这个问题就要了解jvm反射实现的第二种方式,jvm会通过方法`sun.reflect.ReflectionFactory#newMethodAccessor`构建MethodAccessor，代理通过该对象的invoke方法调用真正的方法。
+要回答这个问题就要了解jvm反射实现的第二种方式,jvm会通过方法`sun.reflect.ReflectionFactory#newMethodAccessor`构建MethodAccessor，代理通过该对象的invoke方法调用真正的方法。下图为MethodAccessor接口的相关实现类
 
-newMethodAccessor代码如下: *code-4*
+![MethodAccessor接口的相关实现类](https://o364p1r5a.qnssl.com/2018821/2018-08-21-14-26-55.png)
+
+`ReflectionFactory#newMethodAccessor`代码如下: *code-4*
 
 ```java
    public MethodAccessor newMethodAccessor(Method method) {
@@ -410,8 +412,6 @@ defineClass代码如下： *code-6*
 ```
 
 通过上面代码及注释，发现生成的类是绑定在`DelegatingClassLoader`这个加载器上的，也就是说只有通过该加载器才能load生成的类，**然而在log4j的`ThrowableProxy#loadClass`方法并没有尝试该类加载器**，所以加载不到也是很正常的了。
-
-![MethodAccessor接口的相关实现](https://o364p1r5a.qnssl.com/2018821/2018-08-21-14-26-55.png)
 
 ## 疑问点三
 
