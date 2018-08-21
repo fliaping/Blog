@@ -146,7 +146,7 @@ at org.apache.logging.log4j.core.impl.ThrowableProxy.loadClass(ThrowableProxy.ja
 at org.apache.logging.log4j.core.impl.ThrowableProxy.toExtendedStackTrace(ThrowableProxy.java:660)
 ```
 
-以下为类加载获取锁的代码片段: *代码1*
+以下为类加载获取锁的代码片段: *code-1*
 
 ```java
 // java.lang.ClassLoader#loadClass(java.lang.String, boolean)
@@ -216,7 +216,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 根据上面的线程栈, 获取锁之后走到源码的424行, 就表示类没有在jvm中加载过,并且双亲加载器也加载不到,调用了`findClass`去加载. 这里就非常奇怪了, jvm如果加载过一次,下次一定会从jvm中直接拿到, 结合前面说的锁会马上释放, 根本不会阻塞. 也就是说实际每次要重新加载. 为了找到具体是哪个类每次都需要加载一次,需要来debug确定.
 
-下面是log4j2中 `ThrowableProxy` 类加载流程的代码: *代码2* ,是调用类加载的地方.
+下面是log4j2中 `ThrowableProxy` 类加载流程的代码: *code-2* ,是调用类加载的地方.
 
 ```java
    // org.apache.logging.log4j.core.impl.ThrowableProxy#loadClass(java.lang.String)
@@ -264,11 +264,11 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 ### 调试过程
 
-先让代码跑起来,并走几次出问题的流程,确保该加载的类已经加载过了, 然后在*代码1*中 `findLoadedClass` 方法处打断点并查看返回值是否为空. *代码2*中`lastLoader`的类型是`LaunchedURLClassLoader` 继承关系如下图
+先让代码跑起来,并走几次出问题的流程,确保该加载的类已经加载过了, 然后在 *code-1* 中 `findLoadedClass` 方法处打断点并查看返回值是否为空. *code-2* 中`lastLoader`的类型是`LaunchedURLClassLoader` 继承关系如下图
 
 ![LaunchedURLClassLoader](https://o364p1r5a.qnssl.com/2018820/LaunchedURLClassLoader.png)
 
-`loadClass` 方法如: *代码3*: `org.springframework.boot.loader.LaunchedURLClassLoader#loadClass`
+`loadClass` 方法如: *code-3* : `org.springframework.boot.loader.LaunchedURLClassLoader#loadClass`
 
 ```java
 @Override
@@ -297,11 +297,11 @@ protected Class<?> loadClass(String name, boolean resolve)
 }
 ```
 
-执行 `lastLoader.loadClass(className)` 跳到*代码1*, 整个加载流程遵循双亲委派机制, 如下图
+执行 `lastLoader.loadClass(className)` 跳到 *code-1* , 整个加载流程遵循双亲委派机制, 如下图
 
 ![java_classloader_hierarchy](https://o364p1r5a.qnssl.com/2018820/java_classloader_hierarchy.PNG)
 
-LaunchedURLClassLoader是一个自定义类加载器, 直接调用父类 `ClassLoader#loadClass` 即*代码1*中所示, 分别用“应用类加载器”、“扩展类加载器”、“引导类加载器”加载，最终发现了当出现类名 `sun.reflect.GeneratedMethodAccessor204` 时经过 parent loaders、bootstrap loader、URLClassLoader#findClass都加载不到，最后抛出`ClassNotFoundException`被*代码2*步骤1处捕获并忽略，接着执行步骤2继续尝试加载，随后抛出异常，捕获后在步骤3处再次尝试加载，再次异常返回空。
+LaunchedURLClassLoader是一个自定义类加载器, 直接调用父类 `ClassLoader#loadClass` 即 *code-1* 中所示, 分别用“应用类加载器”、“扩展类加载器”、“引导类加载器”加载，最终发现了当出现类名 `sun.reflect.GeneratedMethodAccessor204` 时经过 parent loaders、bootstrap loader、URLClassLoader#findClass都加载不到，最后抛出`ClassNotFoundException`被 *code-2* 步骤1处捕获并忽略，接着执行步骤2继续尝试加载，随后抛出异常，捕获后在步骤3处再次尝试加载，再次异常返回空。
 
 如异常日志`at sun.reflect.GeneratedMethodAccessor119.invoke(Unknown Source) ~[?:?]`， 由于加载不到该类，源码信息、包信息都是没有的。
 
@@ -313,10 +313,105 @@ LaunchedURLClassLoader是一个自定义类加载器, 直接调用父类 `ClassL
 
 jvm对待反射有两种方式：
 
-1. 使用native方法进行反射操作，这种方式第一次执行时会比较快，但是后面每次执行的速度都差不多
-2. 生成bytecode进行反射操作，所谓的sun.reflect.GeneratedMethodAccessor，它是一个被反射调用方法的包装类，每次调用会有一个递增的序号。这种方式第一次调用速度较满，但是多次调用后速度会提升20倍
+1. 使用native方法进行反射操作，这种方式每次执行的速度差不多
+2. 生成bytecode进行反射操作，即生成类`sun.reflect.GeneratedMethodAccessor<N>`，它是一个被反射调用方法的包装类，代理不同的方法，类后缀序号会递增。这种方式第一次调用速度较慢，较之第一种会慢3-4倍，但是多次调用后速度会提升20倍
 
-在ReflectionFactory里有一种机制，就是当一个方法被反射调用的次数超过一定的阀值时（inflationThreshold），会使用第二种方式来提升速度。这个阀值的默认值是15.该阈值可以通过jvm参数`-Dsun.reflect.inflationThreshold`进行配置。
+在`ReflectionFactory`里有一种机制，就是当一个方法被反射调用的次数超过一定的阀值时（inflationThreshold），会使用第二种方式来提升速度。这个阀值的默认值是15.该阈值可以通过jvm参数`-Dsun.reflect.inflationThreshold`进行配置。
+
+**那么为什么log4j2不能加载到生成类`sun.reflect.GeneratedMethodAccessor<N>`呢？**
+
+要回答这个问题就要了解jvm反射实现的第二种方式,jvm会通过方法`sun.reflect.ReflectionFactory#newMethodAccessor`构建MethodAccessor，代理通过该对象的invoke方法调用真正的方法。
+
+newMethodAccessor代码如下: *code-4*
+
+```java
+   public MethodAccessor newMethodAccessor(Method method) {
+        checkInitted();
+        // noInflation(不膨胀)，直接使用字节码增强方式
+        if (noInflation && !ReflectUtil.isVMAnonymousClass(method.getDeclaringClass())) {
+            return new MethodAccessorGenerator().
+                generateMethod(method.getDeclaringClass(),
+                               method.getName(),
+                               method.getParameterTypes(),
+                               method.getReturnType(),
+                               method.getExceptionTypes(),
+                               method.getModifiers());
+        } else {
+            // 否则使用Inflation膨胀模式， 先创建NativeMethodAccessorImpl，随后将该实现作为DelegatingMethodAccessorImpl的一个delegate，实际上还是委派给NativeMethodAccessorImpl
+            NativeMethodAccessorImpl acc =
+                new NativeMethodAccessorImpl(method);
+            DelegatingMethodAccessorImpl res =
+                new DelegatingMethodAccessorImpl(acc);
+            acc.setParent(res);
+            return res;
+        }
+}
+```
+
+`sun.reflect.NativeMethodAccessorImpl#invoke`代码如下： *code-5*
+
+```java
+    public Object invoke(Object obj, Object[] args)
+        throws IllegalArgumentException, InvocationTargetException
+    {
+        // We can't inflate methods belonging to vm-anonymous classes because
+        // that kind of class can't be referred to by name, hence can't be
+        // found from the generated bytecode.(我们不能膨胀属于vm-anonymous的类，因为这种类不能通过名字引用，因此不能从生成的字节码中被发现)
+        //
+        // 这里可以看到，如果调用次数大于inflationThreshold就会膨胀，使用字节码增强的方式
+        if (++numInvocations > ReflectionFactory.inflationThreshold()
+                && !ReflectUtil.isVMAnonymousClass(method.getDeclaringClass())) {
+            MethodAccessorImpl acc = (MethodAccessorImpl)
+                new MethodAccessorGenerator().
+                    generateMethod(method.getDeclaringClass(),
+                                   method.getName(),
+                                   method.getParameterTypes(),
+                                   method.getReturnType(),
+                                   method.getExceptionTypes(),
+                                   method.getModifiers());
+            parent.setDelegate(acc);
+        }
+        // 没有超过膨胀阈值，就使用JNI方法
+        return invoke0(method, obj, args);
+}
+```
+
+继续查看代码，可以看到`sun.reflect.MethodAccessorGenerator#generate`的实现是调用asm字节码增强工具来生成类，此过程较长，不在此列出。在该方法的最后，我们发现有这样一个操作`sun.reflect.ClassDefiner#defineClass`，查看其源码
+
+defineClass代码如下： *code-6*
+
+```java
+/** <P> We define generated code into a new class loader which
+      delegates to the defining loader of the target class. It is
+      necessary for the VM to be able to resolve references to the
+      target class from the generated bytecodes, which could not occur
+      if the generated code was loaded into the bootstrap class
+      loader. </P>
+      <P> There are two primary reasons for creating a new loader
+      instead of defining these bytecodes directly into the defining
+      loader of the target class: first, it avoids any possible
+      security risk of having these bytecodes in the same loader.
+      Second, it allows the generated bytecodes to be unloaded earlier
+      than would otherwise be possible, decreasing run-time
+      footprint. </P>
+    */
+    static Class<?> defineClass(String name, byte[] bytes, int off, int len,
+                                final ClassLoader parentClassLoader)
+    {
+        // 创建一个DelegatingClassLoader用来加载生成的类
+        ClassLoader newLoader = AccessController.doPrivileged(
+            new PrivilegedAction<ClassLoader>() {
+                public ClassLoader run() {
+                        return new DelegatingClassLoader(parentClassLoader);
+                    }
+                });
+        return unsafe.defineClass(name, bytes, off, len, newLoader, null);
+}
+```
+
+通过上面代码及注释，发现生成的类是绑定在`DelegatingClassLoader`这个加载器上的，也就是说只有通过该加载器才能load生成的类，**然而在log4j的`ThrowableProxy#loadClass`方法并没有尝试该类加载器**，所以加载不到也是很正常的了。
+
+![MethodAccessor接口的相关实现](https://o364p1r5a.qnssl.com/2018821/2018-08-21-14-26-55.png)
 
 ## 疑问点三
 
@@ -378,11 +473,13 @@ com.dianwoda.delibird.common.domain.DeliException:
 1. 从表面看来是加了个`@RefreshScope`注解导致的
 2. 从自身看来是打了太多异常栈
 3. 从log4j来看是`log4j 2.7`的队列满了之后的默认处理策略问题
-4. 另外对于log4j看来其实是一个需要优化的地方，对于动态生成的类就应该特殊处理，不进行类加载
+4. 另外对于log4j看来其实是一个需要优化的地方，对于动态生成的类就应该特殊处理，选择正确的类加载器，或者不进行类加载
 
 # 参考
 
-- [Spring cloud 中关于@RefreshScope 和 Environment Changes的实现分析 ](http://zhouxi.io/blog/post/zhouxi/Spring-cloud-%E4%B8%AD%E5%85%B3%E4%BA%8E-RefreshScope-%E5%92%8C-Environment-Changes%E7%9A%84%E5%AE%9E%E7%8E%B0)
+- [Spring cloud 中关于@RefreshScope 和 Environment Changes的实现分析](http://zhouxi.io/blog/post/zhouxi/Spring-cloud-%E4%B8%AD%E5%85%B3%E4%BA%8E-RefreshScope-%E5%92%8C-Environment-Changes%E7%9A%84%E5%AE%9E%E7%8E%B0)
 - [Spring Cloud 是如何实现热更新的](http://www.scienjus.com/spring-cloud-refresh/)
 - [使用异步日志改善服务性能](http://tech.dianwoda.com/2017/09/18/shi-yong-yi-bu-ri-zhi-gai-shan-fu-wu-xing-neng/)
 - [深入探讨 Java 类加载器](https://www.ibm.com/developerworks/cn/java/j-lo-classloader/index.html)
+- [how to suppress the generation of DelegatingClassLoader](https://groups.google.com/a/jclarity.com/forum/#!topic/friends/KlFzB1mfiJU)
+- [使用反射代理类加载器的潜在内存使用问题](https://www-01.ibm.com/support/docview.wss?uid=swg21636746)
