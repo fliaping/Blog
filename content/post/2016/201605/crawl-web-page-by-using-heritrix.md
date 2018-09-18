@@ -75,12 +75,12 @@ $HERITRIX_HOME/bin/heritrix --help
 **登陆管理界面：**[https://localhost:8443](https://localhost:8443)
 
 一定注意是**https**链接，但因为没有证书，所以会出现安全警告，忽略继续访问就可以的。
-![herirtix3.2-home-page](https://o364p1r5a.qnssl.com/blog/herirtix3.2-home-page.png)
+![herirtix3.2-home-page](https://storage.blog.fliaping.com/blog/herirtix3.2-home-page.png)
 # 创建抓取任务
 在『Add Job Directory』这一项中可以创建新任务或者添加已存在的任务。如下图所示我添加了一个叫做tripsearch的任务。
-![Add-Job-Directory-tripsearch](https://o364p1r5a.qnssl.com/blog/Add-Job-Directory-tripsearch.png)
+![Add-Job-Directory-tripsearch](https://storage.blog.fliaping.com/blog/Add-Job-Directory-tripsearch.png)
 点击这个tripsearch就可以进入这个任务的详情页面，如下图所示：
-![the-detail-page-of-tripsearch-job-](https://o364p1r5a.qnssl.com/blog/the-detail-page-of-tripsearch-job-.png)
+![the-detail-page-of-tripsearch-job-](https://storage.blog.fliaping.com/blog/the-detail-page-of-tripsearch-job-.png)
 看到上面那些菜单项，最重要的是Configuration，通过一个名为crawler-beans.cxml的配置文件控制整个抓取过程。另外还有些控制按钮，这里也来说下。
 
 * build : 构建任务实例
@@ -95,7 +95,7 @@ $HERITRIX_HOME/bin/heritrix --help
 # Heritrix处理流程
 
 Heritrix内部按模块划分成一个个处理器，一个个处理器有序排列，构成处理器链，而处理器链也有序排列。大致可划分为3个处理器链，每个处理器链中又有多个处理器模块。每个URL任务从头走到尾巴，经过各个处理器的处理。
-![](https://o364p1r5a.qnssl.com/blog/14635628989934.png)
+![](https://storage.blog.fliaping.com/blog/14635628989934.png)
 
 `Candidate Chain` 主要负责筛选要抓取的URL，然后把它放入抓取队列中。`Fetch Chain` 主要负责抓取网页内容，提取和解析出内容中的URL。`Disposition Chain` 主要负责将抓取的内容存储下来，把新的解析出的URL再发送回 `Candidate Chain` .
 

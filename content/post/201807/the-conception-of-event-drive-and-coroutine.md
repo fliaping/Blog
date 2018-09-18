@@ -8,7 +8,7 @@ title = "事件驱动与协程概念"
 
 +++
 
-![xiyangyang](https://o364p1r5a.qnssl.com/2018/06/xiyangyang.png)
+![xiyangyang](https://storage.blog.fliaping.com/2018/06/xiyangyang.png)
 
 > 在一个完美的世界中，不存在战争和饥饿，所有的API都将使用异步方式编写，兔兔和小羊羔将会在阳光明媚的绿色草地上手牵手地跳舞
 
@@ -25,14 +25,14 @@ title = "事件驱动与协程概念"
 3.组合成 hello world并写入磁盘
 
 1和2这个两个任务其实是没有先后顺序的，但是在一个进程的世界里，必须要有先后顺序，并不能并发执行，于是整个执行流程就是这样：CPU进入中断，程序等待用户输入，用户输入之后，CPU中断返回，将IO总线上拿到的hello的字节写入主存的某个地址，接着发送指令读取磁盘的world的地址并等待字节返回，然后写入主存的hello的前一个地址，然后发送指令将hello world对应地址的内容写入磁盘。
-![exclusive-application-say-hello](https://o364p1r5a.qnssl.com/2018/06/exclusive-application-say-hello.png)
+![exclusive-application-say-hello](https://storage.blog.fliaping.com/2018/06/exclusive-application-say-hello.png)
 
 ### OS协调式-为了并发
 由于硬件发展，只有一个程序在CPU上跑有些浪费，于是OS作为一个大管家来协调大家的资源需求，于是抽象了进程的概念，当多个进程并发在一个CPU上跑时，一个被IO阻塞，OS可以让CPU执行别的进程。
-![process-for-server](https://o364p1r5a.qnssl.com/2018/06/process-for-server.png)
+![process-for-server](https://storage.blog.fliaping.com/2018/06/process-for-server.png)
 
 后来由于进程切换比较消耗CPU，并且也不能资源共享，于是抽象出线程，线程的CPU使用也是由OS协调，OS通过时间片的方法进行强占式CPU资源分配，程序的编写者不用关注什么时候让出资源，什么时候执行代码，全都由OS管理，这时看起来已经很完美了，世界一片明亮。
-![thread-for-server](https://o364p1r5a.qnssl.com/2018/06/thread-for-server.png)
+![thread-for-server](https://storage.blog.fliaping.com/2018/06/thread-for-server.png)
 
 ### 高并发下的挑战
 有了线程之后，我们处理并发最直观的做法就是加线程，为了减少线程的启动时间，我们开始使用线程池，预先启动一些线程。随着并发进一步提高，加上外部请求基本上都是IO密集型，使用线程带来的效益开始下降，也就是说在线程的生命周期中IO等待时间远远大于CPU计算时间，另外每个线程大约需要4M的内存，由于内存的限制，单机线程数不会很多。所以初期的Apache、tomcat服务器通常只能处理几千的并发。为了突破单机下的并发问题，以nginx为首的一种叫事件驱动的方案开始流行。
@@ -46,15 +46,15 @@ title = "事件驱动与协程概念"
 
 UI方面以Android为例，在应用启动时会有创建一个UI主线程，在主线程中会调用Looper.loop方法，该方法是一个死循环，用来更新UI，但是不会卡死，内部使用了linux的epoll机制。Android应用程序的主线程在进入消息循环过程前，会在内部创建一个Linux管道（Pipe），这个管道的作用是使得Android应用程序主线程在消息队列为空时可以进入空闲等待状态，并且使得当应用程序的消息队列有消息需要处理时唤醒应用程序的主线程。在线程没有消息处理时，虽然有死循环，但是通过linux I/O阻塞机制让程处于空闲状态，有能力去执行其他操作，所以不会因为looper死循环导致线程卡死，当然主线程的UI也不会卡顿。
 
-![android-ui-thread-model](https://o364p1r5a.qnssl.com/2018/06/android-ui-thread-model.png)
+![android-ui-thread-model](https://storage.blog.fliaping.com/2018/06/android-ui-thread-model.png)
 
 
 后端方面以Netty为例， 有一个主线程对应bossEventLoopGroup中的唯一的一个EventLoop，其中也是一个循环，通过NIO的方式(在Linux上底层依然是使用Epoll)或者Epoll的方式，调用操作系统的阻塞方法等待事件到来，然后将事件放入WorkEventLoopGroup的队列中，等待EventLoop来执行。
 
-![netty-thread-model](https://o364p1r5a.qnssl.com/2018/06/netty-thread-model.jpeg)
+![netty-thread-model](https://storage.blog.fliaping.com/2018/06/netty-thread-model.jpeg)
 
 netty这个结构可能比较复杂，还是以处理网络连接为例，下图更简单的描述了事件驱动，用一个线程处理所有的连接，这个线程通常是一个循环的方法，当处理一个连接遇到阻塞的操作就将任务丢给其它的线程，主线程接着处理下一个连接，有没有感觉和Android的UI模型出奇的相似。
-![event-drive-for-server](https://o364p1r5a.qnssl.com/2018/06/event-drive-for-server.png)
+![event-drive-for-server](https://storage.blog.fliaping.com/2018/06/event-drive-for-server.png)
 对比上面的两个例子，UI主线程相当于netty中的那个bossEventLoop，同样适用epoll机制，通过系统调用的阻塞等待事件的到来，之后将事件分发出去，让相应的handler处理。
 
 看了上面的例子，觉得世界应该很美好了，但是不一定，虽然我们接受到消息之后将业务逻辑放入Work Thread Pool进行处理，看似可以同时处理很多请求，但是如果业务处理中也会进行其它的IO操作的话对于整个应用的并发来说是没有什么帮助的，因为每个请求要执行比较长的时间，其中大部分时间用于，读写磁盘、等待数据库，其它接口等IO操作的返回，为了同时处理更多的请求，我们只好加线程，这又回到了最初的问题：线程的使用是比较昂贵的。
@@ -69,11 +69,11 @@ netty这个结构可能比较复杂，还是以处理网络连接为例，下图
 协程与线程和进程有什么区别呢，线程和进程是操作系统通过强占式的调度，强硬把正在使用CPU的线程或进程踢走，让给别的线程或进程，由于切换的速度比较快，从而达到感觉是并发执行的效果。而协程通常是通过一个线程去运行所有协程方法，每个协程让不让出线程资源自己说了算。
 
 如下面的伪代码所示，从main方法进入，执行coroutine_1，当满足`i<10`这个条件之后，便让出CPU，保存此时的上下文信息，进而去执行coroutine_2，同样的coroutine_2满足`i%2==1`也让出CPU并保存上下文，因为这个程序只有两个协程，于是又跳回到coroutine_1接着之前的上下文继续执行。
-![coroutine-pseudo](https://o364p1r5a.qnssl.com/2018/06/coroutine-pseudo.png)
+![coroutine-pseudo](https://storage.blog.fliaping.com/2018/06/coroutine-pseudo.png)
 
 于是对于处理连接这样的事情就变成下图这样，每个协程处理一个连接，当阻塞的时候就yield，让出CPU去执行别的协程，并且由于上下文切换过程在用户态执行，花费比较小，于是性能就得到了提升。
 
-![coroutine-for-server](https://o364p1r5a.qnssl.com/2018/06/coroutine-for-server.png)
+![coroutine-for-server](https://storage.blog.fliaping.com/2018/06/coroutine-for-server.png)
 
 协程看起来如此美好，那我们快用上协程呀。且慢，你现在项目用的什么语言，GO？恭喜你，放心的用，GO的整个体系中所有的IO底层库全部是协程，仅仅一个go关键字你就能体会同步编写异步并发的代码，体会协程在IO方面的强大。但是如果别的语言，还是小心为好，因为用要配合异步IO库来使用，如果用成同步的库，完了，你的程序就要hang住了。
 

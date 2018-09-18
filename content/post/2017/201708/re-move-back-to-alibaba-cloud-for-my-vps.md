@@ -21,18 +21,18 @@ title = "重新迁回阿里云"
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
 ```
-![rpm_add_kernel_source](https://o364p1r5a.qnssl.com/2017/08/rpm_add_kernel_source.png)
+![rpm_add_kernel_source](https://storage.blog.fliaping.com/2017/08/rpm_add_kernel_source.png)
 ## 在 CentOS 7 启用 ELRepo
 ```bash
 yum --disablerepo="*" --enablerepo="elrepo-kernel" list available
 ```
-![yum_list_avaliable_kernel](https://o364p1r5a.qnssl.com/2017/08/yum_list_avaliable_kernel.png)
+![yum_list_avaliable_kernel](https://storage.blog.fliaping.com/2017/08/yum_list_avaliable_kernel.png)
 
 ## 安装主线稳定内核
 ```bash
 yum --enablerepo=elrepo-kernel install kernel-ml
 ```
-![yum_install_kernel_ml](https://o364p1r5a.qnssl.com/2017/08/yum_install_kernel_ml.png)
+![yum_install_kernel_ml](https://storage.blog.fliaping.com/2017/08/yum_install_kernel_ml.png)
 ## 将新内核作为第一启动项
 ```bash
 grub2-set-default 0
@@ -53,7 +53,7 @@ sysctl net.ipv4.tcp_congestion_control
 # 查看 tcp_bbr 模块是否加载
 lsmod | grep tcp_bbr
 ```
-![check_tcp_bbr_open](https://o364p1r5a.qnssl.com/2017/08/check_tcp_bbr_open.png)
+![check_tcp_bbr_open](https://storage.blog.fliaping.com/2017/08/check_tcp_bbr_open.png)
 
 # 安装Docker
 docker目前分为CE（Community Edition）和EE（Enterprise Edition），我们自己用，CE就可以。

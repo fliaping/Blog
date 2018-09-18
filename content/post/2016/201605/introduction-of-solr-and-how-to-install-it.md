@@ -17,7 +17,7 @@ title = "Solr基础知识及安装"
 > Solr is the popular, blazing-fast, open source enterprise search platform built on Apache Lucene™.
 
 再来看看它的[特性](https://lucene.apache.org/solr/features.html)
-![](https://o364p1r5a.qnssl.com/blog/14634817034224.jpg)
+![](https://storage.blog.fliaping.com/blog/14634817034224.jpg)
 
 <!--more-->
 
@@ -40,9 +40,13 @@ title = "Solr基础知识及安装"
 
 ## Solr和Lucene的关系
 
-* Solr是Lucene的一个子项目，它在Lucene的基础上进行包装，成为一个企业级搜索服务器开发框架。* Solr与Lucene的主要区别体现在：  * Solr更加贴近实际应用，是Lucene在面向企业搜索服务领域的扩展；  * Solr的缓存等机制使全文检索获得性能上的提升；通过配置文件的开发使得Solr具有良好的扩展性；  * Solr提供了用户友好的管理界面与查询结果界面。
+* Solr是Lucene的一个子项目，它在Lucene的基础上进行包装，成为一个企业级搜索服务器开发框架。
+* Solr与Lucene的主要区别体现在：
+  * Solr更加贴近实际应用，是Lucene在面向企业搜索服务领域的扩展；
+  * Solr的缓存等机制使全文检索获得性能上的提升；通过配置文件的开发使得Solr具有良好的扩展性；
+  * Solr提供了用户友好的管理界面与查询结果界面。
 
->简单讲：Solr使用Lucene并且扩展了它！
+>简单讲：Solr使用Lstorage.blog.fliaping.com
 
 # Solr的构架
 其构架如下。
@@ -66,7 +70,7 @@ solr-x.x.x.zip
 ## 启动Solr
 解压下载的文件，转到目录，输入一下命令即可启动solr服务器
 
-```bash
+```bashstorage.blog.fliaping.com
 bin/solr start
 ```
 通过浏览器访问 [http://localhost:8983](http://localhost:8983)即可看到Solr的管理界面。上面的这条命令是按照单机模式启动，还有cloud模式，顾名思义应该是solr集群了。关于cloud后面会单独来讲。

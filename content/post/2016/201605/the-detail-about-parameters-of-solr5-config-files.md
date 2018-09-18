@@ -74,11 +74,11 @@ solrconfig.xml文件是solr的主配置文件，主要配置高亮、数据源�
 `<listerner event>` `update`时间监听器配置，`postCommit`每一次提交或优化命令后触发，
 
 `poatOptimize`每次优化命令后触发。`RunExecutableListener`每次调用后执行一些其他操作。配置项：
-![](https://o364p1r5a.qnssl.com/blog/14637396747699.jpg)
+![](https://storage.blog.fliaping.com/blog/14637396747699.jpg)
 `<indexReaderFactory>` 这个配置项用户可以自己扩展`IndexReaderFactory`，可以自己实现自己的
 
 `IndexReader`。如果要明确声明使用的Factory则可以如下配置：
-![](https://o364p1r5a.qnssl.com/blog/14637396960073.jpg)
+![](https://storage.blog.fliaping.com/blog/14637396960073.jpg)
 
 `<query>` 配置检索词相关参数以及缓存配置参数。
 
@@ -189,7 +189,7 @@ managed-schema在solr5之前叫schema.xml，文件主要配置索引和查询的
 `<fieldType name="random" class="solr.RandomSortField" indexed="true" />`这个字段类型可以实现伪随机排序。
 
 **analyzer配置**
-![](https://o364p1r5a.qnssl.com/blog/14638040464120.jpg)
+![](https://storage.blog.fliaping.com/blog/14638040464120.jpg)
 包括tokenizer和filter，可以配置多个filter
 
 **其他配置**

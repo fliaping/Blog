@@ -9,7 +9,7 @@ author: "Payne Xu"
 
 ---
 
-![Apache_Log4j_Logo](https://o364p1r5a.qnssl.com/18-8-19/25780797.jpg)
+![Apache_Log4j_Logo](https://storage.blog.fliaping.com/18-8-19/25780797.jpg)
 
 # 前言
 
@@ -266,7 +266,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 先让代码跑起来,并走几次出问题的流程,确保该加载的类已经加载过了, 然后在 *code-1* 中 `findLoadedClass` 方法处打断点并查看返回值是否为空. *code-2* 中`lastLoader`的类型是`LaunchedURLClassLoader` 继承关系如下图
 
-![LaunchedURLClassLoader](https://o364p1r5a.qnssl.com/2018820/LaunchedURLClassLoader.png)
+![LaunchedURLClassLoader](https://storage.blog.fliaping.com/2018820/LaunchedURLClassLoader.png)
 
 `loadClass` 方法如: *code-3* : `org.springframework.boot.loader.LaunchedURLClassLoader#loadClass`
 
@@ -299,7 +299,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 执行 `lastLoader.loadClass(className)` 跳到 *code-1* , 整个加载流程遵循双亲委派机制, 如下图
 
-![java_classloader_hierarchy](https://o364p1r5a.qnssl.com/2018820/java_classloader_hierarchy.PNG)
+![java_classloader_hierarchy](https://storage.blog.fliaping.com/2018820/java_classloader_hierarchy.PNG)
 
 LaunchedURLClassLoader是一个自定义类加载器, 直接调用父类 `ClassLoader#loadClass` 即 *code-1* 中所示, 分别用“应用类加载器”、“扩展类加载器”、“引导类加载器”加载，最终发现了当出现类名 `sun.reflect.GeneratedMethodAccessor204` 时经过 parent loaders、bootstrap loader、URLClassLoader#findClass都加载不到，最后抛出`ClassNotFoundException`被 *code-2* 步骤1处捕获并忽略，接着执行步骤2继续尝试加载，随后抛出异常，捕获后在步骤3处再次尝试加载，再次异常返回空。
 
@@ -322,7 +322,7 @@ jvm对待反射有两种方式：
 
 要回答这个问题就要了解jvm反射实现的第二种方式,jvm会通过方法`sun.reflect.ReflectionFactory#newMethodAccessor`构建MethodAccessor，代理通过该对象的invoke方法调用真正的方法。下图为MethodAccessor接口的相关实现类
 
-![MethodAccessor接口的相关实现类](https://o364p1r5a.qnssl.com/2018821/2018-08-21-14-26-55.png)
+![MethodAccessor接口的相关实现类](https://storage.blog.fliaping.com/2018821/2018-08-21-14-26-55.png)
 
 `ReflectionFactory#newMethodAccessor`代码如下: *code-4*
 

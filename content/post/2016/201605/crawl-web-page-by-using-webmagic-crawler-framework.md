@@ -29,7 +29,7 @@ title = "基于webmagic爬虫框架的数据抓取"
 > [trip-search - Github](https://github.com/paynexu/trip-search)
 
 # 构架简单介绍
-![](https://o364p1r5a.qnssl.com/blog/14642364175906.jpg)
+![](https://storage.blog.fliaping.com/blog/14642364175906.jpg)
 ## 四个组件介绍
 `Downloader`
 
@@ -70,7 +70,7 @@ dependencies {
 
 我抓取的是去哪儿网的景点页面，一共需要三个正则表达式。先介绍下我要抓取的站点的结构。
 
-![](https://o364p1r5a.qnssl.com/blog/14642378347089.jpg)
+![](https://storage.blog.fliaping.com/blog/14642378347089.jpg)
 首先我找到了地区的汇总页面，这个汇总页面中有很多地区页的链接，我们要识别出来这些链接，并加入待抓取队列，然后如果抓到了地区页面，要在这个页面中找到这个地区的景点列表页；然后如果抓到了景点列表页，从这个页面我们要找到景点页的链接，并且还有景点列表页的不同页数的链接；最后才是我们需要的景点页，可以对其进行解析或者直接把页面保存下来。前面的所有链接都是帮助找到景点页的帮助页面，而景点页才是真正的目标页面。
 我的种子页面是
 

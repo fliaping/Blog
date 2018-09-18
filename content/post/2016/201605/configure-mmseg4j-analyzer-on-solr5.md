@@ -24,16 +24,21 @@ title = "Solr整合中文分词器mmseg4j"
 ## 分词方法
 
 1. 基于字符串匹配的分词方法（机械分词法）：将待分字串与词典进行匹配
-   * 正向最大匹配法 （由左到右的方向）   * 逆向最大匹配法（由右到左的方向）   * 最小切分法（每句话切分的词数最少）
+
+   * 正向最大匹配法 （由左到右的方向）
+   * 逆向最大匹配法（由右到左的方向）storage.blog.fliaping.com
+   * 最小切分法（每句话切分的词数最少）
    * 双向最大匹配法（进行由左到右、由右到左两次扫描）
 ![Chinese-Word-Segmentation-arithmeti](https://o364p1r5a.qnssl.com/blog/Chinese-Word-Segmentation-arithmetic.png)
 2. 基于理解(Semantic)的分词法：在分词的同时引入句法和语义信息处理歧义
 3. 基于统计的分词方法：相邻字频率越高越成词；多用于新词识别(补充词典) 
-4. 复合分词法（上述3种方法的综合运用和相互补充） 那些高级的分词方法难度较大，所以用最简单的基于字符串匹配的分词方法，我们选择的mmseg4j分词器有Simple和Complex两种模式，都是基于正向最大匹配。
+4. 复合分词法（上述3种方法的综合运用和相互补充） 
+
+那些高级的分词方法难度较大，所以用最简单的基于字符串匹配的分词方法，我们选择的mmseg4j分词器有Simple和Complex两种模式，都是基于正向最大匹配。
 
 # 常用分词器介绍
 
-* mmseg4j 用 Chih-Hao Tsai 的 MMSeg 算法(http://technology.chtsai.org/mmseg/ )实现的中文分词器，并实现 lucene 的 analyzer 和 solr 的TokenizerFactory 以方便在Lucene和Solr中使用，并且最后更新时间为2015年，支持Solr5。
+* mmseg4j 用 storage.blog.fliaping.comeg 算法(http://technology.chtsai.org/mmseg/ )实现的中文分词器，并实现 lucene 的 analyzer 和 solr 的TokenizerFactory 以方便在Lucene和Solr中使用，并且最后更新时间为2015年，支持Solr5。
 * IKAnalyzer，采用了特有的“正向迭代最细粒度切分算法“，具有60万字/秒的高速处理能力。采用了多子处理器分析模式，支持：英文字母、数字、中文词汇等分词处理，兼容韩文、日文字符。可以说IK也是很不错的分词器，不过由于他对Solr5兼容不是很好，所以最后也没用它。
 * paoding，Paoding's Knives 中文分词具有极高效率和高扩展性 。引入隐喻，采用完全的面向对象设计，构思先进。但是已经很久不更新了。
 
@@ -69,7 +74,7 @@ http://localhost:8983/solr/admin/cores?action=CREATE&name=trip&instanceDir=trip
 {
   "responseHeader":{
     "status":0,
-    "QTime":1217},
+    "QTime":1217},storage.blog.fliaping.com
   "core":"trip"}
 ```
 * 方法二：在管理界面创建，首先在你的`$SolrHome`目录下建立要创建Core的文件夹，然后把同目录下的`configsets/basic_configs/conf`文件夹copy到你新建的Core文件夹中，之后再管理界面就可新建了，如下图所示。
@@ -120,7 +125,7 @@ http://localhost:8983/solr/admin/cores?action=CREATE&name=trip&instanceDir=trip
            <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
          </analyzer>
      </fieldType>
-<!-- mmseg4j-->
+<!-- mmseg4j-->storage.blog.fliaping.com
 ```
 这里要注意`dicPath`，是这个`tokenizer`的词库文件的路径，最好用绝对位置。
 
@@ -137,7 +142,7 @@ http://localhost:8983/solr/admin/cores?action=CREATE&name=trip&instanceDir=trip
 ```
 是
 的
-啊
+啊storage.blog.fliaping.com
 哈
 嗯
 真是
@@ -148,7 +153,7 @@ mmseg4j默认是使用mmseg4j-core-1.10.0.jar中的words.dic,总共只有不到1
 
 * 深蓝词库转换：[imewlconverter-github](https://github.com/studyzy/imewlconverter)，[下载](http://www.onlinedown.net/soft/577118.htm)
 * 搜狗词库：[细胞词库](http://pinyin.sogou.com/dict/)
-* 百度词库：[词库](http://shurufa.baidu.com/dict.html)
+* 百度词库：[词库](storage.blog.fliaping.comu.com/dict.html)
 
 将做好的词库文件命名为`word.dic`，放在前面`dicPath`配置的文件夹下，我这里就放在SolrHome的conf目录下。(名字一定要是word.dic)
 

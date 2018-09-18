@@ -32,7 +32,7 @@ SolrCloud模式下有Cluster，Node，Collection，Shard，LeaderCore，Replicat
 
 # Collection逻辑图
 
-![](https://o364p1r5a.qnssl.com/blog/14657908838729.jpg)
+![](https://storage.blog.fliaping.com/blog/14657908838729.jpg)
 
 **解释：**
 
@@ -40,7 +40,7 @@ SolrCloud模式下有Cluster，Node，Collection，Shard，LeaderCore，Replicat
 * 每个shard的replica被分别存储在三台不同的机器（Solr实例）中，这样的目的是容灾处理，提高可用性。如果有一个机器挂掉之后，因为每个shard在别的机器上有复制品，所以能保证整个数据的可用，这是Solrcloud就会在还存在的replica中重新选举一个作为这个shard的Leader。
 
 # SolrCloud的工作模式
-![](https://o364p1r5a.qnssl.com/blog/14657929987086.jpg)
+![](https://storage.blog.fliaping.com/blog/14657929987086.jpg)
 
 **解释：**
 
@@ -49,7 +49,7 @@ SolrCloud模式下有Cluster，Node，Collection，Shard，LeaderCore，Replicat
 
 #SolrCloud创建索引和更新索引
 
-![](https://o364p1r5a.qnssl.com/blog/14657978881168.jpg)
+![](https://storage.blog.fliaping.com/blog/14657978881168.jpg)
 
 **解释：**
 
@@ -71,7 +71,7 @@ SolrCloud支持近实时搜索（near real time），所谓的近实时搜索即
 
 
 # SolrCloud索引的检索
-![](https://o364p1r5a.qnssl.com/blog/14657975180492.jpg)
+![](https://storage.blog.fliaping.com/blog/14657975180492.jpg)
 
 **解释：**
 
@@ -82,7 +82,7 @@ SolrCloud支持近实时搜索（near real time），所谓的近实时搜索即
 
 # Solr Shard Splitting的具体过程
 
-![](https://o364p1r5a.qnssl.com/blog/14657976046061.jpg)
+![](https://storage.blog.fliaping.com/blog/14657976046061.jpg)
 
 **解释：**
 
@@ -105,7 +105,7 @@ III.V. 同时，会把文档路由给新的Shard的Leader
 IV.VI. 新Shard的Leader会路由文档到自己的Replica，各自做索引，在原有文档重新索引完成，系统会把分发文档路由切到对应的新的Leader上，原有Shard关闭。Shard只是一个逻辑概念，所以Shard的Splitting只是将原有Shard的Replica均匀的分不到更多的Shard的更多的Solr节点上去。
 
 # Zookeeper
-![](https://o364p1r5a.qnssl.com/blog/14658023256630.jpg)
+![](https://storage.blog.fliaping.com/blog/14658023256630.jpg)
 
 以上为本项目中的Zookeeper的文件结构，可以看到上传的Solr配置文件。
 

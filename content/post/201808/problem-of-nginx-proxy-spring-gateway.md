@@ -9,7 +9,7 @@ tags: ["nginx","gateway"]
 
 ---
 
-![spring cloud gateway](https://o364p1r5a.qnssl.com/18-8-14/26795044.jpg)
+![spring cloud gateway](https://storage.blog.fliaping.com/18-8-14/26795044.jpg)
 
 ## 背景
 

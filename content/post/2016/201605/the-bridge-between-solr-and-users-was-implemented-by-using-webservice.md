@@ -14,7 +14,7 @@ title = "搜索服务API"
 
 这篇文章主要是关于solr和普通用户之间的桥梁`SearchService`,简单了解下整过工作流程.
 
-![](https://o364p1r5a.qnssl.com/blog/14639907128551.jpg)
+![](https://storage.blog.fliaping.com/blog/14639907128551.jpg)
 
 <!--more-->
 
@@ -26,7 +26,7 @@ title = "搜索服务API"
 
 这样做的另一个好处是能轻松应对SolrCloud的扩展和并发量的剧增，如果后期并发增加，可以扩展`SearchService`到多台web服务器，然后通过nginx做反向代理和负载均衡，将客户端的请求分散到不同的web服务器上。
 
-![](https://o364p1r5a.qnssl.com/blog/14639816173721.png)
+![](https://storage.blog.fliaping.com/blog/14639816173721.png)
 
 
 # 用Servlet提供服务

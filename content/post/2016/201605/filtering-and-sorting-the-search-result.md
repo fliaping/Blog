@@ -33,7 +33,7 @@ title = "搜索结果的筛选和排序"
 
 Solr利用Lucene的权重算法，也就是通过一个公式计算每个Documents的得分，然后按得分高低排序，公式如下：
 
-![](https://o364p1r5a.qnssl.com/blog/14658258239201.jpg)
+![](https://storage.blog.fliaping.com/blog/14658258239201.jpg)
 
 其中：
 

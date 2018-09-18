@@ -13,7 +13,7 @@ title = "【翻译】http status code 304"
 
 
 
-![http-status-code-304](https://o364p1r5a.qnssl.com/blog/http-status-code-304.png)
+![http-status-code-304](https://storage.blog.fliaping.com/blog/http-status-code-304.png)
 在研究http2的是时候，无意中发现http code为304，对此不解，故搜之，发现该文，顺便翻译一下。奈何英文水平有限，词不达意，望阅者见谅。以小见大，感叹技术文章翻译之艰难，大多译文不精确也是可以理解，故还是多看英文原文吧。
 
 原文：[304 NOT MODIFIED](https://httpstatuses.com/304)，本文在原文基础上增加了示例说明。
@@ -57,7 +57,7 @@ Source: [RFC7232 Section 4.1](http://tools.ietf.org/html/rfc7232#section-4.1)
 
 再来看下面的图，这是本地304回应的完整请求。可以先看请求头的两个字段`If-Modified-Since`和`If-None-Match`，前者是上次`200 OK`返回中的`Last-Modified`字段的值，后者是`etag`的值。`If-Modified-Since`字段的意思根据名字就可以看出，是一个条件，即资源是不是在这时间之后被修改过，如果没有，返回304，有的话按照正常的200返回。
 
-![http-status-code-304-request-and-response](https://o364p1r5a.qnssl.com/blog/http-status-code-304-request-and-response.png)
+![http-status-code-304-request-and-response](https://storage.blog.fliaping.com/blog/http-status-code-304-request-and-response.png)
 
 通过这种方法可以减少返回体的传输时间，但是还是有网络请求，那么有一个完全的缓存，不会发送请求，直接命中本地缓存，这里需要用到`Cache-Control`字段，例如`max-age=2592000`表示缓存将在30天后失效。还有其他的取值：
 
