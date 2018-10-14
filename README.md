@@ -16,3 +16,13 @@ git submodule update --remote
 2. 撰写文章, 并push到github
 3. 准备发布: 将meta信息中的draft改为false, 并移动到post目录
 4. deploy到服务器: `./deploy`
+
+## other
+
+分类：
+
+- 后端开发
+- AI之遥
+- 科幻Fans
+- 智慧之光
+- 一粒尘埃
