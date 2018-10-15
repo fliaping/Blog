@@ -1,5 +1,5 @@
 ---
-title: "简述交叉编译常用的方法及应用"
+title: "简述交叉编译常用的方法及在构建Docker镜像中的应用"
 date: 2018-10-14T13:38:44+08:00
 draft: false
 categories: ["后端开发"]
