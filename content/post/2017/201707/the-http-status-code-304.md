@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["http"]
+categories = ["Developer"]
 date = 2017-07-04T13:45:25Z
 description = ""
 draft = false

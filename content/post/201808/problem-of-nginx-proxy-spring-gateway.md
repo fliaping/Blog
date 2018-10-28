@@ -3,7 +3,7 @@ author: "Payne Xu"
 title: "Spring cloud gateway通过nginx代理报错问题"
 date: 2018-08-14T20:42:55+08:00
 draft: false
-categories: ["spring-cloud-gateway"]
+categories: ["Developer"]
 slug: "problem-of-nginx-proxy-spring-gateway"
 tags: ["nginx","gateway"]
 

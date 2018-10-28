@@ -1,7 +1,8 @@
 +++
 author = "Payne Xu"
 date = 2017-08-10T18:41:46Z
-description = ""
+categories = ["酷cool玩"]
+tags = ["vps"]
 draft = false
 slug = "re-move-back-to-alibaba-cloud-for-my-vps"
 title = "重新迁回阿里云"

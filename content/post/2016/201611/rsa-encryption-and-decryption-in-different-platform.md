@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["rsa", "java", "php"]
+categories = ["Developer"]
 date = 2016-11-22T11:36:25Z
 description = ""
 draft = false

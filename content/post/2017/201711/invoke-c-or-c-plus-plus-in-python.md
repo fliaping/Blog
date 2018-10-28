@@ -1,7 +1,8 @@
 +++
 author = "Payne Xu"
 date = 2017-11-03T23:26:00Z
-description = ""
+categories = ["Developer"]
+tags = ["python"]
 draft = false
 slug = "invoke-c-or-c-plus-plus-in-python"
 title = "Python 调用C/C++"

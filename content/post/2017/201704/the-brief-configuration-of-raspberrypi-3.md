@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["raspberry-pi"]
+categories = ["酷cool玩"]
 date = 2017-04-08T12:33:25Z
 description = ""
 draft = false

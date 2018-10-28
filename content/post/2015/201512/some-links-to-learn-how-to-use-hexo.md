@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["hexo"]
+categories = ["Developer"]
 date = 2015-12-26T18:15:40Z
 description = ""
 draft = false

@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["vpn"]
+categories = ["Developer"]
 date = 2017-06-24T03:48:25Z
 description = ""
 draft = false

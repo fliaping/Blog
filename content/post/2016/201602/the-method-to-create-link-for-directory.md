@@ -1,11 +1,11 @@
 +++
 author = "Payne Xu"
-categories = ["android文件系统"]
+categories = ["Developer"]
 date = 2016-02-25T10:48:43Z
 description = ""
 draft = false
 slug = "the-method-to-create-link-for-directory"
-tags = ["android文件系统"]
+tags = ["android"]
 title = "Android文件夹链接方法(ln不能用)"
 
 +++

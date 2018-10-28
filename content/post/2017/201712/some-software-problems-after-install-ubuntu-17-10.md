@@ -1,7 +1,8 @@
 +++
 author = "Payne Xu"
 date = 2017-12-03T20:11:43Z
-description = ""
+categories = ["Developer"]
+tags = ["ubuntu"]
 draft = false
 slug = "some-software-problems-after-install-ubuntu-17-10"
 title = "安装ubuntu17.10后的相关软件问题"

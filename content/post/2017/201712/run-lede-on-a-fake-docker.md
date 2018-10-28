@@ -1,10 +1,11 @@
 +++
 author = "Payne Xu"
 date = 2017-12-04T02:31:48Z
-description = ""
+categories = ["酷cool玩"]
+tags = ["docker","openwrt"]
 draft = false
 slug = "run-lede-on-a-fake-docker"
-title = "利用容器技术在一个宿主机上运行LEDE(OpenWrt)"
+title = "利用容器技术在一个宿主机上运行OpenWrt(LEDE)"
 
 +++
 

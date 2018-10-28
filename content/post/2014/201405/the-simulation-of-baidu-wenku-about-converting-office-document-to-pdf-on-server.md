@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["文库", "Linux", "doc2pdf"]
+categories = ["Developer"]
 date = 2014-05-01T09:30:25Z
 description = ""
 draft = false

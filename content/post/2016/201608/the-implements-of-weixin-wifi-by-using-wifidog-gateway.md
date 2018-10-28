@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["openwrt"]
+categories = ["Developer"]
 date = 2016-08-14T07:51:25Z
 description = ""
 draft = false

@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["Docker"]
+categories = ["Developer"]
 date = 2017-10-08T05:56:11Z
 description = ""
 draft = false

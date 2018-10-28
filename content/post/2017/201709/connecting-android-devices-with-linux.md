@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["软件"]
+categories = ["酷cool玩"]
 date = 2017-09-24T06:11:58Z
 description = ""
 draft = false

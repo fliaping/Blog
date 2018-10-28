@@ -1,7 +1,8 @@
 +++
 author = "Payne Xu"
 date = 2018-05-05T06:51:02Z
-description = ""
+categories = ["酷cool玩"]
+tags = ["linux","gui","网易云音乐"]
 draft = false
 slug = "analysis-of-the-problem-that-netease-music-linux-client-cant-show-gui"
 title = "网易云音乐Linux客户端GUI不能显示问题排查"

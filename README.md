@@ -21,8 +21,9 @@ git submodule update --remote
 
 分类：
 
-- 后端开发
+- Developer
 - AI之遥
 - 科幻Fans
 - 智慧之光
-- 一粒尘埃
+- 星云尘埃
+- 酷cool玩

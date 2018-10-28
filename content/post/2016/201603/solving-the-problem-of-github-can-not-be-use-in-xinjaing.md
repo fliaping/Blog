@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["gfw", "github"]
+categories = ["Developer"]
 date = 2016-03-01T15:04:33Z
 description = ""
 draft = false

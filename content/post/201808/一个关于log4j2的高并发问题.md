@@ -2,9 +2,9 @@
 title: "一个关于log4j2的高并发问题"
 date: 2018-08-21T15:46:16+08:00
 draft: false
-categories: ["高并发"]
+categories: ["Developer"]
 slug: "a-high-concurrency-problem-of-log4j2"
-tags: ["log4j2"]
+tags: ["log4j2","高并发"]
 author: "Payne Xu"
 
 ---

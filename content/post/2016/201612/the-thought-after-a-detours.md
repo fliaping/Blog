@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["job"]
+categories = ["星云尘埃"]
 date = 2016-12-17T12:06:25Z
 description = ""
 draft = false

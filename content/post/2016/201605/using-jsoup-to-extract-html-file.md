@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["搜索引擎", "jsoup"]
+categories = ["Developer"]
 date = 2016-05-22T11:09:25Z
 description = ""
 draft = false

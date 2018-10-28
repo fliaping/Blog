@@ -1,9 +1,10 @@
 +++
 author = "Payne Xu"
 date = 2017-12-24T07:22:44Z
-description = ""
+categories = ["星云尘埃"]
+tags = ["summary"]
 draft = false
-slug = "the-summery-of-2017-and-the-plan-of-2018"
+slug = "the-summary-of-2017-and-the-plan-of-2018"
 title = "2017年总结及2018年计划"
 
 +++

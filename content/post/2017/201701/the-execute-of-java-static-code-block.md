@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["java"]
+categories = ["Developer"]
 date = 2017-01-23T12:58:25Z
 description = ""
 draft = false

@@ -2,7 +2,7 @@
 title: "简述交叉编译常用的方法及在构建Docker镜像中的应用"
 date: 2018-10-14T13:38:44+08:00
 draft: false
-categories: ["后端开发"]
+categories: ["Developer"]
 tags: ["docker","编译"]
 slug: "introduce-the-method-and-application-of-cross-compilation"
 author: "Payne Xu"

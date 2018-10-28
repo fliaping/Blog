@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["视频分享系统", "Docker"]
+categories = ["Developer"]
 date = 2016-04-24T04:29:19Z
 description = ""
 draft = false

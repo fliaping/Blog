@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["shadowsocks"]
+categories = ["Developer"]
 date = 2015-12-23T07:23:17Z
 description = ""
 draft = false

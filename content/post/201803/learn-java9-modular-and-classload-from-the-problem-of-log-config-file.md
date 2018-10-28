@@ -1,7 +1,8 @@
 +++
 author = "Payne Xu"
 date = 2018-03-31T07:50:07Z
-description = ""
+categories = ["Developer"]
+tags = ["java"]
 draft = false
 slug = "learn-java9-modular-and-classload-from-the-problem-of-log-config-file"
 title = "从日志配置文件读取了解java9模块化和类加载机制的改变"

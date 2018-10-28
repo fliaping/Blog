@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["Ghost", "node.js"]
+categories = ["Developer"]
 date = 2016-03-04T12:19:40Z
 description = ""
 draft = false

@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["搜索引擎", "Solr"]
+categories = ["Developer"]
 date = 2016-05-20T04:49:25Z
 description = ""
 draft = false

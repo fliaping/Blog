@@ -1,6 +1,6 @@
 +++
 author = "Payne Xu"
-categories = ["AI", "idea"]
+categories = ["AI之遥"]
 date = 2017-12-09T07:11:04Z
 description = ""
 draft = false
