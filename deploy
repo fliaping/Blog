@@ -8,10 +8,10 @@ else
     git push
 fi
 
-# USER=fliaping
-# HOST=june
-# DIR=www/fliaping_blog   # might sometimes be empty!
+USER=fliaping
+HOST=june
+DIR=www/fliaping_blog   # might sometimes be empty!
 
-# hugo && rsync -avz --delete public/ ${USER}@${HOST}:~/${DIR}
+hugo && rsync -avz --delete public/ ${USER}@${HOST}:~/${DIR}
 
-# exit 0
+exit 0
