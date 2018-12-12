@@ -1,8 +1,15 @@
 #!/bin/sh
-USER=fliaping
-HOST=june
-DIR=www/fliaping_blog   # might sometimes be empty!
+if [ ! -n "$1" ] ;then
+    echo "please input deploy message"
+    exit 0
+else
+    git commit -m "$1"
+fi
 
-hugo && rsync -avz --delete public/ ${USER}@${HOST}:~/${DIR}
+# USER=fliaping
+# HOST=june
+# DIR=www/fliaping_blog   # might sometimes be empty!
 
-exit 0
+# hugo && rsync -avz --delete public/ ${USER}@${HOST}:~/${DIR}
+
+# exit 0
