@@ -11,6 +11,8 @@ author: "Payne Xu"
 
 ![Apache_Log4j_Logo](https://storage.blog.fliaping.com/18-8-19/25780797.jpg)
 
+笔者在apache-issue提出了该问题，目前解决方案正在讨论中 https://issues.apache.org/jira/browse/LOG4J2-2490
+
 # 前言
 
 日志应该是一个应用的基础组件, 其中老牌的log4j应该是我们用的最多的, 后来互联网发展,大家都朝着高并发的方向发力,发现log4j性能不行,因为竞争锁导致阻塞,性能跟不上. 后来其创始人另立门户logback后, log4j的新主子Apache进行了大的升级改造,就是如今的log4j2, 其异步日志的性能也是一骑绝尘, 然而其使用过程中依然有很多坑,稍不留意就会搞个人仰马翻. 下面先列举一些别人踩过的log4j的坑:
