@@ -11,7 +11,7 @@ author: "Payne Xu"
 
 ![Apache_Log4j_Logo](https://storage.blog.fliaping.com/18-8-19/25780797.jpg)
 
-笔者在apache-issue提出了该问题，目前解决方案正在讨论中 https://issues.apache.org/jira/browse/LOG4J2-2490
+笔者在apache-issue提出了该问题，目前解决方案正在讨论中 <https://issues.apache.org/jira/browse/LOG4J2-2490>
 
 # 前言
 
