@@ -4,7 +4,7 @@ date: 2019-03-24T16:25:42+08:00
 draft: false
 categories: ["Developer"] # Developer AI之遥 科幻Fans 智慧之光 星云尘埃 酷cool玩
 slug: "arts-week-1"
-tags: ["arts"]
+tags: ["ARTS"]
 author: "Payne Xu"
 
 ---
@@ -152,7 +152,7 @@ Output: 0
 Explanation: In this case, no transaction is done, i.e. max profit = 0.
 ```
 
-1. 记录最小值和最大收益。
+1. 只做一次遍历，记录最小值和最大收益，每遍历一个元素计算看看可不可以更新最大收益和最小值
 
 ```java
 public int maxProfit(int[] prices) {
