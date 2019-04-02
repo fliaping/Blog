@@ -15,6 +15,8 @@ author: "Payne Xu"
 3. Tip：学习至少一个技术技巧
 4. Share：分享一篇有观点和思考的技术文章
 
+[ARTS挑战](https://www.zhihu.com/question/301150832)
+
 ## Algorithm
 
 ### 120 Triangle
