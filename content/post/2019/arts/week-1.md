@@ -8,7 +8,6 @@ tags: ["ARTS"]
 author: "Payne Xu"
 
 ---
-# ARTS-WEEK-1
 
 1. Algorithm：每周至少做一个 leetcode 的算法题
 2. Review：阅读并点评至少一篇英文技术文章
@@ -191,7 +190,6 @@ public int maxProfit(int[] prices) {
 
 该项目是Google领导，其它公司参与的项目，属于一个新组建的机构Continuous Delivery Foundation，该机构的项目还包含Jenkins X, Jenkins, and Spinnaker，。该机构隶属于Linux Foundation
 
-
 ## Tip
 
 Java字节码学习，Lambda底层原理 ：
@@ -201,7 +199,6 @@ Java字节码学习，Lambda底层原理 ：
 - 第一次执行 invokedynamic 指令时，它所对应的启动方法会通过 ASM 来生成一个适配器类。这个适配器类实现了对应的函数式接口，在我们的例子中，也就是 IntUnaryOperator。启动方法的返回值是一个 ConstantCallSite，其链接对象为一个返回适配器类实例的方法句柄。
 - 如果该 Lambda 表达式没有捕获其他变量，那么可以认为它是上下文无关的。因此，启动方法将新建一个适配器类的实例，并且生成一个特殊的方法句柄，始终返回该实例。
 - 如果该 Lambda 表达式捕获了其他变量，那么每次执行该 invokedynamic 指令，我们都要更新这些捕获了的变量，以防止它们发生了变化。为了保证 Lambda 表达式的线程安全，我们无法共享同一个适配器类的实例。因此，在每次执行 invokedynamic 指令时，所调用的方法句柄都需要新建一个适配器类实例。
-
 
 ## Share
 

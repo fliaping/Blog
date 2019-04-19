@@ -1,15 +1,13 @@
 ---
 title: "ARTS-Week-2"
 date: 2019-03-31T23:59:42+08:00
-draft: true
+draft: false
 categories: ["Developer"] # Developer AI之遥 科幻Fans 智慧之光 星云尘埃 酷cool玩
 slug: "arts-week-2"
 tags: ["ARTS"]
 author: "Payne Xu"
 
 ---
-
-# ARTS-WEEK-2
 
 1. Algorithm：每周至少做一个 leetcode 的算法题
 2. Review：阅读并点评至少一篇英文技术文章
@@ -101,3 +99,75 @@ Follow up: Could you improve it to O(n log n) time complexity?
     ```
 
 ## Review
+
+原文链接：[How Java 10 changes the way we use Anonymous Inner Classes](https://medium.com/the-java-report/how-java-10-changes-the-way-we-use-anonymous-inner-classes-b3735cf45593)
+
+本文主要内容是讲Java10如何改变我们使用匿名内部类的方式，在我们使用匿名内部类时需要继承一个父类，我们可以在匿名内部类中定义一些方法，可以是重载父类方法，也可以是新定义的方法,如下代码所示：
+
+```java
+/* AnonDemo.java */
+class Anon { };
+public class AnonDemo {
+    public static void main (String[] args) {
+        Anon anonInner = new Anon () { 
+            public String toString() { return "Overriden"; };
+            public void doSomething() {
+                 System.out.println("Blah");
+            };
+        };
+        System.out.println(anonInner.toString());       
+        anonInner.doSomething(); // Won't compile!
+    };
+};
+
+```
+
+在上面的代码中，创建了一个继承自Anon的匿名内部类的实例，并通过Anon类型变量anonInner引用，该匿名内部类重载了父类的toString方法，新定义了一个doSomething方法，anonInner可以调用toString方法，但是不能调用doSomething，因为anonInner的类型是Anon，并没有doSomething方法, 故不能调用，会发生编译错误。
+
+调用匿名类新定义的方法只有一种方法，如下：
+
+```java
+new Anon() { public void foo() { System.out.println("Woah"); } }.foo();
+```
+
+但是这样的方式并没有使用多态。通常这样的写法有很大的局限性。不过从Java10引入的var关键字解决了这个问题，如下示例：
+
+```java
+/* AnonDemo.java */
+class Anon { };
+public class AnonDemo {
+    public static void main (String[] args) {
+          var anonInner = new Anon() {
+          public void hello() { 
+                   System.out.println("New method here, and you can
+                   easily access me in Java 10!\n" +
+                  "The class is:  " + this.getClass() 
+          ); 
+          anonInner.hello(); // Works!!
+    };
+};
+```
+
+通过var关键字的类型推断可以将匿名内部类实例赋值给一个未定义类型的引用，而Java在编译阶段的类型推断可以判定引用的类型，从而可以调用匿名内部类新定义的字段、方法。
+
+## Tips
+
+问题： 在使用Redisson的过程中，从3.7.2 升级至3.10.2之后出现编解码错误的问题，通过Release Log看到，在3.10.0时有如下修改：Improvement - default codec changed to FSTCodec
+
+1. 谨慎对待版本升级，阅读升级所跨区间的Release Log，尤其注意那些不是非常熟悉的类库
+2. 由于三方包对于开发者来说是一个黑盒子，三方包难免会有bug，默认配置的更改等情况，这些都是难以避免，如何在三方包不可控的情况下让我们的系统更加可靠？无外乎需要每次升级改动之后进行全面的测试，但是由于常规测试流程长，比较好的解决办法就是自动化测试的使用，任何源码的改动都会触发自动化构建测试，其实这也叫做CI（持续集成）
+3. CI的目的为：针对软体系统每个变动，能持续且自动地进行验证。此验证通常包含了：
+   - 构建 (build)
+   - 测试 (test)
+   - 代码分析 (source code analysis)
+   - 其他相关工作 (Auto deploy)
+4. CI的好处：
+   - 降低风险。
+   - 减少人工手动的繁杂步骤。
+   - 可随时产生一版可部署的版本。
+   - 增加系统透明度。
+5. 我们公司可能不太重视这块，但是这是保证软件质量很重要的环节。仅仅靠业务测试很难保证软件质量。
+
+## Share
+
+//todo 待补充
