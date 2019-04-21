@@ -3,7 +3,7 @@ title: "ARTS-Week-3"
 date: 2019-03-31T23:59:42+08:00
 draft: true
 categories: ["Developer"] # Developer AI之遥 科幻Fans 智慧之光 星云尘埃 酷cool玩
-slug: "arts-week-2"
+slug: "arts-week-3"
 tags: ["ARTS"]
 author: "Payne Xu"
 
@@ -15,3 +15,17 @@ author: "Payne Xu"
 4. Share：分享一篇有观点和思考的技术文章
 
 [ARTS挑战](https://www.zhihu.com/question/301150832)
+
+## Algorithm
+
+### 146. LRU Cache
+
+
+### 实现超时过期缓存
+
+## Review
+
+## Tip
+
+
+## Share
