@@ -323,4 +323,4 @@ Raft共识算法的三个角色：Leader（领导者）、Follower（跟随者�
 
 ## Share
 
-NoImplementException
+NotImplementException

@@ -1,9 +1,9 @@
 ---
-title: "ARTS-Week-3"
-date: 2019-03-31T23:59:42+08:00
+title: "ARTS-Week-7"
+date: 2019-05-01T23:11:42+08:00
 draft: true
 categories: ["Developer"] # Developer AI之遥 科幻Fans 智慧之光 星云尘埃 酷cool玩
-slug: "arts-week-3"
+slug: "arts-week-7"
 tags: ["ARTS"]
 author: "Payne Xu"
 
@@ -18,18 +18,10 @@ author: "Payne Xu"
 
 ## Algorithm
 
-### 146. LRU Cache
-
-
-### 实现超时过期缓存
-
 ## Review
 
-[Java新发展和特性-Dzone](https://dzone.com/guides/java-new-developments-and-features)
-
-
+[Bigtable论文](https://research.google.com/archive/bigtable-osdi06.pdf)
 
 ## Tip
-
 
 ## Share
