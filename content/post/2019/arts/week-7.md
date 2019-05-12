@@ -24,4 +24,8 @@ author: "Payne Xu"
 
 ## Tip
 
+[CPU与内存的那些事](https://www.cnblogs.com/xkfz007/archive/2012/10/08/2715163.html)
+
+NUMA CPU 架构
+
 ## Share

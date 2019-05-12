@@ -18,6 +18,9 @@ author: "Payne Xu"
 
 ## Algorithm
 
+- [排序算法复习汇总](https://www.cnblogs.com/onepixel/p/7674659.html)
+- [各种排序算法动画](http://panthema.net/2013/sound-of-sorting/)
+
 ## Review
 
 [GFS论文](https://research.google.com/archive/gfs-sosp2003.pdf)
