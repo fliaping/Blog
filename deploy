@@ -9,7 +9,7 @@ else
 fi
 
 USER=fliaping
-HOST=june
+HOST=blog
 DIR=www/fliaping_blog   # might sometimes be empty!
 
 hugo && rsync -avz --delete public/ ${USER}@${HOST}:~/${DIR}
