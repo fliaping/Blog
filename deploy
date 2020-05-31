@@ -12,6 +12,7 @@ USER=fliaping
 HOST=blog
 DIR=www/fliaping_blog   # might sometimes be empty!
 
-hugo && rsync -avzhu --delete public/ ${USER}@${HOST}:~/${DIR}
+# hugo && rsync -avzhu --delete public/ ${USER}@${HOST}:~/${DIR}
 
+hugo && qshell qupload2 --bucket www-blog --src-dir ./public
 exit 0
