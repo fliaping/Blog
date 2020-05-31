@@ -13,6 +13,7 @@ HOST=blog
 DIR=www/fliaping_blog   # might sometimes be empty!
 
 # hugo && rsync -avzhu --delete public/ ${USER}@${HOST}:~/${DIR}
-
-hugo && qshell qupload2 --bucket www-blog --src-dir ./public --overwrite --thread-count 5
+rm -rf ~/.qshell/qupload
+hugo && qshell qupload2 --bucket www-blog --src-dir ./public --overwrite --thread-count 5 --rescan-local
+qshell cdnrefresh -r -i ./qiniu_refresh.txt
 exit 0
