@@ -219,3 +219,6 @@ paginate = 10                                              # 首页每页显示�
 #  section = ["HTML", "RSS"]
 #  taxonomy = ["HTML", "RSS"]
 #  taxonomyTerm = ["HTML"]
+
+[permalinks]
+  post = "/:slug"
