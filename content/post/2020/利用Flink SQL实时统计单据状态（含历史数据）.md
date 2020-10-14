@@ -346,9 +346,9 @@ FROM    plus_offline_data
 ;
 ```
 
-### UDxF
+### UDF
 
-prevValue函数(UDAF)：
+prevValue函数(UDAF:UDF - Aggregation Functions)：
 
 ```java
 package com.fliaping.flink.udf;
@@ -395,7 +395,7 @@ public class PrevValueUdaf extends AggregateFunction<String, PrevValueUdaf.PrevV
 
 ```
 
-statusCount函数（UDTF）：
+statusCount函数（UDTF:UDF - Table Functions）：
 
 ```java
 package com.fliaping.flink.udf;
