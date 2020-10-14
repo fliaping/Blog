@@ -26,7 +26,7 @@ author: "Payne Xu"
 2. 调试成本比较高，无法像写代码那样调试计算逻辑，flink的调试通常只能看输入、输出
 3. 需要有合适的数据输入，如果数据不合适的话，可能非常费事（下文会提到）
 
-那么什么情况下可以采用Blink的方案呢？
+那么什么情况下可以采用Flink的方案呢？
 
 1. 真的对实时性有严格要求，并且由于原始数据量级的问题，无法直接查询原始数据（对数据库压力太大，或耗时过久）
 2. 出于学习的目的，且时间充裕
@@ -36,7 +36,7 @@ author: "Payne Xu"
 
 ## 基本思路
 
-那么下面我们就来讨论实时要求下使用Blink的方案实现。
+那么下面我们就来讨论实时要求下使用Flink的方案实现。
 
 对于实时计算架构，业界有比较成熟两个方案，Lambda和Kappa
 
@@ -78,7 +78,7 @@ Kappa舍弃了离线数据，通过回溯流数据的方式来解决出问题后
 
 ### 实时状态计数如何算
 
-如果熟悉blink[撤回机制](https://developer.aliyun.com/article/457392)，很容易想到，这个不就是状态统计吗，两个group by不就搞定实时计数了吗？
+如果熟悉Flink[撤回机制](https://developer.aliyun.com/article/457392)，很容易想到，这个不就是状态统计吗，两个group by不就搞定实时计数了吗？
 如下面的代码所示，当同一个单据号的状态发生变化，就会撤回之前的那条数据，这个user_id下，前一个状态的计数就会减一。
 
 ```sql
@@ -104,10 +104,10 @@ select user_id,status,COUNT(orderNo) num from (
 
 但是有些数据库同步工具没有变更前数据，对于数据同步的场景是无所谓的，但是我们这个场景是必须要的，对于这种情况，如果非要走下去，那就要加个中间层，缓存每个单据的前一次状态。有两种方案：
 
-1. 可以通过blink的backend state 来存储，不过这个存储是有时效的，但单据的生命周期有可能大于存储时效，这时可以再引入离线数据。
+1. 可以通过Flink的backend state 来存储，不过这个存储是有时效的，但单据的生命周期有可能大于存储时效，这时可以再引入离线数据。
 2. 直接建一个单据前一次状态表，既作为维表又作为结果表，每次一条数过来先当做维表查询上一次状态，然后再把本次状态写入结果表。
 
-然而第2种方案有些重，引入了一张新的外部表，相当于同步了一份单据前一次状态的数据，并且还是要考虑离线数据的问题。而方案1，根据数据分布的特性，由于我们关心的状态在某一时刻，单据并不会很多，离线单据状态可以直接缓存到blink，所以这里我决定还是用方案1来实现。
+然而第2种方案有些重，引入了一张新的外部表，相当于同步了一份单据前一次状态的数据，并且还是要考虑离线数据的问题。而方案1，根据数据分布的特性，由于我们关心的状态在某一时刻，单据并不会很多，离线单据状态可以直接缓存到Flink，所以这里我决定还是用方案1来实现。
 
 ## 实现方案
 
@@ -117,7 +117,7 @@ select user_id,status,COUNT(orderNo) num from (
 
 方案说明：
 
-- 单据上次状态：由于数据源没有更新前数据，因此我们只能利用blink的存储，并加上离线的单据状态进行计算，得到前一次的状态值，这里自定义了聚合函数prevValue，缓存单据前一个状态，如果没有，那就从离线单据中取得，
+- 单据上次状态：由于数据源没有更新前数据，因此我们只能利用Flink的存储，并加上离线的单据状态进行计算，得到前一次的状态值，这里自定义了聚合函数prevValue，缓存单据前一个状态，如果没有，那就从离线单据中取得，
 - 单据状态操作值转换：这里根据当前和上一次状态转换为+1或-1操作，如果两个状态一致，我们就要忽略掉，有可能是重复数据；利用[UDTF](https://ci.apache.org/projects/flink/flink-docs-release-1.3/dev/table/udfs.html#table-functions)，可能一条数据转为两条，上一次状态-1及当前状态+1；如果前一个状态为空，则忽略。
 
 注意点：
@@ -144,7 +144,7 @@ select user_id,status,COUNT(orderNo) num from (
 
 ## 附录
 
-### BLINK SQL代码
+### Flink SQL代码
 
 ```sql
 CREATE FUNCTION statusCount AS 'com.fliaping.flink.udf.StatusCountUdtf' ;
@@ -214,7 +214,7 @@ AND     biz_status IS NOT NULL
 AND     gmt_modified IS NOT NULL
 ;
 
--- 获取blink存储中的单据前一个状态，并缓存当前状态
+-- 获取Flink存储中的单据前一个状态，并缓存当前状态
 CREATE VIEW get_before_biz_status AS
 SELECT  order_no
         ,user_id
@@ -225,7 +225,7 @@ SELECT  order_no
 FROM    filter_view
 ;
 
--- 对于blink中没有存储上一次状态的单据，去离线数据中查出来
+-- 对于Flink中没有存储上一次状态的单据，去离线数据中查出来
 CREATE VIEW order_with_last_biz_status AS
 SELECT  c.*
         -- 考虑每天的离线数据需要一定时间产出，故使用前日离线数据
@@ -254,7 +254,7 @@ select  S.order_no
         ,T.effect_biz_status
         ,T.effect_biz_status_opt
 from    (
-    -- 将离线和blink中取到的前一个状态进行合并，确定该单据前一个状态
+    -- 将离线和Flink中取到的前一个状态进行合并，确定该单据前一个状态
             SELECT  order_no
                     ,user_id
                     ,biz_status
@@ -306,7 +306,7 @@ SELECT  user_id
             ,offline_num
             ,',realtimeNum:'
             ,num
-            ,',sourceType:BLINK_STREAM'
+            ,',sourceType:Flink_STREAM'
         ) attribute
 FROM    (
             SELECT  a.user_id
