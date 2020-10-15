@@ -131,14 +131,14 @@ paginate = 10                                              # 首页每页显示�
     warn = 180              # Display warning if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示警告
 
   [params.gitment]          # Gitment is a comment system based on GitHub issues. see https://github.com/imsun/gitment
-    owner = "fliaping"              # Your GitHub ID
-    repo = "Blog"               # The repo to store comments
-    clientId = "c4ef14e88fbeca886191"           # Your client ID
-    clientSecret = "9abcc260c662ad994ea4cf8c7267feb9c66da87a"       # Your client secret
+    # owner = "fliaping"              # Your GitHub ID
+    # repo = "Blog"               # The repo to store comments
+    # clientId = "c4ef14e88fbeca886191"           # Your client ID
+    # clientSecret = "9abcc260c662ad994ea4cf8c7267feb9c66da87a"       # Your client secret
 
   [params.utterances]       # https://utteranc.es/
-    owner = ""              # Your GitHub ID
-    repo = ""               # The repo to store comments
+    owner = "fliaping"              # Your GitHub ID
+    repo = "Blog"               # The repo to store comments
 
   [params.gitalk]           # Gitalk is a comment system based on GitHub issues. see https://github.com/gitalk/gitalk
     owner = ""              # Your GitHub ID
