@@ -16,7 +16,7 @@ pygmentsCodefencesGuessSyntax = true
 
 hasCJKLanguage = true     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
 paginate = 10                                              # 首页每页显示的文章数
-disqusShortname = "fliaping"      # disqus_shortname
+# disqusShortname = "fliaping"      # disqus_shortname
 # googleAnalytics = "UA-63276498-2"      # UA-XXXXXXXX-X
 # copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
 
@@ -131,10 +131,10 @@ disqusShortname = "fliaping"      # disqus_shortname
     warn = 180              # Display warning if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示警告
 
   [params.gitment]          # Gitment is a comment system based on GitHub issues. see https://github.com/imsun/gitment
-    # owner = "fliaping"              # Your GitHub ID
-    # repo = "Blog"               # The repo to store comments
-    # clientId = "c4ef14e88fbeca886191"           # Your client ID
-    # clientSecret = "9abcc260c662ad994ea4cf8c7267feb9c66da87a"       # Your client secret
+    owner = "fliaping"              # Your GitHub ID
+    repo = "Blog"               # The repo to store comments
+    clientId = "c4ef14e88fbeca886191"           # Your client ID
+    clientSecret = "9abcc260c662ad994ea4cf8c7267feb9c66da87a"       # Your client secret
 
   [params.utterances]       # https://utteranc.es/
     owner = ""              # Your GitHub ID
