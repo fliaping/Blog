@@ -3,6 +3,7 @@ if [ ! -n "$1" ] ;then
     echo "please input deploy message"
     exit 0
 else
+    ./upload_and_replace.sh
     git add .
     git commit -m "$1"
     git push
