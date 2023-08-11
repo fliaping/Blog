@@ -6,9 +6,7 @@ categories: ["Developer"] # Developer AI之遥 科幻Fans 智慧之光 星云尘
 slug: "use-flink-sql-count-order-status-and-include-history"
 tags: ["flink","实时计算"]
 author: "Payne Xu"
-
 ---
-
 ## 背景
 
 需求抽象下，有一种单据，整个生命周期中有很多种状态，现在要实时按照某个维度（例如用户id）统计其中某几个状态的数量，并按照该维度定时推送统计数据。
