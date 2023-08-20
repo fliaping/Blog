@@ -21,17 +21,17 @@ function upload_images_and_get_links() {
   mkdir -p "./temp_$uploads_dir/$date_part/$time_part"
 
   # 将'uploads_dir'移动到时间子目录
-  cp -r "./$uploads_dir/" "./temp_$uploads_dir/$date_part/$time_part"
+  cp "./$uploads_dir/**" "./temp_$uploads_dir/$date_part/$time_part"
 
-  qshell qupload2 --bucket xpghost --src-dir "./temp_$uploads_dir" --overwrite --thread-count 5 --rescan-local
+  # qshell qupload2 --bucket xpghost --src-dir "./temp_$uploads_dir" --overwrite --thread-count 5 --rescan-local
   
-  # Recursively upload and get public links for each file in the 'images' directory
-  for file_path in $(find "$uploads_dir" -type f); do
-    local public_link="https://storage.blog.fliaping.com/$date_part/$time_part${file_path#$uploads_dir}"
-    echo "$file_path,$public_link" > "$public_links_file"
-  done
+  # # Recursively upload and get public links for each file in the 'images' directory
+  # for file_path in $(find "$uploads_dir" -type f); do
+  #   local public_link="https://storage.blog.fliaping.com/$date_part/$time_part${file_path#$uploads_dir}"
+  #   echo "$file_path,$public_link" > "$public_links_file"
+  # done
 
-  echo "Step 1: Upload and get public links for '$uploads_dir' - Done!"
+  # echo "Step 1: Upload and get public links for '$uploads_dir' - Done!"
 }
 
 regex_escape_path() {
@@ -126,5 +126,5 @@ function clean_cache_dir() {
 
 # Main execution
 upload_images_and_get_links
-replace_image_paths_in_markdown
-clean_cache_dir
+# replace_image_paths_in_markdown
+# clean_cache_dir
