@@ -1,4 +1,4 @@
-themes/
+# themes/
 public/
 !themes/.keep
 uploads/
