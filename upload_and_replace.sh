@@ -96,7 +96,7 @@ function replace_image_paths_in_markdown() {
 
       # 如果有匹配的行，输出完整的行和行号
       if [ ! -z "$line_numbers" ]; then
-          echo "[MATCHED:$path_in_md],[FILE:$file_path]"
+          echo "\n[MATCHED:$path_in_md],[FILE:$file_path]"
           for line in $line_numbers; do
               line_content=$(sed -n "${line}p" "$file_path")
               echo "[$line]: $line_content"
@@ -111,7 +111,7 @@ function replace_image_paths_in_markdown() {
           fi
 
           # 输出对应行的最新内容
-          echo -e "\n[REPLACED:$public_link],[FILE:$file_path]"
+          echo -e "[REPLACED:$public_link],[FILE:$file_path]"
           for line in $line_numbers; do
               line_content=$(sed -n "${line}p" "$file_path")
               echo "[$line]: $line_content"
