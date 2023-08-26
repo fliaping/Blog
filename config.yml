@@ -1,6 +1,6 @@
 baseURL: "https://blog.fliaping.com"
 title: Fliaping's Blog
-paginate: 5
+paginate: 10
 theme: PaperMod
 
 enableRobotsTXT: true
@@ -33,7 +33,7 @@ params:
   ShowCodeCopyButtons: true
   ShowWordCount: true
   ShowRssButtonInSectionTermList: true
-  UseHugoToc: true
+  UseHugoToc: flase
   disableSpecial1stPost: false
   disableScrollToTop: false
   comments: true
