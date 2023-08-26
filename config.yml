@@ -33,7 +33,7 @@ params:
   ShowCodeCopyButtons: true
   ShowWordCount: true
   ShowRssButtonInSectionTermList: true
-  UseHugoToc: flase
+  UseHugoToc: true
   disableSpecial1stPost: false
   disableScrollToTop: false
   comments: true
@@ -133,3 +133,7 @@ markup:
     # guessSyntax: true
     # lineNos: true
     # style: monokai
+
+
+permalinks:
+  post: "/:slug"
