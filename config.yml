@@ -8,7 +8,12 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 
-googleAnalytics: UA-63276498-2
+enableInlineShortcodes: true
+enableEmoji: true # 允许使用 Emoji 表情，建议 true
+hasCJKLanguage: true # 自动检测是否包含 中文日文韩文 如果文章中使用了很多中文引号的话可以开启
+summaryLength: 140
+
+#googleAnalytics: UA-63276498-2
 
 minify:
   disableXML: true
@@ -22,7 +27,7 @@ params:
   author: fliaping
   # author: ["Me", "You"] # multiple authors
   images: ["<link or path of image for opengraph, twitter-cards>"]
-  DateFormat: "2023-08-22"
+  DateFormat: "2006-01-02"
   defaultTheme: auto # dark, light
   disableThemeToggle: false
 
@@ -42,15 +47,16 @@ params:
   showtoc: true
   tocopen: true
   math: true
+#  extendCodeBackground: false # 代码块是否自动横向展开
 
   assets:
     # disableHLJS: true # to disable highlight.js
     # disableFingerprinting: true
-    favicon: "<link / abs url>"
-    favicon16x16: "<link / abs url>"
-    favicon32x32: "<link / abs url>"
-    apple_touch_icon: "<link / abs url>"
-    safari_pinned_tab: "<link / abs url>"
+    favicon: "/favicon.ico"
+    favicon16x16: "/favicon-16x16.png"
+    favicon32x32: "/favicon-32x32.png"
+    apple_touch_icon: "/apple-touch-icon.png"
+    safari_pinned_tab: "/safari-pinned-tab.svg"
 
   label:
     text: "Home"
@@ -60,8 +66,8 @@ params:
   # profile-mode
   profileMode:
     enabled: false # needs to be explicitly set
-    title: ExampleSite
-    subtitle: "This is subtitle"
+    title: Fliaping's Blog
+    subtitle: ""
     imageUrl: "<img location>"
     imageWidth: 120
     imageHeight: 120
@@ -99,8 +105,8 @@ params:
     hiddenInSingle: true # hide on single page
 
   editPost:
-    URL: "https://github.com/<path_to_repo>/content"
-    Text: "Suggest Changes" # edit text
+    URL: "https://github.com/fliaping/Blog/tree/master/content"
+    Text: "修改建议" # edit text
     appendFilePath: true # to append file path to Edit link
 
   # for search
@@ -113,16 +119,37 @@ params:
     threshold: 0.4
     minMatchCharLength: 0
     keys: ["title", "permalink", "summary", "content"]
+
+  StartYear: 2015 # 底部开始年份
+  FilingNo: 豫ICP备15007908号-2 # 底部备案号
+  PublicSecurityIconLink: 填自己的公安图标链接 # 填自己的公安图标链接,可用绝对路径，相对路径如 img/beian.png
+  PublicNetworkSecurity: 填自己的公网安备 # 底部公网安备号
 menu:
   main:
-    - identifier: categories
-      name: categories
-      url: /categories/
-      weight: 10
+    - identifier: search
+      name: 🔍 搜索
+      url: search
+      weight: 1
+    - identifier: home
+      name: 🏠 主页
+      url: /
+      weight: 2
+    - identifier: posts
+      name: 📚 文章
+      url: posts
+      weight: 3
     - identifier: tags
-      name: tags
-      url: /tags/
+      name: 🧩 标签
+      url: tags
+      weight: 15
+    - identifier: archives
+      name: ⏱️ 时间轴
+      url: archives/
       weight: 20
+    - identifier: about
+      name: 🙋🏻‍♂️ 关于
+      url: about
+      weight: 50
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
 markup:
@@ -137,3 +164,9 @@ markup:
 
 permalinks:
   post: "/:slug"
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
