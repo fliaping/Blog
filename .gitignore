@@ -1,4 +1,5 @@
 # themes/
+resources/_gen
 public/
 !themes/.keep
 uploads/
