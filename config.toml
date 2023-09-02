@@ -50,9 +50,9 @@ paginate = 10                                              # 首页每页显示�
   url = "/categories/"
 [[menu.main]]
   name = "About"
-  weight = 40
-  identifier = "categories"
-  url = "/categories/"
+  weight = 50
+  identifier = "about"
+  url = "/about/"
 
 [params]
   version = "4.x"           # Used to give a friendly message when you have an incompatible update
