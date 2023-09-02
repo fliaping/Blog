@@ -48,6 +48,11 @@ paginate = 10                                              # 首页每页显示�
   weight = 40
   identifier = "categories"
   url = "/categories/"
+[[menu.main]]
+  name = "About"
+  weight = 40
+  identifier = "categories"
+  url = "/categories/"
 
 [params]
   version = "4.x"           # Used to give a friendly message when you have an incompatible update
@@ -91,7 +96,7 @@ paginate = 10                                              # 首页每页显示�
   mathjaxUseLocalFiles = false  # You should install mathjax in `yout-site/static/lib/mathjax`
                                                     
   postMetaInFooter = true   # contain author, lastMod, markdown link, license           # 包含作者，上次修改时间，markdown链接，许可信息
-  linkToMarkDown = false    # Only effective when hugo will output .md files.           # 链接到markdown原始文件（仅当允许hugo生成markdown文件时有效）
+  linkToMarkDown = true    # Only effective when hugo will output .md files.           # 链接到markdown原始文件（仅当允许hugo生成markdown文件时有效）
   contentCopyright = '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'     # e.g. '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
 
   # changyanAppid = ""        # Changyan app id             # 畅言
@@ -160,11 +165,11 @@ paginate = 10                                              # 首页每页显示�
     visitor = false
 
   [params.flowchartDiagrams]# see https://blog.olowolo.com/example-site/post/js-flowchart-diagrams/
-    enable = false
+    enable = true
     options = ""
 
   [params.sequenceDiagrams] # see https://blog.olowolo.com/example-site/post/js-sequence-diagrams/
-    enable = false
+    enable = true
     options = ""            # default: "{theme: 'simple'}"
 
   [params.busuanzi]         # count web traffic by busuanzi                             # 是否使用不蒜子统计站点访问量
@@ -204,20 +209,20 @@ paginate = 10                                              # 首页每页显示�
 
 # 将下面这段配置取消注释可以使 hugo 生成 .md 文件
 # Uncomment these options to make hugo output .md files.
-#[mediaTypes]
-#  [mediaTypes."text/plain"]
-#    suffixes = ["md"]
-#
-#[outputFormats.MarkDown]
-#  mediaType = "text/plain"
-#  isPlainText = true
-#  isHTML = false
-#
-#[outputs]
-#  home = ["HTML", "RSS"]
-#  page = ["HTML", "MarkDown"]
-#  section = ["HTML", "RSS"]
-#  taxonomy = ["HTML", "RSS"]
+[mediaTypes]
+ [mediaTypes."text/plain"]
+   suffixes = ["md"]
+
+[outputFormats.MarkDown]
+ mediaType = "text/plain"
+ isPlainText = true
+ isHTML = false
+
+[outputs]
+ home = ["HTML", "RSS"]
+ page = ["HTML", "MarkDown"]
+ section = ["HTML", "RSS"]
+ taxonomy = ["HTML", "RSS"]
 #  taxonomyTerm = ["HTML"]
 
 [permalinks]
