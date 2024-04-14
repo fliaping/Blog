@@ -126,14 +126,15 @@ function replace_image_paths_in_markdown() {
 }
 
 function clean_cache_dir() {
+   cp -rv "./temp_$uploads_dir/"* "./achive_$uploads_dir"
    rm -rf "./temp_$uploads_dir"
-   rm -rf "./$uploads_dir/"
+   rm -rf "./$uploads_dir/"*
    rm "./$public_links_file"
 
    echo "Step 3: clean temp dir - Done!"
 }
 
 # Main execution
-upload_images_and_get_links
-replace_image_paths_in_markdown
+# upload_images_and_get_links
+# replace_image_paths_in_markdown
 clean_cache_dir

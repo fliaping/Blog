@@ -3,3 +3,4 @@ resources/_gen
 public/
 !themes/.keep
 uploads/
+achive_uploads/
