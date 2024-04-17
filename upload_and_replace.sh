@@ -135,6 +135,6 @@ function clean_cache_dir() {
 }
 
 # Main execution
-# upload_images_and_get_links
-# replace_image_paths_in_markdown
+upload_images_and_get_links
+replace_image_paths_in_markdown
 clean_cache_dir

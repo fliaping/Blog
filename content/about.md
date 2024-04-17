@@ -20,7 +20,8 @@ cover:
     relative: false
 ---
 
-![](../uploads/20240417_185237_cd536ca2-a275-4d33-b92c-5a5e5a0fb8b9.png)
+
+![](https://storage.blog.fliaping.com/2024-04-17/18-56/20240417_185618_fliaping-logo.png)
 
 🎭角色：
 
