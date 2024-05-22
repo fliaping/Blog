@@ -21,7 +21,7 @@ cover:
 ---
 
 
-![](/storage/2024-04-17/18-56/20240417_185618_fliaping-logo.png?imageMogr2/thumbnail/108x)
+![](/storage/2024-04-17/18-56/20240417_185618_fliaping-logo.png?x-oss-process=image/resize,h_108,m_lfit)
 
 🎭角色：
 

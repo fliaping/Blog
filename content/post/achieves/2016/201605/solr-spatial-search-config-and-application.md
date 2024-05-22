@@ -77,7 +77,7 @@ doc.setField("poi_location_p",     "POLYGON((120.35330414772034
 31.58268495951037))") //多边形类型
 ```
 构建流程：
-![](https://storage.blog.fliaping.com/blog/14642322882257.jpg)
+![](/storage/blog/14642322882257.jpg)
 
 下面主要说明Point类型的term创建过程。
 1、将空间索引域的shapeStr解析成相应的Shape（这里指Point，复杂Shape如Polygon要使用JTS中的WTKReader来解析）。

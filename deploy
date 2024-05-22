@@ -15,8 +15,8 @@ DIR=www/fliaping_blog   # might sometimes be empty!
 
 # hugo && rsync -avzhu --delete public/ ${USER}@${HOST}:~/${DIR}
 # rm -rf ~/.qshell/qupload
-hugo && \\
-ossutil --config-file ~/.ossconfig cp -r ./public oss://fliaping-blog -u && \\
+hugo && \
+ossutil --config-file ~/.ossconfig cp -r ./public oss://fliaping-blog -u && \
 ossutil --config-file ~/.ossconfig cp -r ./storage oss://fliaping-blog/storage -u
 # qshell qupload2 --bucket www-blog --src-dir ./public --overwrite --thread-count 5 --rescan-local
 # qshell cdnrefresh -r -i ./qiniu_refresh.txt

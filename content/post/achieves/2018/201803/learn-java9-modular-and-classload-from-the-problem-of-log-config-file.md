@@ -50,7 +50,7 @@ ERROR StatusLogger No Log4j 2 configuration file found. Using default configurat
 
 
 通过查看源码发现`ConfigurationFactory`类的子类有这么多，每个子类通过`Order`注解排序
-![log4j2-configurationfactorys](https://storage.blog.fliaping.com/2018/03/log4j2-configurationfactorys.png)
+![log4j2-configurationfactorys](/storage/2018/03/log4j2-configurationfactorys.png)
 
 拿我们常用的xml配置来说，通过下面的代码可以看出`XmlConfigurationFactory`序号是5
 ```java
@@ -93,17 +93,17 @@ public int compare(Class<?> lhs, Class<?> rhs) {
 
 `ConfigurationFactory`通过静态方法`getInstance`获取到`ConfigurationFactory.Factory`类型的单例对象，而这个Factory又继承自`ConfigurationFactory`，通过下图可以看到在获取这个单例时的初始化插件的过程。
 
-![log4j2-configurationfactory-getinstance](https://storage.blog.fliaping.com/2018/03/log4j2-configurationfactory-getinstance.png)
+![log4j2-configurationfactory-getinstance](/storage/2018/03/log4j2-configurationfactory-getinstance.png)
 
  而真正获取配置文件的逻辑在`ConfigurationFactory.Factory#getConfiguration(org.apache.logging.log4j.core.LoggerContext, java.lang.String, java.net.URI)`，首先是检查系统属性参数`log4j.configurationFile`看看有没有配置文件。
  
- ![log4j2-configurationfactory-get-from-system-property](https://storage.blog.fliaping.com/2018/03/log4j2-configurationfactory-get-from-system-property.png)
+ ![log4j2-configurationfactory-get-from-system-property](/storage/2018/03/log4j2-configurationfactory-get-from-system-property.png)
  
  然后查找不同文件名的配置文件。
- ![log4j2-configurationfactory-find-config](https://storage.blog.fliaping.com/2018/03/log4j2-configurationfactory-find-config.png)
+ ![log4j2-configurationfactory-find-config](/storage/2018/03/log4j2-configurationfactory-find-config.png)
  
  查找的具体实现就是用ClassLoader去getResource，就是从classpath中查找不同名字的配置文件
- ![log4j2-configurationfactory-search-config-in-classpath](https://storage.blog.fliaping.com/2018/03/log4j2-configurationfactory-search-config-in-classpath.png)
+ ![log4j2-configurationfactory-search-config-in-classpath](/storage/2018/03/log4j2-configurationfactory-search-config-in-classpath.png)
   到这里也就是说log4j2并没有从classpath中找到配置文件，当然我们可以通过手动设置系统属性来解决这个问题：
   
   ```java
@@ -132,7 +132,7 @@ public int compare(Class<?> lhs, Class<?> rhs) {
 
 通过上面简单的描述大家初步了解模块的含义，那java9中是如何使用模块化的呢，首先java9先将jre的系统库进行的分解，将不同的功能分别组装成不同的模块：
 
-![dependencygraph](https://storage.blog.fliaping.com/2018/03/dependencygraph.png)
+![dependencygraph](/storage/2018/03/dependencygraph.png)
 JAVA_HOME的目录中多了个jmods的目录来放系统类库的模块，哦对了，java9定义了每个模块的存在形式--jmod文件
 
 ```
@@ -192,11 +192,11 @@ idea {
 其实如果是打包成jar来运行的话，上面的问题是不会出现的，因为idea会在打包jar的时候将resource目录中的所有的文件复制到jar打包的根目录也就是和`module-info.java`平级，是属于这个模块中的，就可以直接访问到。
 
 我们接着再来看看java9的`java.lang.Class#getResource`方法，看它如何实现兼容
-![java9-class-getresources](https://storage.blog.fliaping.com/2018/03/java9-class-getresources.png)
+![java9-class-getresources](/storage/2018/03/java9-class-getresources.png)
 
 ## Java9 ClassLoader
 在java9之前JDK使用三个类加载器来加载类，使用双亲委派机制来防止重复加载，如下图所示：
-![classloaders-before-java9](https://storage.blog.fliaping.com/2018/03/classloaders-before-java9.png)
+![classloaders-before-java9](/storage/2018/03/classloaders-before-java9.png)
 
 * 启动类加载器(Bootstrap ClassLoader)：负责加载 JAVA_HOME\lib 目录中的，或通过-Xbootclasspath参数指定路径中的，且被虚拟机认可（按文件名识别，如rt.jar）的类。
 * 扩展类加载器(Extension ClassLoader)：负责加载 JAVA_HOME\lib\ext 目录中的，或通过java.ext.dirs系统变量指定路径中的类库。
@@ -205,9 +205,9 @@ idea {
 双亲委派机制是这样的，例如我们平时项目中写的一个类，是由Application ClassLoader来加载，加载时Application ClassLoader先将这个工作委托给父加载器加载，也就是Extension ClassLoader，Extension ClassLoader不会自己先加载，还是会让父加载器加载，也就是Bootstrap ClassLoader，Bootstrap ClassLoader找不到，又交给了Extension ClassLoader，Extension ClassLoader找不到最后又交给Application ClassLoader。这就是双亲委派机制。
 
 在java9中做了修改，如下图，保持三级分层类加载器架构以实现向后兼容。但是，从模块系统加载类的方式有一些变化，应用程序类加载器可以委托给平台类加载器以及引导类加载器，平台类加载器可以委托给引导类加载器和应用程序类加载器。。
-![classloaders-java9](https://storage.blog.fliaping.com/2018/03/classloaders-java9.png)
+![classloaders-java9](/storage/2018/03/classloaders-java9.png)
 
-![java9-classloaders-hierarchy](https://storage.blog.fliaping.com/2018/03/java9-classloaders-hierarchy.png)
+![java9-classloaders-hierarchy](/storage/2018/03/java9-classloaders-hierarchy.png)
 
 * BootClassLoader:启动类加载器，在虚拟机中实现的，用于加载启动的基础模块类，有这些模块`java.base`、`java.logging`、`java.prefs`、`java.desktop`
 * PlatformClassLoader：平台类加载器，用于加载一些平台相关的模块，例如：`java.activation`、`java.se`、`jdk.desktop`、`java.compiler` 等，双亲是BootClassLoader。

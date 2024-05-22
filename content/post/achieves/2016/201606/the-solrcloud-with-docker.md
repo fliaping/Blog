@@ -14,7 +14,7 @@ title = "借助Docker技术的Solr集群实现"
 
 在本项目中，为了更好的模拟真实的生产环境，对于SolrCloud技术不采用伪集群方式，而是真正实现一个搜索集群，当然由于笔者只是学生，没有资金租用多台服务器来搭建集群，因此借助于Docker的容器技术在一台服务器上虚拟出逻辑上的六台主机。
 
-![trip-search-six-docke](https://storage.blog.fliaping.com/blog/trip-search-six-docker.png)
+![trip-search-six-docke](/storage/blog/trip-search-six-docker.png)
 
 <!--more-->
 
@@ -97,7 +97,7 @@ docker run -d --name solr2 -h solr2  -v /data/solr2:/data -v /data/exe:/exe xup
 docker run -d --name solr3 -h solr3  -v /data/solr3:/data -v /data/exe:/exe xuping/ubuntu_java /bin/bash /exe/solrRun.sh 
 ```
 4.　通过`docker ps`查看运行的容器，如果运行成功即会看到本文开始的那张图片。
-![trip-search-six-docke](https://storage.blog.fliaping.com/blog/trip-search-six-docker.png)
+![trip-search-six-docke](/storage/blog/trip-search-six-docker.png)
 
 
 5.　由于我们没有定制docker容器的网络，虽然同一台机器上的容器默认在同一网络中，但其网络是自动分配，需要将各自的ip进行同步。利用docker的挂载功能，将同一目录挂载到所有容器，这样即可用脚本来同步所有容器的网络信息，其脚本如下所示，作用不仅是同步网络，另外也是保持容器后台持续运行。
@@ -155,13 +155,13 @@ wget http://solr1:8983/solr/admin/collections?action=CREATE&name=trip&numShards=
 * collection.configName=trip  要创建的collection在zookeeper中的配置文件的路径
 
 成功之后，访问任一solr节点的管理界面，会看到如下所示的样子。（当然前提是你的浏览器要和这些节点在同一网络内，无论是代理，还是VPN都能实现）
-![solrcloud-architecture-graph](https://storage.blog.fliaping.com/blog/solrcloud-architecture-graph.png)
+![solrcloud-architecture-graph](/storage/blog/solrcloud-architecture-graph.png)
 # 建立索引
 
 还是选择从mysql中导入数据，和单机情况下的导入一样，配置文件不需要改变，直接像单机情况下使用即可。
 
 当然后台的一些情况还是不同于单机版的，其实流程也比较清晰，我们暂时不用管怎么实现这些的，只管了解即可。
-![solrcloud-index-workflo](https://storage.blog.fliaping.com/blog/solrcloud-index-workflow.png)
+![solrcloud-index-workflo](/storage/blog/solrcloud-index-workflow.png)
 
 # 查询
 

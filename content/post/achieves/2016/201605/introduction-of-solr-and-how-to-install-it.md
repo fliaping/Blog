@@ -17,7 +17,7 @@ title = "Solr基础知识及安装"
 > Solr is the popular, blazing-fast, open source enterprise search platform built on Apache Lucene™.
 
 再来看看它的[特性](https://lucene.apache.org/solr/features.html)
-![](https://storage.blog.fliaping.com/blog/14634817034224.jpg)
+![](/storage/blog/14634817034224.jpg)
 
 <!--more-->
 

@@ -33,13 +33,13 @@ KDE Connect实现的需求是1和2另外还有些特色功能，下面列出主�
 * 控制桌面的打开的媒体播放器
 
 该软件分为桌面端和手机端，手机端直接在google play就可以下载，桌面端可以在各大发行版仓库中下载。它们之间的连接是通过内网连接，需要在同一个环境下，并且需要开放相关端口。安装KDE Connect之后它们会自动发现，但是有时候并不能，需要手动添加。在右上角三竖点的子项 Add devices by IP。输入桌面端的IP地址即可在，KDE Connect Settings中发现手机，pair之后即可看到对于该手机的一些设置项。
-![kde-connect-settings](https://storage.blog.fliaping.com/2017/09/kde-connect-settings.png)
+![kde-connect-settings](/storage/2017/09/kde-connect-settings.png)
 
 对于手机端，如下图，可以发送文件，控制桌面的媒体播放器，模拟桌面的触摸板，除此之外还可以在右上角三竖点的子项中发现Plugin settings，对应于桌面端的那些设置，尤其值得注意，要想在桌面收到手机端的通知需要开启Notification sync，哦也可以设置APP维度通知的过滤。
 
-![kde-connect-android](https://storage.blog.fliaping.com/2017/09/kde-connect-android.jpg)
+![kde-connect-android](/storage/2017/09/kde-connect-android.jpg)
 
-![kde-connect-android-plugin-settings](https://storage.blog.fliaping.com/2017/09/kde-connect-android-plugin-settings.jpg)
+![kde-connect-android-plugin-settings](/storage/2017/09/kde-connect-android-plugin-settings.jpg)
 
 另外有个扩展软件叫indicator-kdeconnect，可以在托盘中显示一个手机图标，显示设备的状态，以及一些快捷选项。可以通过一下命令安装，安装不成功的话就编译安装吧。Github: [indicator-kdeconnect](https://github.com/vikoadi/indicator-kdeconnect)
 
@@ -68,9 +68,9 @@ sudo make install
 
 桌面端软件是个jar包，安装了jre的都可以运行。因为是用adb连接，需要连接数据线，当然也可以开启Android的无线adb功能（下文会提到）。
 
-![deskdock-android-status](https://storage.blog.fliaping.com/2017/09/deskdock-android-status.jpg)
+![deskdock-android-status](/storage/2017/09/deskdock-android-status.jpg)
 
-![deskdock-pc-settings](https://storage.blog.fliaping.com/2017/09/deskdock-pc-settings.png)
+![deskdock-pc-settings](/storage/2017/09/deskdock-pc-settings.png)
 
 相关链接（介绍和用法）：
 [DeskDock - Share computer's mouse & keyboard with Android (+ Drag & Drop)](https://forum.xda-developers.com/android/apps-games/app-deskdock-missing-link-computer-t3447035)
@@ -80,9 +80,9 @@ sudo make install
 这是一款chrome插件，但是它能做到真正的控制，首先是画面的同步、然后是操作的控制，还有截图、录像等功能，不过这是一款订阅收费的软件，免费版限制很多，不过即便如此免费版已经满足基本需求，满足文章开头的3。
 
 使用vysor需要连接数据线，当然也可以不用数据线，通过无线adb连接。
-![vysor-pc-ui](https://storage.blog.fliaping.com/2017/09/vysor-pc-ui.png)
-![vysor-pc-android-view](https://storage.blog.fliaping.com/2017/09/vysor-pc-android-view.png)
-![vysor-pc-android-settings](https://storage.blog.fliaping.com/2017/09/vysor-pc-android-settings.png)
+![vysor-pc-ui](/storage/2017/09/vysor-pc-ui.png)
+![vysor-pc-android-view](/storage/2017/09/vysor-pc-android-view.png)
+![vysor-pc-android-settings](/storage/2017/09/vysor-pc-android-settings.png)
 
 # 其他内容
 其实还有很多android透屏到电脑的软件，以后用到了再介绍。不过我目前还没发现满足需求5的软件，发现了再说。

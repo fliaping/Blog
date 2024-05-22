@@ -13,9 +13,9 @@ author: "Payne Xu"
 
 [History and Clarification of Linux Audio](https://www.penguinproducer.com/Blog/2011/12/history-and-clarification-of-linux-audio/)
 
-![Pulseaudio-diagram.svg.png](https://storage.blog.fliaping.com/2020-3-6/1280px-Pulseaudio-diagram.svg.png?imageslim)
+![Pulseaudio-diagram.svg.png](/storage/2020-3-6/1280px-Pulseaudio-diagram.svg.png?imageslim)
 
-![Linux_kernel_and_daemons_with_exclusive_access.svg.png](https://storage.blog.fliaping.com/2020-3-6/2560px-Linux_kernel_and_daemons_with_exclusive_access.svg.png?imageslim)
+![Linux_kernel_and_daemons_with_exclusive_access.svg.png](/storage/2020-3-6/2560px-Linux_kernel_and_daemons_with_exclusive_access.svg.png?imageslim)
 
 ## ALSA系统
 

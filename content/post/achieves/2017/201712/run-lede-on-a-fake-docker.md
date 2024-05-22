@@ -21,10 +21,10 @@ title = "利用容器技术在一个宿主机上运行OpenWrt(LEDE)"
 实现在Ubuntu服务器上运行*路由器系统lede/openwrt*的包管理程序opkg，并进行软件安装、卸载操作。至于说路由器的其它功能，并没有实现，一个原因是需要的配置比较麻烦，我们的假Docker过于简单，不能满足要求，但是在另外一篇文章[在树莓派上用Docker运行LEDE(OpenWrt)](/run-lede-on-raspberry-pi-with-docker)会尝试运行一个可用的lede系统。
 
 **启动一个LEDE Bash**
-![lede-on-linux-server](https://storage.blog.fliaping.com/2017/10/lede-on-linux-server.png)
+![lede-on-linux-server](/storage/2017/10/lede-on-linux-server.png)
 
 **用opkg安装软件**
-![lede-opkg-install-curl-on-linux-server](https://storage.blog.fliaping.com/2017/10/lede-opkg-install-curl-on-linux-server.png)
+![lede-opkg-install-curl-on-linux-server](/storage/2017/10/lede-opkg-install-curl-on-linux-server.png)
 
 # 如何做
 
@@ -79,10 +79,10 @@ Container [    1] - setup hostname!
 ## 配置网络
 
 1. 新开一个终端，处于宿主机环境下，执行代码中的脚本`sudo ./host_net.sh 13946`，脚本后的参数是容器进程在宿主机下真实pid。此时在宿主机新建了一个veth0的虚拟网卡并新建了一个peer的veth0.1,并将veth0.1按入容器的Namespace中。
-   ![deepinscreenshot_select-area_20171204182053](https://storage.blog.fliaping.com/2017/12/deepinscreenshot_select-area_20171204182053.png)
+   ![deepinscreenshot_select-area_20171204182053](/storage/2017/12/deepinscreenshot_select-area_20171204182053.png)
 2. 将代码中的inner_net.sh复制到rootfs文件夹
 3. 返回已经进入容器的终端，执行`inner_net.sh`，这时初始化了按入容器的网卡veth0.1，并改为名字eth0。还有DNS服务器的配置，opkg的初始化。
-   ![deepinscreenshot_select-area_20171204182304](https://storage.blog.fliaping.com/2017/12/deepinscreenshot_select-area_20171204182304.png)
+   ![deepinscreenshot_select-area_20171204182304](/storage/2017/12/deepinscreenshot_select-area_20171204182304.png)
 4. 宿主机设置NAT网络转发，讲veth0通过宿主机的eth0转发出去。网络结构： 容器eth0 <---peer---> 宿主veth0 <---NAT Forward---> 宿主eth0 <---> internet
 
 此时我们可以通过ping命令检查网络是否正常，然后 `opkg update & opkg install curl && curl www.baidu.com`

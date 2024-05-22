@@ -9,7 +9,7 @@ title = "网易云音乐Linux客户端GUI不能显示问题排查"
 
 +++
 
-![netease-music](https://storage.blog.fliaping.com/2018/05/deepinscreenshot_select-area_20180505224924.png)
+![netease-music](/storage/2018/05/deepinscreenshot_select-area_20180505224924.png)
 
 OS: ubuntu 17.10,ubuntu 18.04
 网易云音乐版本：netease-cloud-music_1.1.0_amd64_ubuntu.deb
