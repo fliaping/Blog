@@ -27,7 +27,7 @@ function upload_images_and_get_links() {
   
   # Recursively upload and get public links for each file in the 'images' directory
   for file_path in $(find "$uploads_dir" -type f); do
-    local public_link="https://storage.blog.fliaping.com/$date_part/$time_part${file_path#$uploads_dir}"
+    local public_link="https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/$date_part/$time_part${file_path#$uploads_dir}"
     echo "$file_path,$public_link" >> "$public_links_file"
   done
 

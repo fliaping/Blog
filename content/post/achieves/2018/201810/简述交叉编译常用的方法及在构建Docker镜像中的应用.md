@@ -8,7 +8,7 @@ slug: "introduce-the-method-and-application-of-cross-compilation"
 author: "Payne Xu"
 ---
 
-![CrossCompile](/storage/18-10-14/CrossCompile.png)
+![CrossCompile](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/18-10-14/CrossCompile.png)
 
 # 软件编译
 
@@ -55,7 +55,7 @@ author: "Payne Xu"
 
 ## QEMU
 
-![qemu](/storage/18-10-14/qemu.jpg)
+![qemu](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/18-10-14/qemu.jpg)
 
 >QEMU (short for Quick Emulator) is a free and open-source hosted hypervisor that performs hardware virtualization.
 >

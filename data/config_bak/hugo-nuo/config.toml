@@ -40,7 +40,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
 # Add your own params here
 [params]
   author = "Payne Xu"
-  avatar = "https://storage.blog.fliaping.com/2017/08/android-chrome-512x512.png"
+  avatar = "https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/2017/08/android-chrome-512x512.png"
   seotitle = "Payne's Blog"
   subtitle = "Thoughts, stories and ideas."
   description = "Payne's Blog"

@@ -78,9 +78,9 @@ sudo weavedinstaller
 
 # 磁盘挂载
 ```
-UUID="DE5EEB695EEB38C3" https://storage.blog.fliaping.com/blog/Data  ntfs-3g  defaults,nofail,x-systemd.device-timeout=1   0  0
+UUID="DE5EEB695EEB38C3" https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/blog/Data  ntfs-3g  defaults,nofail,x-systemd.device-timeout=1   0  0
 
-UUID="c6d814f6-259e-3ad2-9386-8e9f778fbe44"   https://storage.blog.fliaping.com/blog/TimeMachine  hfsplus defaults,nofail,x-systemd.device-timeout=1   0  0
+UUID="c6d814f6-259e-3ad2-9386-8e9f778fbe44"   https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/blog/TimeMachine  hfsplus defaults,nofail,x-systemd.device-timeout=1   0  0
 ```
 UUID 可以通过 blkid 命令获得。
 

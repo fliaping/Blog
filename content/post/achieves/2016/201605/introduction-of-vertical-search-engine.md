@@ -67,7 +67,7 @@ title = "垂直搜索引擎基础知识"
 
 # 如何构建垂直搜索
 ## 技术流程
-![](/storage/blog/14634008481848.jpg)
+![](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/14634008481848.jpg)
 从上图可以看出，搜索引擎的基本技术流程，其中有三大核心组件
 
 * 索引库(DB)是信息存储的地方，这里的信息已经变成倒排结构。

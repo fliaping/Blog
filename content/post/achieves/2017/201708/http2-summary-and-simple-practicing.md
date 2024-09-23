@@ -35,7 +35,7 @@ title = "http2总结及简单实践"
 
 `HTTP2`的通信过程无外乎这是这个流程，但是通过TCP传输的数据会有不同，客户端和服务器的行为也有了新的规则。引入了Connection、Stream、Message、Frame这四个概念，从下图大概可以看出他们之间的关系。
 
-![http2-connection-stream-message-frame](/storage/blog/http2-connection-stream-message-frame.png)
+![http2-connection-stream-message-frame](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/http2-connection-stream-message-frame.png)
 
 * Connection： 其实就是一个TCP连接
 * Stream：已建立的连接上的双向字节流
@@ -57,11 +57,11 @@ title = "http2总结及简单实践"
 ## 二进制分帧（Binary framing layer）
 
 二进制分帧就是把http的数据按照规定的格式进行封装，类似IP和TCP的数据包, 简单画了个承载HTTP2数据的以太帧结构，方便理解。
-![the-ethernet-frame-of-overing-http2](/storage/blog/the-ethernet-frame-of-overing-http2.png)
+![the-ethernet-frame-of-overing-http2](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/the-ethernet-frame-of-overing-http2.png)
 
 *通过wireshark抓包可以看到http2的结构*
 
-![wireshark-http2-frame](/storage/blog/wireshark-http2-frame.png)
+![wireshark-http2-frame](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/wireshark-http2-frame.png)
 
 * Length: 无符号的自然数，24个比特表示，仅表示帧负载所占用字节数，不包括帧头所占用的9个字节。默认大小区间为为0~16,384(2^14)，一旦超过默认最大值2^14(16384)，发送方将不再允许发送，除非接收到接收方定义的SETTINGS_MAX_FRAME_SIZE（一般此值区间为2^14 ~ 2^24）值的通知。
 * Type: 8个比特表示，定义了帧负载的具体格式和帧的语义，HTTP/2规范定义了10个帧类型，这里不包括实验类型帧和扩展类型帧
@@ -91,7 +91,7 @@ HTTP2帧中的类型如下：[参考链接](https://www.iana.org/assignments/htt
 
 通过Google Developers中的一个图，我们可以更好的理解，HTTP2的分帧在网络数据中所处的位置，以及和HTTP/1.1的不同之处。
 
-![binary_framing_layer](/storage/blog/binary_framing_layer01.svg)
+![binary_framing_layer](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/binary_framing_layer01.svg)
 
 HTTP/1.1中的头部变成HEADERS类型的帧，请求体/回应体变成DATA类型的帧，通过二进制分帧，将传输的数据使用二进制方式，对比文本方式减少数据量；通过不同类型的帧实现流控、服务器推送等功能。
 
@@ -102,7 +102,7 @@ HTTP/1.1中的头部变成HEADERS类型的帧，请求体/回应体变成DATA类
 HTTP2中，因为新的二进制帧的使用，使得可以轻松复用单个TCP连接。客户端和服务器可以将 HTTP 消息分解为互不依赖的帧，然后交错发送，最后再在另一端把它们重新组装起来。
 
 还是 Google Developers的图：
-![multiplexing](/storage/blog/multiplexing01.svg)
+![multiplexing](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/multiplexing01.svg)
 可以看到我们可以并行交错的发送多个响应和请求，并且使用同一个TCP连接，没有先后顺序，每个帧中携带有如何组装的信息，客户端会等某项工作所需要的所有的资源都就绪之后再执行。
 
 ## 数据流优先级（Stream prioritization）
@@ -111,7 +111,7 @@ HTTP2中，因为新的二进制帧的使用，使得可以轻松复用单个TCP
 
 HTTP/2通过父依赖和权重来标示优先级，每一个stream会标示一个父stream id，没有标示的默认为虚拟的root stream，这样按照这种依赖关系构建一个依赖树，树上层的stream权重较高，同一层的stream会有一个weight来区分资源分配比。。
 
-![stream_prioritization](/storage/blog/stream_prioritization01.svg)
+![stream_prioritization](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/stream_prioritization01.svg)
 
 上图是依赖树的一些示例，从左到右，共四棵树。
 * 第一个两个stream A 和 B，没有标明父stream，默认依赖虚拟的root节点，A、B处于同一层，优先级相同，根据权重分配资源，A分到`12/(12+4)=3/4`资源，B分到`1/4`资源。
@@ -123,14 +123,14 @@ HTTP/2通过父依赖和权重来标示优先级，每一个stream会标示一�
 
 ## 首部压缩 (Header Compression)
 由于当前网站内容越来越复杂，单个页面的请求数基本都是几十个甚至上百，每个请求都要带上客户端或者用户的标识，例如：UA，cookie等头部数据，请求数量多了以后，传输http头部消耗的流量也非常可观，并且头部数据中大部分都是相同的，这就是赤裸裸的浪费呀。于是产生了头部压缩技术来节省流量。
-![hpack-header-compression-google-io](/storage/2017/08/hpack-header-compression-google-io.png)
+![hpack-header-compression-google-io](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2017/08/hpack-header-compression-google-io.png)
 * 维护一份相同的静态字典（Static Table），包含常见的头部名称，以及特别常见的头部名称与值的组合
 * 维护一份相同的动态字典（Dynamic Table），可以动态地添加内容
 * 支持基于静态哈夫曼码表的哈夫曼编码（Huffman Coding）
 
 ### 静态字典
 静态字典就是把常用的头部映射为字节较短的索引序号，如下图所示，截取了前面几个映射，全部定义可以看[Static Table Definition](https://http2.github.io/http2-spec/compression.html#rfc.section.A)
-![part-of-http2-hpack-static-table](/storage/2017/08/part-of-http2-hpack-static-table.png)
+![part-of-http2-hpack-static-table](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2017/08/part-of-http2-hpack-static-table.png)
 例如当头部有个字段是`:method: GET`，那么查表可知，可以用序号2标识，于是这个字段的数据就是`0000010`(2的二进制表示)
 
 ### 动态字典

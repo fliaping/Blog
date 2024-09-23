@@ -32,7 +32,7 @@ github链接：[config-client-enhance](https://github.com/fliaping/config-client
 ### 官方spring-cloud-config的工作原理
 如下图，就是我们常用的结构，当然是比较简化的。
 
-![spring-cloud-config](/storage/2017/10/spring-cloud-config.png)
+![spring-cloud-config](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2017/10/spring-cloud-config.png)
 
 1. 当我们的配置发生变化之后，配置在git仓库的webhook用http的方式向ConfigServer发送refresh消息（或者自己手动触发）
 2. ConfigServer再将这个消息发送给spring cloud bus（用kafka或者rabbitMQ实现）
@@ -309,7 +309,7 @@ spring cloud config在刷新的时候有点不爽的地方，当没有destinatio
 另外如果想对某一类应用更新的话destination规则比较死板，虽然支持通配符的destination，但是如果我想对不同名字的应用，
 但是使用了同一个共有配置仓库的应用更新的话就没有办法，于是就在对官方的bus下手进行魔改，当然前提也是要搞清楚是怎么回事才能改。
 
-![spring-cloud-config-bus](/storage/2017/10/spring-cloud-config-bus.png)
+![spring-cloud-config-bus](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2017/10/spring-cloud-config-bus.png)
 
 利用spring-cloud-starter-stream-kafka的整合，利用注解，将kafka消息转化为`RemoteApplicationEvent`
 

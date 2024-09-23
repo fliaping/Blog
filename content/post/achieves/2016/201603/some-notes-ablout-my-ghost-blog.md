@@ -51,7 +51,7 @@ http2属于加密连接，如果页面中嵌有http连接将产生错误，因�
 我用的是七牛存储来加速图片，并且它也提供了https的域名，那我只改url头就行了。
 
 ```sql
-update posts set html=(replace(html,'http://7xirr0.com1.z0.glb.clouddn.com','https://storage.blog.fliaping.com'));
+update posts set html=(replace(html,'http://7xirr0.com1.z0.glb.clouddn.com','https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com'));
 ```
 另一个办法就是强制http走https连接，前提是你图片都是本地的。
 

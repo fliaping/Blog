@@ -25,7 +25,7 @@ jsoup 的主要功能如下：
 jsoup 是基于 MIT 协议发布的，可放心使用于商业项目。
 
 jsoup 的主要类层次结构如下图所示：
-![](/storage/blog/14639714791303.jpg)
+![](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/14639714791303.jpg)
 
 # Jsoup的基本用法
 

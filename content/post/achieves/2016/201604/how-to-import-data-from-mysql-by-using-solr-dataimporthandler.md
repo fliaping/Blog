@@ -68,12 +68,12 @@ title = "导入Mysql数据到Solr中"
 另外：Solr中field还没有配置的，请先阅读[Solr字段配置解析//TODO]()
 # 进行数据导入
 1.　重启Solr，进入管理页面，选中trip这个Core，进入Dataimport这个选项。如果一切正常会出现如下图所示的界面。
-![solr-admin-ui-dataimporthandler-home](/storage/blog/solr-admin-ui-dataimporthandler-home.png)
+![solr-admin-ui-dataimporthandler-home](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/solr-admin-ui-dataimporthandler-home.png)
 
 右面的那些代码是你点击Configuration后出现的，是`data-config.xml`文件中的内容，也是应该首先检查的地方，如果配有这些配置信息，说明数据库导入的配置文件没生效，是`solrconfig.xml`文件中开启导入功能的地方出错。
 
 2.　开始导入，要注意command参数，它有两个选项，如下图：
-![](/storage/blog/14636563686394.jpg)
+![](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/14636563686394.jpg)
 full-import:全量导入，它会覆盖原有的索引
 delta-import:即增量导入，它会在原有索引的基础上追加
 
@@ -85,15 +85,15 @@ optimize:表示是否优化索引
 debug: 表示是否开启调试模式
 
 3.然后选择需要导入的Entity,点击Execute按钮开始执行数据导入操作，如图：（别人的图，我实在不想去启动Mysql再导入一次，见谅）
-![](/storage/blog/14636565158236.jpg)
+![](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/14636565158236.jpg)
 正常的话就开始进行导入了，如下图
-![](/storage/blog/14636566646663.jpg)
+![](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/14636566646663.jpg)
 我们可以通过`Refresh Status`这个按钮刷新状态，如果出现错误或者Fetched一直是0，那就表明有问题了，你要查看日志进行检查。如果导入成功，就会看到下图所示的情况：
-![](/storage/blog/14636568379783.jpg)
+![](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/14636568379783.jpg)
 查看OverView菜单，会看到文档信息。
-![](/storage/blog/14636569573254.jpg)
+![](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/14636569573254.jpg)
 在查询中点击`Execute Query`按钮,就能看到我们导进去并建好索引的信息，更具体的查询用法后面会讲到，下面是默认的查询，显示文档的所有信息。
-![](/storage/blog/14636571125307.jpg)
+![](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/14636571125307.jpg)
 
 # 较为复杂的字段映射
 ## 数据库单表多个字段到solr多值字段
