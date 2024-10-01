@@ -3,5 +3,5 @@ resources/_gen
 public/
 !themes/.keep
 uploads/
-achive_uploads/
-storage/
+achive_assets/
+assets/
