@@ -2,9 +2,9 @@
 title: "Java正则替换异常问题"
 date: 2019-04-19T16:43:01+08:00
 draft: false
-categories: ["unnamed"] # Developer AI之遥 科幻Fans 智慧之光 星云尘埃 酷cool玩
+categories: ["Developer"] # Developer AI之遥 科幻Fans 智慧之光 星云尘埃 酷cool玩
 slug: "java-regex-replacement-exception-problem"
-tags: ["Developer"]
+tags: ["正则", "Java"]
 author: "Payne Xu"
 
 ---
