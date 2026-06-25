@@ -17,11 +17,11 @@ git submodule update --remote
 3. 准备发布: 将meta信息中的draft改为false, 并移动到post目录
 4. push 到 `master` 后由 GitHub Actions 自动构建并发布到 GitHub Pages
 
-## GitHub Pages
+## Cloudflare Pages
 
-首次启用时，在 GitHub 仓库 `Settings -> Pages` 中将 `Build and deployment` 的 `Source` 设置为 `Deploy from a branch`，分支选择 `gh-pages`，目录选择 `/ (root)`。
+push 到 `master` 后，GitHub Actions 会构建 Hugo 站点并通过 Wrangler 发布到 Cloudflare Pages。
 
-未配置自定义域名时，站点会发布到 GitHub Pages 默认地址：`https://fliaping.github.io/Blog/`。
+未配置自定义域名时，站点会发布到 Cloudflare Pages 默认地址：`https://fliaping-blog.pages.dev/`。
 
 ## other
 
