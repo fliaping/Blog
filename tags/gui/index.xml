@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gui on Fliaping's Blog</title><link>https://fliaping.github.io/Blog/tags/gui/</link><description>Recent content in Gui on Fliaping's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 23 Sep 2024 14:15:29 +0800</lastBuildDate><atom:link href="https://fliaping.github.io/Blog/tags/gui/index.xml" rel="self" type="application/rss+xml"/><item><title>网易云音乐Linux客户端GUI不能显示问题排查</title><link>https://fliaping.github.io/Blog/analysis-of-the-problem-that-netease-music-linux-client-cant-show-gui/</link><pubDate>Sat, 05 May 2018 06:51:02 +0000</pubDate><guid>https://fliaping.github.io/Blog/analysis-of-the-problem-that-netease-music-linux-client-cant-show-gui/</guid><description>&lt;p>&lt;img src="https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2018/05/deepinscreenshot_select-area_20180505224924.png" alt="netease-music">&lt;/p>
+&lt;p>OS: ubuntu 17.10,ubuntu 18.04
+网易云音乐版本：netease-cloud-music_1.1.0_amd64_ubuntu.deb&lt;/p>
+&lt;h2 id="症状">症状&lt;/h2>
+&lt;p>启动了页面弹不出来，命令行也一样，然后呢，点关机按钮，弹出来确认框，随后网易乐音乐页面也弹出来了，这时取消关机，可以正常使用云音乐。&lt;/p>
+&lt;p>并且录了屏：https://weibo.com/tv/v/FwZO3ltaM?fid=1034:1d480a191cbbcc940b81f619f0614a98&lt;/p></description></item></channel></rss>

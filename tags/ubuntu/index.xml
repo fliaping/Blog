@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ubuntu on Fliaping's Blog</title><link>https://fliaping.github.io/Blog/tags/ubuntu/</link><description>Recent content in Ubuntu on Fliaping's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sat, 02 Sep 2023 11:58:58 +0800</lastBuildDate><atom:link href="https://fliaping.github.io/Blog/tags/ubuntu/index.xml" rel="self" type="application/rss+xml"/><item><title>安装ubuntu17.10后的相关软件问题</title><link>https://fliaping.github.io/Blog/some-software-problems-after-install-ubuntu-17-10/</link><pubDate>Sun, 03 Dec 2017 20:11:43 +0000</pubDate><guid>https://fliaping.github.io/Blog/some-software-problems-after-install-ubuntu-17-10/</guid><description>&lt;h1 id="字体">字体&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt-get install ttf-wqy-microhei &lt;span class="c1">#文泉驿-微米黑&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get install ttf-wqy-zenhei &lt;span class="c1">#文泉驿-正黑&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get install xfonts-wqy &lt;span class="c1">#文泉驿-点阵宋体&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>自带google的思源黑体 Noto Sans CJK&lt;/p>
+&lt;h1 id="wps">WPS&lt;/h1>
+&lt;p>1.到优麒麟下载wps64位，dpkg -i安装。
+2.apt-get install -f修复依赖
+3.到debian网站下载libpng12,安装
+4.下载网上专为wps做的字体包安装
+5.apt-get安装文泉驿字体&lt;/p></description></item></channel></rss>

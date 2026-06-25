@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://fliaping.github.io/Blog/sitemap.xml

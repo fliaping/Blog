@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Android on Fliaping's Blog</title><link>https://fliaping.github.io/Blog/tags/android/</link><description>Recent content in Android on Fliaping's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sat, 02 Sep 2023 11:58:58 +0800</lastBuildDate><atom:link href="https://fliaping.github.io/Blog/tags/android/index.xml" rel="self" type="application/rss+xml"/><item><title>Android文件夹链接方法(ln不能用)</title><link>https://fliaping.github.io/Blog/the-method-to-create-link-for-directory/</link><pubDate>Thu, 25 Feb 2016 10:48:43 +0000</pubDate><guid>https://fliaping.github.io/Blog/the-method-to-create-link-for-directory/</guid><description>&lt;p>在android中，当用ln命令来建立文件夹软连接的时候，出现以下错误&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">&amp;#34;link failed Function not implemented&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>xda论坛一位解释了&lt;a href="http://forum.xda-developers.com/showthread.php?t=1122710#2">原因&lt;/a>&lt;/p>
+&lt;blockquote>
+&lt;p>symlinks (ln -s) doesn&amp;rsquo;t work because /sdcard is fat32. It doesn&amp;rsquo;t support symlink. You can indeed mount the external_sd underneat /sdcard, but as you say, it&amp;rsquo;s lost after reboot. You have to do it everytime you boot.&lt;/p>
+&lt;/blockquote></description></item></channel></rss>

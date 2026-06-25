@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Fliaping's Blog</title><link>https://fliaping.github.io/Blog/tags/docker/</link><description>Recent content in Docker on Fliaping's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 23 Sep 2024 14:15:29 +0800</lastBuildDate><atom:link href="https://fliaping.github.io/Blog/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>简述交叉编译常用的方法及在构建Docker镜像中的应用</title><link>https://fliaping.github.io/Blog/introduce-the-method-and-application-of-cross-compilation/</link><pubDate>Sun, 14 Oct 2018 13:38:44 +0800</pubDate><guid>https://fliaping.github.io/Blog/introduce-the-method-and-application-of-cross-compilation/</guid><description>&lt;p>&lt;img src="https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/18-10-14/CrossCompile.png" alt="CrossCompile">&lt;/p>
+&lt;h1 id="软件编译">软件编译&lt;/h1>
+&lt;p>众所周知，服务器大部分都是复杂指令集的x86平台，移动设备是精简指令集的ARM平台，还有IMB的PowerPC平台，之前家用路由器和一些嵌入式设备常用的MIPS平台。 不同平台的CPU的指令集（ISA，Instruction Set Architecture）是不同的，对于在其上运行的软件都要编译成对应的平台可识别的执行之后才可以运行。&lt;/p></description></item><item><title>利用容器技术在一个宿主机上运行OpenWrt(LEDE)</title><link>https://fliaping.github.io/Blog/run-lede-on-a-fake-docker/</link><pubDate>Mon, 04 Dec 2017 02:31:48 +0000</pubDate><guid>https://fliaping.github.io/Blog/run-lede-on-a-fake-docker/</guid><description>&lt;p>在阅读本文之前，可以先了解下另外一篇文章&lt;a href="https://fliaping.github.io/Blog/container-core-technical-details">容器核心技术详解&lt;/a>。&lt;/p>
+&lt;p>容器技术所用到的技术主要是Linux Namespace和cgroup，目前最成功的方案就是Docker，我们也来试着利用Linux kernel的 Namespace来简单实现docker的部分功能，这里称之为假Docker。&lt;/p>
+&lt;p>本文相关的代码在这里 &lt;a href="https://github.com/fliaping/docker_learning/tree/master/fake_docker">fake_docker&lt;/a>，文章中对于比较长的代码会省略，可以在代码仓库中查看。&lt;/p></description></item><item><title>容器核心技术详解</title><link>https://fliaping.github.io/Blog/container-core-technical-details/</link><pubDate>Sun, 08 Oct 2017 05:56:11 +0000</pubDate><guid>https://fliaping.github.io/Blog/container-core-technical-details/</guid><description>&lt;p>最近看了docker用到的技术，于是在公司分享了一下，对于Linux内核比较关心的同学肯定早就知道这些知识了，但是我一直对内核不怎么了解，这些对我来说算是新知识，寻思着后面看看内核相关的书。&lt;/p>
+&lt;h1 id="linux-namespace">Linux Namespace&lt;/h1>
+&lt;blockquote>
+&lt;p>a feature of the Linux kernel that isolate and virtualize system resources of a collection of processes.
+注：linux kernel的一个特性，可以隔离并且虚拟化一组进程的系统资源。&lt;/p>
+&lt;/blockquote>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>名称&lt;/th>
+&lt;th>宏定义&lt;/th>
+&lt;th>隔离内容&lt;/th>
+&lt;th>发布版本&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>IPC&lt;/td>
+&lt;td>CLONE_NEWIPC&lt;/td>
+&lt;td>System V IPC, POSIX message queues&lt;/td>
+&lt;td>since Linux 2.6.19&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Network&lt;/td>
+&lt;td>CLONE_NEWNET&lt;/td>
+&lt;td>network device interfaces, IPv4 and IPv6 protocol stacks, IP routing tables, firewall rules, the /proc/net and /sys/class/net directory trees, sockets, etc&lt;/td>
+&lt;td>since Linux 2.6.24&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Mount&lt;/td>
+&lt;td>CLONE_NEWNS&lt;/td>
+&lt;td>Mount points&lt;/td>
+&lt;td>since Linux 2.4.19&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>PID&lt;/td>
+&lt;td>CLONE_NEWPID&lt;/td>
+&lt;td>Process IDs&lt;/td>
+&lt;td>since Linux 2.6.24&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>User&lt;/td>
+&lt;td>CLONE_NEWUSER&lt;/td>
+&lt;td>User and group IDs&lt;/td>
+&lt;td>started in Linux 2.6.23 and completed in Linux 3.8&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>UTS&lt;/td>
+&lt;td>CLONE_NEWUTS&lt;/td>
+&lt;td>Hostname and NIS domain name&lt;/td>
+&lt;td>since Linux 2.6.19&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>基于Docker的开源视频分享系统解决方案</title><link>https://fliaping.github.io/Blog/a-solution-of-open-source-video-sharing-system-based-on-docker/</link><pubDate>Sun, 24 Apr 2016 04:29:19 +0000</pubDate><guid>https://fliaping.github.io/Blog/a-solution-of-open-source-video-sharing-system-based-on-docker/</guid><description>&lt;p>&lt;strong>序言&lt;/strong>：
+学校之前有个视频分享站点，用的是CC视频的系统，买的源码，后来服务器被黑掉了，存储服务器被格了，好几T的视频都没了，挺心疼人的。绊倒还是要站起来的，准备重新搭建视频系统，可是CC的系统已经太老了，对环境要求很苛刻，要求系统是redhat 5.4，php版本不能大于5.2，还有mysql也有特定要求，最重要的是所有的软件需要编译安装，视频转码那些软件不太好搞。之前搭建这个系统的师哥过来没搞定，把这个坑留给我，在准备跳下去的时候还是回来了，我感觉可能解决不了。于是转投其他系统，国内真心没啥好用的，都是CMS，是从各大视频网站抓链接，什么转码、截图都没有。CC视频也变成了纯粹的云服务了。国外有些很不错的，像Vimp，Melody，但免费版的功能有很多限制，也跳过坑，最后找到开源的clipbucket。&lt;/p>
+&lt;p>另外，本项目托管在 &lt;a href="https://github.com/fliaping/mytube">mytube - github&lt;/a> ，后续更新以此为准。&lt;/p></description></item></channel></rss>

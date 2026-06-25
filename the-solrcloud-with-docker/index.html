@@ -1,0 +1,139 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>借助Docker技术的Solr集群实现 - Fliaping's Blog</title>
+<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Payne Xu"><meta name=description content="在本项目中，为了更好的模拟真实的生产环境，对于SolrCloud技术不采用伪集群方式，而是真正实现一个搜索集群，当然由于笔者只是学生，没有资金租用多台服务器来搭建集群，因此借助于Docker的容器技术在一台服务器上虚拟出逻辑上的六台主机。
+"><meta name=keywords content="fliaping,Payne.Xu"><meta name=generator content="Hugo 0.124.1 with theme even"><link rel=canonical href=https://fliaping.github.io/Blog/the-solrcloud-with-docker/><link rel=apple-touch-icon sizes=180x180 href=/Blog/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/Blog/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/Blog/favicon-16x16.png><link rel=manifest href=/Blog/manifest.json><link rel=mask-icon href=/Blog/safari-pinned-tab.svg color=#5bbad5><script defer src=https://cn.vercount.one/js></script><link href=/Blog/sass/main.min.2a3766884c406c389d3a4ca20b300e80e434d78f1c08825bbdf164a13f4a4235.css rel=stylesheet><link rel=stylesheet href=https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="借助Docker技术的Solr集群实现"><meta property="og:description" content="在本项目中，为了更好的模拟真实的生产环境，对于SolrCloud技术不采用伪集群方式，而是真正实现一个搜索集群，当然由于笔者只是学生，没有资金租用多台服务器来搭建集群，因此借助于Docker的容器技术在一台服务器上虚拟出逻辑上的六台主机。
+"><meta property="og:type" content="article"><meta property="og:url" content="https://fliaping.github.io/Blog/the-solrcloud-with-docker/"><meta property="article:section" content="post"><meta property="article:published_time" content="2016-06-12T09:01:25+00:00"><meta property="article:modified_time" content="2024-09-23T14:15:29+08:00"><meta itemprop=name content="借助Docker技术的Solr集群实现"><meta itemprop=description content="在本项目中，为了更好的模拟真实的生产环境，对于SolrCloud技术不采用伪集群方式，而是真正实现一个搜索集群，当然由于笔者只是学生，没有资金租用多台服务器来搭建集群，因此借助于Docker的容器技术在一台服务器上虚拟出逻辑上的六台主机。
+"><meta itemprop=datePublished content="2016-06-12T09:01:25+00:00"><meta itemprop=dateModified content="2024-09-23T14:15:29+08:00"><meta itemprop=wordCount content="1727"><meta itemprop=keywords content="搜索引擎,Solr,"><meta name=twitter:card content="summary"><meta name=twitter:title content="借助Docker技术的Solr集群实现"><meta name=twitter:description content="在本项目中，为了更好的模拟真实的生产环境，对于SolrCloud技术不采用伪集群方式，而是真正实现一个搜索集群，当然由于笔者只是学生，没有资金租用多台服务器来搭建集群，因此借助于Docker的容器技术在一台服务器上虚拟出逻辑上的六台主机。
+"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://fastly.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://fastly.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Fliaping's Blog</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/Blog/><li class=mobile-menu-item>🏠 主页</li></a><a href=/Blog/post/><li class=mobile-menu-item>⏱️ 时间轴</li></a><a href=/Blog/tags/><li class=mobile-menu-item>🧩 标签</li></a><a href=/Blog/categories/><li class=mobile-menu-item>🗃️ 分类</li></a><a href=/Blog/categories/%E9%9A%8F%E7%AC%94><li class=mobile-menu-item>😊 随笔</li></a><a href=/Blog/about/><li class=mobile-menu-item>🙋🏻‍♂️ 关于</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Fliaping's Blog</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/Blog/>🏠 主页</a></li><li class=menu-item><a class=menu-item-link href=/Blog/post/>⏱️ 时间轴</a></li><li class=menu-item><a class=menu-item-link href=/Blog/tags/>🧩 标签</a></li><li class=menu-item><a class=menu-item-link href=/Blog/categories/>🗃️ 分类</a></li><li class=menu-item><a class=menu-item-link href=/Blog/categories/%E9%9A%8F%E7%AC%94>😊 随笔</a></li><li class=menu-item><a class=menu-item-link href=/Blog/about/>🙋🏻‍♂️ 关于</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>借助Docker技术的Solr集群实现</h1><div class=post-meta><span class=post-time>2016-06-12</span><div class=post-category><a href=/Blog/categories/developer/>Developer</a></div><span class=more-meta>约 1727 字 </span><span class=more-meta>预计阅读 4 分钟 </span><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#java环境镜像制作>java环境镜像制作</a></li><li><a href=#运行镜像>运行镜像</a></li><li><a href=#创建collection>创建collection</a></li><li><a href=#建立索引>建立索引</a></li><li><a href=#查询>查询</a></li></ul></nav></div></div><div class=post-content><p>在本项目中，为了更好的模拟真实的生产环境，对于SolrCloud技术不采用伪集群方式，而是真正实现一个搜索集群，当然由于笔者只是学生，没有资金租用多台服务器来搭建集群，因此借助于Docker的容器技术在一台服务器上虚拟出逻辑上的六台主机。</p><p><img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/trip-search-six-docker.png alt=trip-search-six-docke></p><p>在阅读本节之前，需要对Docker技术和SolrCloud的基础知识有一定的了解，可以参考一下链接。</p><ul><li><a href=https://www.gitbook.com/book/yeasy/docker_practice/details>Docker —— 从入门到实践</a></li><li><a href>SolrCloud基础</a></li></ul><h1 id=java环境镜像制作>java环境镜像制作</h1><p>本项目中的java环境基于ubuntu镜像，除了jdk还安装了必要的工具，例如vim，ifconfig,ssh等。</p><p>已经做好的镜像可以从docker hub或者上拉取</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker pull xuping/ubuntu_java
+</span></span></code></pre></td></tr></table></div></div><h1 id=运行镜像>运行镜像</h1><p>1.　在运行镜像之前，要先建立容器要挂载的目录。在本项目中，我在系统根目录新建data目录，并在该目录包含如下目录，其中<code>solr*</code>为三个solr实例的程序执行目录，其中<code>zookeeper*</code>为三个zookeeper实例的执行目录。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@iZ2880wp05zZ:/data# tree -L <span class=m>1</span>
+</span></span><span class=line><span class=cl>.
+</span></span><span class=line><span class=cl><span class=p>|</span>-- conf
+</span></span><span class=line><span class=cl><span class=p>|</span>-- data
+</span></span><span class=line><span class=cl><span class=p>|</span>-- exe
+</span></span><span class=line><span class=cl><span class=p>|</span>-- jetty
+</span></span><span class=line><span class=cl><span class=p>|</span>-- solr1
+</span></span><span class=line><span class=cl><span class=p>|</span>-- solr2
+</span></span><span class=line><span class=cl><span class=p>|</span>-- solr3
+</span></span><span class=line><span class=cl><span class=p>|</span>-- zookeeper1
+</span></span><span class=line><span class=cl><span class=p>|</span>-- zookeeper2
+</span></span><span class=line><span class=cl><span class=sb>`</span>-- zookeeper3
+</span></span></code></pre></td></tr></table></div></div><p><code>solr*</code>目录中放置Solr的可运行程序，其实就是solr安装目录，需要做的修改是将solr安装目录下bin/solr.in.sh，将ZK_HOSTS的值改为zookeeper的地址，在本项目中就是ZK_HOSTS=”zoo1:2181,zoo2:2181,zoo3:2181”，去掉注释使之生效。</p><p><code>zookeeper*</code>目录中放置Zookeeper的可运行程序，这里需要修改的是zookeeper安装目录下conf/zoo.cfg(新建)，以及在data目录下新建myid文件，并写入当前服务的id,例如<code>server.1</code>就在myid中写入1。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>tickTime=2000
+</span></span><span class=line><span class=cl>initLimit=10
+</span></span><span class=line><span class=cl>syncLimit=5
+</span></span><span class=line><span class=cl>dataDir=/data/data
+</span></span><span class=line><span class=cl>clientPort=2181
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>server.1=zoo1:2888:3888
+</span></span><span class=line><span class=cl>server.2=zoo2:2888:3888
+</span></span><span class=line><span class=cl>server.3=zoo3:2888:3888
+</span></span></code></pre></td></tr></table></div></div><p>2.　运行镜像，启动zookeeper实例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker run -d --name zoo1 -h zoo1  -v /data/zookeeper1:/data -v /data/exe:/exe xuping/ubuntu_java /bin/bash /exe/zooRun.sh 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docker run -d --name zoo2 -h zoo2  -v /data/zookeeper2:/data -v /data/exe:/exe xuping/ubuntu_java /bin/bash /exe/zooRun.sh 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docker run -d --name zoo3 -h zoo3  -v /data/zookeeper3:/data -v /data/exe:/exe xuping/ubuntu_java /bin/bash /exe/zooRun.sh 
+</span></span></code></pre></td></tr></table></div></div><p>解释：</p><ul><li>run 运行镜像</li><li>-d 保持后台运行</li><li>&ndash;name zoo2 -h zoo2 镜像的运行实例，即container的名字和主机名都为zoo2</li><li>-v /data/zookeeper2:/data 挂载宿主机的/data/zookeeper2文件夹到container中的/data</li><li>xuping/ubuntu_java 要运行的镜像</li><li>/bin/bash /exe/zooRun.sh 在镜像启动时，要运行的命令。</li></ul><p>3.　运行镜像，启动Solr实例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker run -d --name solr1 -h solr1  -v /data/solr1:/data -v /data/exe:/exe xuping/ubuntu_java /bin/bash /exe/solrRun.sh 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docker run -d --name solr2 -h solr2  -v /data/solr2:/data -v /data/exe:/exe xuping/ubuntu_java /bin/bash /exe/solrRun.sh 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docker run -d --name solr3 -h solr3  -v /data/solr3:/data -v /data/exe:/exe xuping/ubuntu_java /bin/bash /exe/solrRun.sh 
+</span></span></code></pre></td></tr></table></div></div><p>4.　通过<code>docker ps</code>查看运行的容器，如果运行成功即会看到本文开始的那张图片。
+<img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/trip-search-six-docker.png alt=trip-search-six-docke></p><p>5.　由于我们没有定制docker容器的网络，虽然同一台机器上的容器默认在同一网络中，但其网络是自动分配，需要将各自的ip进行同步。利用docker的挂载功能，将同一目录挂载到所有容器，这样即可用脚本来同步所有容器的网络信息，其脚本如下所示，作用不仅是同步网络，另外也是保持容器后台持续运行。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>service ssh start   <span class=c1>#启动ssh服务</span>
+</span></span><span class=line><span class=cl>/data/bin/zkServer.sh start  <span class=c1>#启动zookeeper服务</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>local_ip</span><span class=o>=</span><span class=sb>`</span>/sbin/ifconfig -a<span class=p>|</span>grep inet<span class=p>|</span>grep -v 127.0.0.1<span class=p>|</span>grep -v inet6<span class=p>|</span>awk <span class=s1>&#39;{print $2}&#39;</span><span class=p>|</span>tr -d <span class=s1>&#39;addr:&#39;</span><span class=sb>`</span>
+</span></span><span class=line><span class=cl><span class=nv>host_item</span><span class=o>=</span><span class=nv>$local_ip</span><span class=s1>&#39; &#39;</span><span class=sb>`</span>hostname<span class=sb>`</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>$host_item</span>  &gt;&gt; /exe/hosts
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>input</span><span class=o>=</span><span class=s2>&#34;/exe/hosts&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>while</span> true<span class=p>;</span>
+</span></span><span class=line><span class=cl> <span class=k>do</span> <span class=nb>echo</span> update hosts<span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nb>echo</span> <span class=s1>&#39;&#39;</span> &gt; /etc/hosts
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=nv>IFS</span><span class=o>=</span> <span class=nb>read</span> -r var
+</span></span><span class=line><span class=cl>        <span class=k>do</span>
+</span></span><span class=line><span class=cl>          <span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$var</span><span class=s2>&#34;</span> &gt;&gt; /etc/hosts
+</span></span><span class=line><span class=cl>          <span class=k>done</span> &lt; <span class=s2>&#34;</span><span class=nv>$input</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>sleep 10<span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span></code></pre></td></tr></table></div></div><p>同样的，在Solr实例中也有类似的脚本。</p><h1 id=创建collection>创建collection</h1><p>通过ssh连接上任意一个solr实例，转到solr安装目录。</p><p>1.　上传配置文件到Zookeeper中</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>server/scripts/cloud-scripts/zkcli.sh -zkhost zoo1:2181,zoo2:2181,zoo3:2181 -cmd upconfig -confname trip -confdir ./conf
+</span></span></code></pre></td></tr></table></div></div><p>解释：</p><ul><li>-cmd upconfig 表示操作是上传配置</li><li>-confname 表示在Zookeeper中的配置文件所放的路径</li><li>-confdir 表示本地要上传的配置文件的路径</li></ul><p>2.　通过Url API来创建collection</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>wget http://solr1:8983/solr/admin/collections?action<span class=o>=</span>CREATE<span class=p>&amp;</span><span class=nv>name</span><span class=o>=</span>trip<span class=p>&amp;</span><span class=nv>numShards</span><span class=o>=</span>3<span class=p>&amp;</span><span class=nv>replicationFactor</span><span class=o>=</span>3<span class=p>&amp;</span><span class=nv>maxShardsPerNode</span><span class=o>=</span>5<span class=p>&amp;</span>collection.configName<span class=o>=</span>trip
+</span></span></code></pre></td></tr></table></div></div><p>解释：</p><ul><li>action=CREATE 动作为创建collections</li><li>name=trip collection的名字为trip</li><li>numShards=3 分片数量为3</li><li>replicationFactor=3 复件个数为3</li><li>maxShardsPerNode=5 每节点最大分片个数为5</li><li>collection.configName=trip 要创建的collection在zookeeper中的配置文件的路径</li></ul><p>成功之后，访问任一solr节点的管理界面，会看到如下所示的样子。（当然前提是你的浏览器要和这些节点在同一网络内，无论是代理，还是VPN都能实现）
+<img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/solrcloud-architecture-graph.png alt=solrcloud-architecture-graph></p><h1 id=建立索引>建立索引</h1><p>还是选择从mysql中导入数据，和单机情况下的导入一样，配置文件不需要改变，直接像单机情况下使用即可。</p><p>当然后台的一些情况还是不同于单机版的，其实流程也比较清晰，我们暂时不用管怎么实现这些的，只管了解即可。
+<img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/blog/solrcloud-index-workflow.png alt=solrcloud-index-workflo></p><h1 id=查询>查询</h1><p>只用修改连接的实例即可，其它部分和单机情况下一样。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>String</span><span class=w> </span><span class=n>urlString</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>&#34;zoo1:2181,zoo2:2181,zoo3:2181&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>SolrClient</span><span class=w> </span><span class=n>solrClient</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>CloudSolrClient</span><span class=p>(</span><span class=n>urlString</span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>Payne Xu</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2024-09-23
+<a href=https://github.com/fliaping/Blog.git/commit/96bf251e692fee02a026bcec4dc0e3481e96e5b6 title=修改图片域名>(96bf251)</a></span></p><p class=copyright-item><span class=item-title>原始文档</span>
+<span class=item-content><a class=link-to-markdown href=https://fliaping.github.io/Blog/the-solrcloud-with-docker/index.md target=_blank>查看本文 Markdown 版本 »</a></span></p><p class=copyright-item><span class=item-title>许可协议</span>
+<span class=item-content><a rel="license noopener" href=https://creativecommons.org/licenses/by-nc-nd/4.0/ target=_blank>CC BY-NC-ND 4.0</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/Blog/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/>搜索引擎</a>
+<a href=/Blog/tags/solr/>Solr</a></div><nav class=post-nav><a class=prev href=/Blog/the-implements-of-weixin-wifi-by-using-wifidog-gateway/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">利用wifidog实现微信wifi连接</span>
+<span class="prev-text nav-mobile">上一篇</span>
+</a><a class=next href=/Blog/the-introduction-of-solrcloud/><span class="next-text nav-default">SolrCloud基础</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script><script type=text/javascript>var gitalk=new Gitalk({id:"2016-06-12 09:01:25 +0000 UTC",title:"借助Docker技术的Solr集群实现",clientID:"c4ef14e88fbeca886191",clientSecret:"9abcc260c662ad994ea4cf8c7267feb9c66da87a",repo:"Blog",owner:"fliaping",admin:["fliaping"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:xavierrpayne@gmail.com class="iconfont icon-email" title=email></a><a href=https://twitter.com/fliaping class="iconfont icon-twitter" title=twitter></a><a href=https://www.linkedin.com/in/paynexu/ class="iconfont icon-linkedin" title=linkedin></a><a href=https://github.com/fliaping class="iconfont icon-github" title=github></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动
+</span><span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 次 </span><span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2015 -
+2026<span class=heart><i class="iconfont icon-heart"></i></span><span>fliaping</span>
+</span><span><a href=http://www.miitbeian.gov.cn>豫ICP备15007908号-2</a></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://fastly.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://fastly.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/Blog/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script><script type=text/javascript>window.MathJax={loader:{load:["input/asciimath"]},tex:{inlineMath:[["$","$"],["\\(","\\)"]],tags:"ams",processEscapes:!0}}</script><script id=MathJax-script async src=https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==="localhost")return;var t,e=document.createElement("script");e.async=!0,e.src="https://hm.baidu.com/hm.js?3b9e1727c271ab68867e6c829416ed4c",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script><script>function createCopyButton(e){const t=document.createElement("div");t.className="copy-code",t.innerText="Copy",t.addEventListener("click",()=>copyCodeToClipboard(t,e)),addCopyButtonToDom(t,e)}async function copyCodeToClipboard(e,t){const n=t.querySelector(":last-child > .chroma > code").innerText;await navigator.clipboard.writeText(n),e.blur(),e.innerText="Copied!",setTimeout(()=>e.innerText="Copy",2e3)}function addCopyButtonToDom(e,t){t.insertBefore(e,t.firstChild);const n=document.createElement("div");n.className="highlight-wrapper",t.parentNode.insertBefore(n,t),n.appendChild(t)}var isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);isMobile||document.querySelectorAll(".highlight").forEach(e=>createCopyButton(e))</script></body></html>

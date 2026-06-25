@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java on Fliaping's Blog</title><link>https://fliaping.github.io/Blog/tags/java/</link><description>Recent content in Java on Fliaping's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 23 Sep 2024 14:15:29 +0800</lastBuildDate><atom:link href="https://fliaping.github.io/Blog/tags/java/index.xml" rel="self" type="application/rss+xml"/><item><title>Java正则替换异常问题</title><link>https://fliaping.github.io/Blog/java-regex-replacement-exception-problem/</link><pubDate>Fri, 19 Apr 2019 16:43:01 +0800</pubDate><guid>https://fliaping.github.io/Blog/java-regex-replacement-exception-problem/</guid><description>用Java进行正则匹配替换时，会出现莫名的异常，例如： Exception in thread &amp;ldquo;main&amp;rdquo; java.lang.IllegalArgumentException: Illegal group reference Exception in thread &amp;ldquo;main&amp;rdquo; java.lang.IndexOutOfBoundsException: No group 3 使用java正则替换，一般的方式是： 构建正则表达式：P</description></item><item><title>从日志配置文件读取了解java9模块化和类加载机制的改变</title><link>https://fliaping.github.io/Blog/learn-java9-modular-and-classload-from-the-problem-of-log-config-file/</link><pubDate>Sat, 31 Mar 2018 07:50:07 +0000</pubDate><guid>https://fliaping.github.io/Blog/learn-java9-modular-and-classload-from-the-problem-of-log-config-file/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>Java9出来大半年了，Java10也发布了，Java11半年后就来了，将成为了一个LTS长期支持版，从Java9开始的模块化是java非常重大的改变，未来必然成为趋势，学习模块化也早晚的事。这不正好学习netty，写一个代理软件练练手，顺便学习下模块化。本文并不是完整介绍模块化，而是在使用模块化过程中遇到的一个问题的分析和解决。&lt;/p>
+&lt;h2 id="问题描述">问题描述&lt;/h2>
+&lt;p>首先说下项目的基本情况：&lt;/p>
+&lt;ul>
+&lt;li>JDK9（模块化，即使用了module-info.java）&lt;/li>
+&lt;li>项目构建：gradle 4.6&lt;/li>
+&lt;li>IDE: IntelliJ IDEA 2017.3.5&lt;/li>
+&lt;/ul>
+&lt;p>代码中有使用到日志工具，目前比较常用的是slf4j作为日志api，实现使用log4j、log4j2或者logback。我当然也这么用，slf4j+log4j2。在不使用模块化情况下（java9为了向前兼容，可以不使用模块化），将日志的配置文件log4j2.xml文件放到&lt;code>src/main/resources&lt;/code>然后用idea build-&amp;gt;run，但发现log4j2报错：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ERROR StatusLogger No Log4j 2 configuration file found. Using default configuration (logging only errors to the console), or user programmatically provided configurations. Set system property &amp;#39;log4j2.debug&amp;#39; to show Log4j 2 internal initialization logging. See https://logging.apache.org/log4j/2.x/manual/configuration.html for instructions on how to configure Log4j 2
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>java常用JSON库注意事项总结</title><link>https://fliaping.github.io/Blog/the-attention-of-json-serialization-and-deserialization-in-java/</link><pubDate>Mon, 27 Feb 2017 08:47:25 +0000</pubDate><guid>https://fliaping.github.io/Blog/the-attention-of-json-serialization-and-deserialization-in-java/</guid><description>如果想将对象进行网络传输，就需要序列话和反序列化。主要分为以文本为介质和以二进制为介质。以文本为介质最广泛的是 xml 和 json ，但是 xml 过于冗长，jso</description></item><item><title>Java静态代码块的执行</title><link>https://fliaping.github.io/Blog/the-execute-of-java-static-code-block/</link><pubDate>Mon, 23 Jan 2017 12:58:25 +0000</pubDate><guid>https://fliaping.github.io/Blog/the-execute-of-java-static-code-block/</guid><description>&lt;h1 id="问题及总结">问题及总结&lt;/h1>
+&lt;p>关于静态代码块其实是面试时老生常谈的问题，虽然面试时问了我也大概知道，但是在用的时候还是踩了个小坑。我想通过调用类的静态变量来触发静态代码块的调用，但是没有成功。&lt;/p>
+&lt;p>总结下静态代码块能执行的条件：&lt;/p>
+&lt;ol>
+&lt;li>第一次初始化对象&lt;/li>
+&lt;li>第一次调用静态方法&lt;/li>
+&lt;li>第一次调用静态代码块下面的静态变量&lt;/li>
+&lt;/ol></description></item><item><title>不同平台下的RSA加解密及认证</title><link>https://fliaping.github.io/Blog/rsa-encryption-and-decryption-in-different-platform/</link><pubDate>Tue, 22 Nov 2016 11:36:25 +0000</pubDate><guid>https://fliaping.github.io/Blog/rsa-encryption-and-decryption-in-different-platform/</guid><description>&lt;p>RSA是目前(2016)用途最为广泛的非对称加密方法，广泛应用于加解密以及认证，例如：ssh登录、加密通信、https等很多方面。但是不同平台对其支持时，在实现上有少许的不同，这些不同可能会阻碍我们使用，尤其是在跨平台的时候，如果不知道其中的细节，往往会失败，本文以作者用过的几个语言做一些实例。&lt;/p>
+&lt;p>代码：&lt;a href="https://github.com/fliaping/tools_code/tree/master/RSA">https://github.com/fliaping/tools_code/tree/master/RSA&lt;/a>&lt;/p>
+&lt;p>目前只有 JAVA 和 PHP 的互通，后续可能进行一些补充。&lt;/p></description></item></channel></rss>

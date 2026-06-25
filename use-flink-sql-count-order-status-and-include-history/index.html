@@ -1,0 +1,676 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>利用Flink SQL实时统计单据状态（含历史数据） - Fliaping's Blog</title>
+<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Payne Xu"><meta name=description content="背景 需求抽象下，有一种单据，整个生命周期中有很多种状态，现在要实时按照某个维度（例如用户id）统计其中某几个状态的数量，并按照该维度定时推送"><meta name=keywords content="fliaping,Payne.Xu"><meta name=generator content="Hugo 0.124.1 with theme even"><link rel=canonical href=https://fliaping.github.io/Blog/use-flink-sql-count-order-status-and-include-history/><link rel=apple-touch-icon sizes=180x180 href=/Blog/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/Blog/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/Blog/favicon-16x16.png><link rel=manifest href=/Blog/manifest.json><link rel=mask-icon href=/Blog/safari-pinned-tab.svg color=#5bbad5><script defer src=https://cn.vercount.one/js></script><link href=/Blog/sass/main.min.2a3766884c406c389d3a4ca20b300e80e434d78f1c08825bbdf164a13f4a4235.css rel=stylesheet><link rel=stylesheet href=https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="利用Flink SQL实时统计单据状态（含历史数据）"><meta property="og:description" content="背景 需求抽象下，有一种单据，整个生命周期中有很多种状态，现在要实时按照某个维度（例如用户id）统计其中某几个状态的数量，并按照该维度定时推送"><meta property="og:type" content="article"><meta property="og:url" content="https://fliaping.github.io/Blog/use-flink-sql-count-order-status-and-include-history/"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-10-14T09:39:27+08:00"><meta property="article:modified_time" content="2020-10-14T09:39:27+08:00"><meta itemprop=name content="利用Flink SQL实时统计单据状态（含历史数据）"><meta itemprop=description content="背景 需求抽象下，有一种单据，整个生命周期中有很多种状态，现在要实时按照某个维度（例如用户id）统计其中某几个状态的数量，并按照该维度定时推送"><meta itemprop=datePublished content="2020-10-14T09:39:27+08:00"><meta itemprop=dateModified content="2020-10-14T09:39:27+08:00"><meta itemprop=wordCount content="5287"><meta itemprop=keywords content="flink,实时计算,"><meta name=twitter:card content="summary"><meta name=twitter:title content="利用Flink SQL实时统计单据状态（含历史数据）"><meta name=twitter:description content="背景 需求抽象下，有一种单据，整个生命周期中有很多种状态，现在要实时按照某个维度（例如用户id）统计其中某几个状态的数量，并按照该维度定时推送"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://fastly.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://fastly.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Fliaping's Blog</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/Blog/><li class=mobile-menu-item>🏠 主页</li></a><a href=/Blog/post/><li class=mobile-menu-item>⏱️ 时间轴</li></a><a href=/Blog/tags/><li class=mobile-menu-item>🧩 标签</li></a><a href=/Blog/categories/><li class=mobile-menu-item>🗃️ 分类</li></a><a href=/Blog/categories/%E9%9A%8F%E7%AC%94><li class=mobile-menu-item>😊 随笔</li></a><a href=/Blog/about/><li class=mobile-menu-item>🙋🏻‍♂️ 关于</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Fliaping's Blog</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/Blog/>🏠 主页</a></li><li class=menu-item><a class=menu-item-link href=/Blog/post/>⏱️ 时间轴</a></li><li class=menu-item><a class=menu-item-link href=/Blog/tags/>🧩 标签</a></li><li class=menu-item><a class=menu-item-link href=/Blog/categories/>🗃️ 分类</a></li><li class=menu-item><a class=menu-item-link href=/Blog/categories/%E9%9A%8F%E7%AC%94>😊 随笔</a></li><li class=menu-item><a class=menu-item-link href=/Blog/about/>🙋🏻‍♂️ 关于</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>利用Flink SQL实时统计单据状态（含历史数据）</h1><div class=post-meta><span class=post-time>2020-10-14</span><div class=post-category><a href=/Blog/categories/developer/>Developer</a></div><span class=more-meta>约 5287 字 </span><span class=more-meta>预计阅读 11 分钟 </span><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#背景>背景</a></li><li><a href=#基本思路>基本思路</a><ul><li><a href=#离线和实时数据结合>离线和实时数据结合</a></li><li><a href=#实时状态计数如何算>实时状态计数如何算</a></li></ul></li><li><a href=#实现方案>实现方案</a><ul><li><a href=#数据准确性调试>数据准确性调试</a></li><li><a href=#可改进点>可改进点</a></li></ul></li><li><a href=#参考资料>参考资料</a></li><li><a href=#附录>附录</a><ul><li><a href=#flink-sql代码>Flink SQL代码</a></li><li><a href=#udf>UDF</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><h2 id=背景>背景</h2><p>需求抽象下，有一种单据，整个生命周期中有很多种状态，现在要实时按照某个维度（例如用户id）统计其中某几个状态的数量，并按照该维度定时推送统计数据。</p><p>对于这个需求，解决办法有很多，那么什么情况下<strong>不需要Flink</strong>来实现？</p><ol><li>MySQL存储，单库单表，数据量比较小，直接sql查询</li><li>MySQL存储，单库单表，统计维度和状态字段加了索引，且该维度数据比较分散，不会集中在某几个值（按照维度一次查询的数量比较少）</li><li>业务接受统计数据延迟，例如一个小时更新一次，那么可以用小时离线表来统计</li><li>有AnalyticDB（aliyun）、Elastic Search等分析型数据库可用（当然需要考虑成本问题）</li></ol><p>其实上面的场景已经覆盖大部分情况，从技术方案选型的角度来讲<strong>Flink一定是最后才考虑的方案</strong>，为什么这么说呢？</p><ol><li>流式计算还是比较年轻的技术，开发体验还有待提高，尽管有FlinkSQL，但学习成本依然不低，需要转换思维</li><li>调试成本比较高，无法像写代码那样调试计算逻辑，flink的调试通常只能看输入、输出</li><li>需要有合适的数据输入，如果数据不合适的话，可能非常费事（下文会提到）</li></ol><p>那么什么情况下可以采用Flink的方案呢？</p><ol><li>真的对实时性有严格要求，并且由于原始数据量级的问题，无法直接查询原始数据（对数据库压力太大，或耗时过久）</li><li>出于学习的目的，且时间充裕</li><li>其他因为直接查询路子走不通的情况（例如，分库分表了、数据量比较大太耗时）</li><li>由于各种原因，申请不到分析型数据库，或者有现成的flink集群</li><li>其他方案成本太高，包括 开发成本、机器资源成本、嘴皮子成本(开玩笑)</li></ol><h2 id=基本思路>基本思路</h2><p>那么下面我们就来讨论实时要求下使用Flink的方案实现。</p><p>对于实时计算架构，业界有比较成熟两个方案，Lambda和Kappa</p><p>Lambda架构比较成熟稳定，但是需要维护两套系统的代码，不易于维护</p><p><img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2020-10-14/20201014101724.png?imageslim alt=实时计算-Lambda架构></p><p>Kappa舍弃了离线数据，通过回溯流数据的方式来解决出问题后修复，但是如果时间跨度比较大的话，修复时间会很久，对于短期数据的统计，用这种方式肯定是更好的方案</p><p><img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2020-10-14/20201014101900.png?imageslim alt=实时计算-Kappa架构></p><h3 id=离线和实时数据结合>离线和实时数据结合</h3><p>对于我们这个需求：</p><ol><li>首先时间跨度比较长，至少是几个月的</li><li>然后要考虑应用代码的BUG等问题，如果纯用流式计算，如果不进行维护，后续的误差会越来越大，我们希望的是要有一定的自校准能力。</li><li>另外结果的输出希望直接输出一张表，并且是全量数据，不必在应用层进行汇总，减少了一定的维护成本。</li></ol><p>结合我们的需求和这两个方案的优缺点，可以发现并不能照搬以上两种方案，需要做一些微创新</p><p><img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2020-10-14/20201014101950.png?imageslim alt=20201014101950></p><p>那么一个简单的雏形就出现了，但是会有一些问题</p><ol><li>任务每次重启都要先做离线数据的初始化，如果没有初始化，今日无变化的数据就不会落到结果表中。这样除了实时任务外还需要一个初始化任务，每次重启任务就需要有两步，先初始化，然后将实时任务回溯到今日0点然后重跑</li><li>我们知道离线数据通常需要花费比较久的时间，并且很多任务并不是0点就开始跑，有时候任务跑完就已经5、6点了，这期间离线数据用的是前天的，实时数据用的是今天的，这就会出现错误</li></ol><p>针对上面两个问题，可以考虑如下优化</p><ol><li>主要是想省个事，这个好办，每天来定时刷一遍离线数据，如果有实时数据，那就以实时为准，没有则用离线。最重要的是可以通过这种方式用离线来对实时数据做一次校准，因为实时数据的效期是一天，如果第二天没有更新，这条数据就会被清理掉，那么就会替换为离线数据，起到了校准的目的。</li><li>这个问题的本质是离线任务执行时间和实时计算的有效数据窗口之间有GAP，导致在离线任务产出之前，离线数据只有前日汇总可用，而实时计算的区间已经切换到今日，如下图所示</li></ol><p><img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2020-10-14/20201014102056.png?imageslim alt=20201014102056></p><p>那么解决这个问题也比较简单，拉长实时计算的时间区间，给离线任务充足的时间，让离线数据和实时数据区间重叠即可，如下图所示，离线数据采用前日数据，不管昨日数据是否产生，实时数据从昨日0点开始统计，这样离线任务有整整一天的可执行时间，完全是充足的。</p><p><img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2020-10-14/20201014102116.png?imageslim alt=20201014102116></p><h3 id=实时状态计数如何算>实时状态计数如何算</h3><p>如果熟悉Flink<a href=https://developer.aliyun.com/article/457392>撤回机制</a>，很容易想到，这个不就是状态统计吗，两个group by不就搞定实时计数了吗？
+如下面的代码所示，当同一个单据号的状态发生变化，就会撤回之前的那条数据，这个user_id下，前一个状态的计数就会减一。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=line><span class=cl><span class=k>select</span><span class=w> </span><span class=n>user_id</span><span class=p>,</span><span class=n>status</span><span class=p>,</span><span class=k>COUNT</span><span class=p>(</span><span class=n>orderNo</span><span class=p>)</span><span class=w> </span><span class=n>num</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>SELECT</span><span class=w> </span><span class=n>orderNo</span><span class=p>,</span><span class=n>LAST_VALUE</span><span class=p>(</span><span class=n>status</span><span class=p>)</span><span class=w> </span><span class=n>status</span><span class=w> </span><span class=p>,</span><span class=n>LAST_VALUE</span><span class=p>(</span><span class=n>user_id</span><span class=p>)</span><span class=w> </span><span class=n>user_id</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>order_table</span><span class=w> </span><span class=k>group</span><span class=w> </span><span class=k>by</span><span class=w> </span><span class=n>orderNo</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>)</span><span class=w> </span><span class=k>group</span><span class=w> </span><span class=k>by</span><span class=w> </span><span class=n>user_id</span><span class=p>,</span><span class=n>status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>这样是很好，但是没有考虑单据生命周期跨越实时计算覆盖范围的情况，假如实时计算近两天的数据，我们要统计的状态是（10，15），这两个状态是连续的，考虑以下情况：</p><ol><li>单据在两天前创建，状态没有到10，实时计算时有了状态为10的数据，此时 状态10计数+1。</li><li>单据在近两天内创建，状态从10到15，由于单据状态为10或15都在实时计算范围内，根据撤回机制，状态10计数-1，状态15计数+1，很完美。</li><li>单据在两天前创建且状态流转到10，在近两天出现了状态15，根据上面的sql，状态15计数+1，但并没有感知之前的状态10，所以加上离线数据的话，状态10的计数就多加了。</li></ol><p>简单说只利用实时计算的撤回机制，对于单据跨越实时计算覆盖范围的情况并不能很好处理。当然如果说我把实时计算区间设置大一些，几个月或者一年，超过单据最大生命周期的时间，这当然是可以的，但如果任务重启咋整，源数据并不会保存那么久，所以还是要考虑这个问题。</p><p><strong>那状态变更的计数如何做呢？</strong></p><p>根据上面描述，如果能拿到当前状态及前一个状态，那么可以对每个状态的计数进行加减。变更消息过来时，将更新后的状态计数加一，将更新前的状态计数减一，这样就能正确计数。但有时候现实会有很多限制条件，比如：状态变更消息没有更新前状态，或者干脆没有状态更新消息，那怎么办呢？改代码加上带更新前状态的消息，如果这种方式并不简单呢？</p><p>接入数据库变更日志（binlog）是一种很好的解耦方式，很多云服务提供的数据库都有对应的CDC（Change Data Capture）功能，像阿里云的Flink服务就提供了对应的connector（<a href=https://help.aliyun.com/document_detail/184874.html>mysql-cdc</a>）;此外还有一些同步工具通过解析binlog将数据同步出来，通过开发对应的connector都可以对接上flink，例如<a href=https://help.aliyun.com/product/26590.html>Aliyun-DTS</a>、<a href=https://github.com/alibaba/canal>canal</a>等。</p><p>但是有些数据库同步工具没有变更前数据，对于数据同步的场景是无所谓的，但是我们这个场景是必须要的，对于这种情况，如果非要走下去，那就要加个中间层，缓存每个单据的前一次状态。有两种方案：</p><ol><li>可以通过Flink的backend state 来存储，不过这个存储是有时效的，但单据的生命周期有可能大于存储时效，这时可以再引入离线数据。</li><li>直接建一个单据前一次状态表，既作为维表又作为结果表，每次一条数过来先当做维表查询上一次状态，然后再把本次状态写入结果表。</li></ol><p>然而第2种方案有些重，引入了一张新的外部表，相当于同步了一份单据前一次状态的数据，并且还是要考虑离线数据的问题。而方案1，根据数据分布的特性，由于我们关心的状态在某一时刻，单据并不会很多，离线单据状态可以直接缓存到Flink，所以这里我决定还是用方案1来实现。</p><h2 id=实现方案>实现方案</h2><p><img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2020-10-14/20201014112120.png?imageslim alt=20201014112120></p><p>整体的架构如上图所示，具体代码见文末附录。</p><p>方案说明：</p><ul><li>单据上次状态：由于数据源没有更新前数据，因此我们只能利用Flink的存储，并加上离线的单据状态进行计算，得到前一次的状态值，这里自定义了聚合函数prevValue，缓存单据前一个状态，如果没有，那就从离线单据中取得，</li><li>单据状态操作值转换：这里根据当前和上一次状态转换为+1或-1操作，如果两个状态一致，我们就要忽略掉，有可能是重复数据；利用<a href=https://ci.apache.org/projects/flink/flink-docs-release-1.3/dev/table/udfs.html#table-functions>UDTF</a>，可能一条数据转为两条，上一次状态-1及当前状态+1；如果前一个状态为空，则忽略。</li></ul><p>注意点：</p><ul><li>这里需要注意的是，从数据库同步到离线的单据，要选择通过更新时间来分区，这种方式会根据更新时间字段来判断某条数据该不该落到今天这个分区，这样会准确些。而普通的每天全量的方式就可能会把今天更新的数据也放到昨天的分区中，而我们实时计算的覆盖范围是识别更新时间的，这时有可能因为离线计算和实时计算有重叠而导致错误。</li></ul><h3 id=数据准确性调试>数据准确性调试</h3><p>数据的调试相对于业务逻辑的调试更加麻烦些，有如下原因：</p><ol><li>测试数据不太好造，主要是因为场景多，输入输出输出比较复杂</li><li>线上数据可能不如预期的规范，测试时不能覆盖到该场景</li></ol><p>我目前也没有什么比较好的办法，就是花时间造数据测试；在线上数据跑起来后要多验证，对于异常数据要把源数据拉下来找出原因。</p><h3 id=可改进点>可改进点</h3><ul><li>如果离线单据状态数据比较多，不能全部缓存，或者影响性能的话，可以引入其他存储，例如hbase。</li></ul><h2 id=参考资料>参考资料</h2><ul><li><a href=https://developer.aliyun.com/article/752406>从Lambda架构到Kappa架构再到？浅谈未来数仓架构设计~</a></li><li><a href=https://yuque.antfin-inc.com/rtcompute/doc>flink官方文档</a></li></ul><h2 id=附录>附录</h2><h3 id=flink-sql代码>Flink SQL代码</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=line><span class=cl><span class=k>CREATE</span><span class=w> </span><span class=k>FUNCTION</span><span class=w> </span><span class=n>statusCount</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=s1>&#39;com.fliaping.flink.udf.StatusCountUdtf&#39;</span><span class=w> </span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>CREATE</span><span class=w> </span><span class=k>FUNCTION</span><span class=w> </span><span class=n>prevValue</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=s1>&#39;com.fliaping.flink.udf.PrevValueUdaf&#39;</span><span class=w> </span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 采购单的tt数据源
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>create</span><span class=w> </span><span class=k>table</span><span class=w> </span><span class=n>xx_source</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>id</span><span class=w> </span><span class=nb>BIGINT</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>gmt_modified</span><span class=w> </span><span class=nb>VARCHAR</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>user_id</span><span class=w> </span><span class=nb>VARCHAR</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>biz_status</span><span class=w> </span><span class=nb>VARCHAR</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>event_time</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=n>PROCTIME</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=k>PRIMARY</span><span class=w> </span><span class=k>KEY</span><span class=w> </span><span class=p>(</span><span class=o>`</span><span class=n>id</span><span class=o>`</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>)</span><span class=w> </span><span class=k>with</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>type</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s1>&#39;your-db-type&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 状态统计离线表
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>create</span><span class=w> </span><span class=k>table</span><span class=w> </span><span class=n>offline_order_status_num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>user_id</span><span class=w> </span><span class=nb>VARCHAR</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;供应商ID&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>biz_status</span><span class=w> </span><span class=nb>VARCHAR</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;业务状态&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>last_day_num</span><span class=w> </span><span class=nb>BIGINT</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;昨日待办数量&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>num</span><span class=w> </span><span class=nb>BIGINT</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;待办数量&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>ds</span><span class=w> </span><span class=nb>VARCHAR</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;分区字段&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=k>PRIMARY</span><span class=w> </span><span class=k>KEY</span><span class=w> </span><span class=p>(</span><span class=n>user_id</span><span class=p>,</span><span class=w> </span><span class=n>biz_status</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>PERIOD</span><span class=w> </span><span class=k>FOR</span><span class=w> </span><span class=n>SYSTEM_TIME</span><span class=w>    </span><span class=c1>--定义了维表的标识。
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>)</span><span class=w> </span><span class=k>with</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>type</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s1>&#39;your-offline-type&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 单据状态离线表
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>create</span><span class=w> </span><span class=k>table</span><span class=w> </span><span class=n>order_status_history</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>order_no</span><span class=w> </span><span class=nb>VARCHAR</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;供应商ID&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>biz_status</span><span class=w> </span><span class=nb>VARCHAR</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;业务状态&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>last_biz_status</span><span class=w> </span><span class=nb>VARCHAR</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;昨日状态&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>gmt_modified</span><span class=w> </span><span class=k>TIMESTAMP</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;修改时间&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>last_gmt_modified</span><span class=w> </span><span class=k>TIMESTAMP</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;昨日修改时间&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>ds</span><span class=w> </span><span class=nb>VARCHAR</span><span class=w> </span><span class=k>COMMENT</span><span class=w> </span><span class=s1>&#39;分区字段&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=k>PRIMARY</span><span class=w> </span><span class=k>KEY</span><span class=w> </span><span class=p>(</span><span class=n>order_no</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>PERIOD</span><span class=w> </span><span class=k>FOR</span><span class=w> </span><span class=n>SYSTEM_TIME</span><span class=w>    </span><span class=c1>--定义了维表的标识。
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>)</span><span class=w> </span><span class=k>with</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>type</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s1>&#39;your-offline-type&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 进行数据过滤
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>create</span><span class=w> </span><span class=k>VIEW</span><span class=w> </span><span class=n>filter_view</span><span class=w> </span><span class=k>AS</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>select</span><span class=w>  </span><span class=n>order_no</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>gmt_modified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>event_time</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FROM</span><span class=w>    </span><span class=n>tt_source</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>where</span><span class=w>   </span><span class=n>order_no</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NOT</span><span class=w> </span><span class=k>NULL</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>and</span><span class=w>     </span><span class=n>user_id</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NOT</span><span class=w> </span><span class=k>NULL</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>AND</span><span class=w>     </span><span class=n>biz_status</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NOT</span><span class=w> </span><span class=k>NULL</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>AND</span><span class=w>     </span><span class=n>gmt_modified</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NOT</span><span class=w> </span><span class=k>NULL</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 获取Flink存储中的单据前一个状态，并缓存当前状态
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>CREATE</span><span class=w> </span><span class=k>VIEW</span><span class=w> </span><span class=n>get_before_biz_status</span><span class=w> </span><span class=k>AS</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>SELECT</span><span class=w>  </span><span class=n>order_no</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>TO_TIMESTAMP</span><span class=w> </span><span class=p>(</span><span class=n>gmt_modified</span><span class=p>)</span><span class=w> </span><span class=n>gmt_modified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>DATE_FORMAT</span><span class=w> </span><span class=p>(</span><span class=n>TO_TIMESTAMP</span><span class=w> </span><span class=p>(</span><span class=n>gmt_modified</span><span class=p>),</span><span class=w> </span><span class=s1>&#39;yyyyMMdd&#39;</span><span class=p>)</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=n>gmt_modified_day</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>prevValue</span><span class=p>(</span><span class=n>biz_status</span><span class=p>)</span><span class=w> </span><span class=n>OVER</span><span class=w> </span><span class=p>(</span><span class=n>PARTITION</span><span class=w> </span><span class=k>BY</span><span class=w> </span><span class=n>order_no</span><span class=w> </span><span class=k>ORDER</span><span class=w> </span><span class=k>BY</span><span class=w> </span><span class=n>event_time</span><span class=p>)</span><span class=w> </span><span class=n>prev_biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FROM</span><span class=w>    </span><span class=n>filter_view</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 对于Flink中没有存储上一次状态的单据，去离线数据中查出来
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>CREATE</span><span class=w> </span><span class=k>VIEW</span><span class=w> </span><span class=n>order_with_last_biz_status</span><span class=w> </span><span class=k>AS</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>SELECT</span><span class=w>  </span><span class=k>c</span><span class=p>.</span><span class=o>*</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>-- 考虑每天的离线数据需要一定时间产出，故使用前日离线数据
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>        </span><span class=p>,</span><span class=k>IF</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>d</span><span class=p>.</span><span class=n>ds</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>DATE_FORMAT</span><span class=w> </span><span class=p>(</span><span class=w> </span><span class=n>date_sub</span><span class=w> </span><span class=p>(</span><span class=k>CURRENT_TIMESTAMP</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>),</span><span class=w> </span><span class=s1>&#39;yyyy-MM-dd&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;yyyyMMdd&#39;</span><span class=w> </span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>,</span><span class=n>d</span><span class=p>.</span><span class=n>last_biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>,</span><span class=n>d</span><span class=p>.</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>)</span><span class=w> </span><span class=n>prev_biz_status_offline</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=k>IF</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>d</span><span class=p>.</span><span class=n>ds</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>DATE_FORMAT</span><span class=w> </span><span class=p>(</span><span class=w> </span><span class=n>date_sub</span><span class=w> </span><span class=p>(</span><span class=k>CURRENT_TIMESTAMP</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>),</span><span class=w> </span><span class=s1>&#39;yyyy-MM-dd&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;yyyyMMdd&#39;</span><span class=w> </span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>,</span><span class=n>d</span><span class=p>.</span><span class=n>last_gmt_modified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>,</span><span class=n>d</span><span class=p>.</span><span class=n>gmt_modified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>)</span><span class=w> </span><span class=n>gmt_modified_offline</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FROM</span><span class=w>    </span><span class=n>get_before_biz_status</span><span class=w> </span><span class=k>c</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>LEFT</span><span class=w> </span><span class=k>JOIN</span><span class=w> </span><span class=n>order_status_history</span><span class=w> </span><span class=k>FOR</span><span class=w> </span><span class=n>SYSTEM_TIME</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=k>OF</span><span class=w> </span><span class=n>PROCTIME</span><span class=w> </span><span class=p>()</span><span class=w> </span><span class=n>d</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>ON</span><span class=w>      </span><span class=k>c</span><span class=p>.</span><span class=n>order_no</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>d</span><span class=p>.</span><span class=n>order_no</span><span class=w> </span><span class=k>AND</span><span class=w> </span><span class=k>c</span><span class=p>.</span><span class=n>prev_biz_status</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NULL</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 将状态迁移通过udtf映射为不同状态的操作数，例如，状态迁移为10-15-16，那么10来的时候，状态10的操作是+1，15来时，状态10 -1，15 +1，产生两条数据，16来时，15 -1， 这么做的原因是TT数据对于更新操作，没有更新前数据和更新后数据，对于状态计数只能通过加入业务状态机的方式识别状态变更到来时，哪个状态+1，哪个状态-1
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>CREATE</span><span class=w> </span><span class=k>VIEW</span><span class=w> </span><span class=n>status_shift_opt</span><span class=w> </span><span class=k>AS</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>select</span><span class=w>  </span><span class=n>S</span><span class=p>.</span><span class=n>order_no</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>S</span><span class=p>.</span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>S</span><span class=p>.</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>S</span><span class=p>.</span><span class=n>gmt_modified_day</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>S</span><span class=p>.</span><span class=n>gmt_modified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>T</span><span class=p>.</span><span class=n>effect_biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>T</span><span class=p>.</span><span class=n>effect_biz_status_opt</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>from</span><span class=w>    </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>-- 将离线和Flink中取到的前一个状态进行合并，确定该单据前一个状态
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>            </span><span class=k>SELECT</span><span class=w>  </span><span class=n>order_no</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=n>gmt_modified_day</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=n>gmt_modified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=k>IF</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                        </span><span class=n>prev_biz_status</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NULL</span><span class=w> </span><span class=k>AND</span><span class=w> </span><span class=n>prev_biz_status_offline</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NOT</span><span class=w> </span><span class=k>NULL</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                        </span><span class=p>,</span><span class=n>prev_biz_status_offline</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                        </span><span class=p>,</span><span class=n>prev_biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>)</span><span class=w> </span><span class=n>prev_biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>FROM</span><span class=w>    </span><span class=n>order_with_last_biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>WHERE</span><span class=w>   </span><span class=p>(</span><span class=n>gmt_modified_offline</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NOT</span><span class=w> </span><span class=k>NULL</span><span class=w> </span><span class=k>AND</span><span class=w> </span><span class=n>gmt_modified_offline</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>gmt_modified</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>or</span><span class=w>      </span><span class=p>(</span><span class=n>gmt_modified_offline</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NULL</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>)</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>S</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=k>LATERAL</span><span class=w> </span><span class=k>TABLE</span><span class=w> </span><span class=p>(</span><span class=n>statusCount</span><span class=w> </span><span class=p>(</span><span class=n>biz_status</span><span class=p>,</span><span class=n>prev_biz_status</span><span class=p>))</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>T</span><span class=w> </span><span class=p>(</span><span class=n>effect_biz_status</span><span class=p>,</span><span class=w> </span><span class=n>effect_biz_status_opt</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 按照天数据进行分组，并过滤出近两天的数据
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>CREATE</span><span class=w> </span><span class=k>VIEW</span><span class=w> </span><span class=n>summary_with_day</span><span class=w> </span><span class=k>AS</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>SELECT</span><span class=w>  </span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>effect_biz_status</span><span class=w> </span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>gmt_modified_day</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=k>SUM</span><span class=p>(</span><span class=n>effect_biz_status_opt</span><span class=p>)</span><span class=w> </span><span class=n>num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FROM</span><span class=w>    </span><span class=n>status_shift_opt</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 实时数据，只统计昨日和今日的数据
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>WHERE</span><span class=w>   </span><span class=n>effect_biz_status</span><span class=w> </span><span class=k>IN</span><span class=w> </span><span class=p>(</span><span class=mi>10</span><span class=p>,</span><span class=mi>15</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>GROUP</span><span class=w> </span><span class=k>BY</span><span class=w> </span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>         </span><span class=p>,</span><span class=n>effect_biz_status</span><span class=p>,</span><span class=n>gmt_modified_day</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 按照供应商+状态维度进行分组，将近两日数据累加，得到（昨日+今日数量）
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>CREATE</span><span class=w> </span><span class=k>VIEW</span><span class=w> </span><span class=n>summary_with_user_id_status</span><span class=w> </span><span class=k>AS</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>SELECT</span><span class=w>  </span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=k>SUM</span><span class=p>(</span><span class=n>num</span><span class=p>)</span><span class=w> </span><span class=n>num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FROM</span><span class=w>    </span><span class=n>summary_with_day</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>WHERE</span><span class=w>  </span><span class=n>gmt_modified_day</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>DATE_FORMAT</span><span class=w> </span><span class=p>(</span><span class=k>CURRENT_TIMESTAMP</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;yyyyMMdd&#39;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>or</span><span class=w>  </span><span class=n>gmt_modified_day</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>DATE_FORMAT</span><span class=w> </span><span class=p>(</span><span class=w> </span><span class=n>date_sub</span><span class=w> </span><span class=p>(</span><span class=k>CURRENT_TIMESTAMP</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>),</span><span class=w> </span><span class=s1>&#39;yyyy-MM-dd&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;yyyyMMdd&#39;</span><span class=w> </span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>GROUP</span><span class=w> </span><span class=k>BY</span><span class=w> </span><span class=n>user_id</span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 加上离线数量，维表离线数量(截止昨日0点) + 实时数量（昨日+今日）= 总数量
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>CREATE</span><span class=w> </span><span class=k>VIEW</span><span class=w> </span><span class=n>plus_offline_data</span><span class=w> </span><span class=k>AS</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>SELECT</span><span class=w>  </span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>offline_num</span><span class=o>+</span><span class=n>num</span><span class=w> </span><span class=n>num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>CONCAT</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=s1>&#39;offlineNum:&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>,</span><span class=n>offline_num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>,</span><span class=s1>&#39;,realtimeNum:&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>,</span><span class=n>num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>,</span><span class=s1>&#39;,sourceType:Flink_STREAM&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>)</span><span class=w> </span><span class=n>attribute</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FROM</span><span class=w>    </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>SELECT</span><span class=w>  </span><span class=n>a</span><span class=p>.</span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=n>a</span><span class=p>.</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=k>IF</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                        </span><span class=n>b</span><span class=p>.</span><span class=n>ds</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>DATE_FORMAT</span><span class=w> </span><span class=p>(</span><span class=w> </span><span class=n>date_sub</span><span class=w> </span><span class=p>(</span><span class=k>CURRENT_TIMESTAMP</span><span class=p>,</span><span class=w> </span><span class=mi>1</span><span class=p>),</span><span class=w> </span><span class=s1>&#39;yyyy-MM-dd&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;yyyyMMdd&#39;</span><span class=w> </span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                        </span><span class=p>,</span><span class=k>IF</span><span class=p>(</span><span class=n>b</span><span class=p>.</span><span class=n>last_day_num</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NULL</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=n>b</span><span class=p>.</span><span class=n>last_day_num</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                        </span><span class=p>,</span><span class=k>IF</span><span class=p>(</span><span class=n>b</span><span class=p>.</span><span class=n>num</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NULL</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=n>b</span><span class=p>.</span><span class=n>num</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>)</span><span class=w> </span><span class=n>offline_num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=n>a</span><span class=p>.</span><span class=n>num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>FROM</span><span class=w>    </span><span class=n>summary_with_user_id_status</span><span class=w> </span><span class=n>a</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>LEFT</span><span class=w> </span><span class=k>JOIN</span><span class=w> </span><span class=n>offline_order_status_num</span><span class=w> </span><span class=k>FOR</span><span class=w> </span><span class=n>SYSTEM_TIME</span><span class=w> </span><span class=k>AS</span><span class=w> </span><span class=k>OF</span><span class=w> </span><span class=n>PROCTIME</span><span class=w> </span><span class=p>()</span><span class=w> </span><span class=n>b</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>ON</span><span class=w>      </span><span class=n>a</span><span class=p>.</span><span class=n>user_id</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>b</span><span class=p>.</span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>and</span><span class=w>     </span><span class=n>a</span><span class=p>.</span><span class=n>biz_status</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>b</span><span class=p>.</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>create</span><span class=w> </span><span class=k>table</span><span class=w> </span><span class=n>mysql_output</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=o>`</span><span class=n>user_id</span><span class=o>`</span><span class=w> </span><span class=nb>varchar</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>biz_status</span><span class=w> </span><span class=nb>varchar</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>num</span><span class=w> </span><span class=nb>BIGINT</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>attribute</span><span class=w> </span><span class=nb>varchar</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=k>primary</span><span class=w> </span><span class=k>key</span><span class=w> </span><span class=p>(</span><span class=n>biz_status</span><span class=p>,</span><span class=w> </span><span class=o>`</span><span class=n>user_id</span><span class=o>`</span><span class=p>)</span><span class=w> </span><span class=p>)</span><span class=w> </span><span class=k>with</span><span class=w> </span><span class=p>(</span><span class=w> </span><span class=k>type</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s1>&#39;mysql&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>url</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s1>&#39;jdbc:mysql://xxxxxx&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>tableName</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s1>&#39;order_status_count&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>userName</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s1>&#39;xxx&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>,</span><span class=n>password</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s1>&#39;xxx&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>INSERT</span><span class=w> </span><span class=k>INTO</span><span class=w> </span><span class=n>mysql_output</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>SELECT</span><span class=w>  </span><span class=o>*</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FROM</span><span class=w>    </span><span class=n>plus_offline_data</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=udf>UDF</h3><p>prevValue函数(UDAF:UDF - Aggregation Functions)：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nn>com.fliaping.flink.udf</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.apache.flink.table.functions.AggregateFunction</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>PrevValueUdaf</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>AggregateFunction</span><span class=o>&lt;</span><span class=n>String</span><span class=p>,</span><span class=w> </span><span class=n>PrevValueUdaf</span><span class=p>.</span><span class=na>PrevValueAccum</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=kt>long</span><span class=w> </span><span class=n>serialVersionUID</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>3733259132660252997L</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>PrevValueAccum</span><span class=w> </span><span class=nf>createAccumulator</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>PrevValueAccum</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=nf>getValue</span><span class=p>(</span><span class=n>PrevValueAccum</span><span class=w> </span><span class=n>prevValueAccum</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>prevValueAccum</span><span class=p>.</span><span class=na>prevValue</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>accumulate</span><span class=p>(</span><span class=n>PrevValueAccum</span><span class=w> </span><span class=n>accumulator</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>iValue</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>accumulator</span><span class=p>.</span><span class=na>prevValue</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>accumulator</span><span class=p>.</span><span class=na>currentValue</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>accumulator</span><span class=p>.</span><span class=na>currentValue</span><span class=w> </span><span class=o>=</span><span class=n>iValue</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>retract</span><span class=p>(</span><span class=n>PrevValueAccum</span><span class=w> </span><span class=n>accumulator</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>iValue</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>accumulator</span><span class=p>.</span><span class=na>currentValue</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>accumulator</span><span class=p>.</span><span class=na>prevValue</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>accumulator</span><span class=p>.</span><span class=na>prevValue</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>iValue</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>merge</span><span class=p>(</span><span class=n>PrevValueAccum</span><span class=w> </span><span class=n>accumulator</span><span class=p>,</span><span class=w> </span><span class=n>Iterable</span><span class=o>&lt;</span><span class=n>PrevValueAccum</span><span class=o>&gt;</span><span class=w> </span><span class=n>its</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=n>PrevValueAccum</span><span class=w> </span><span class=n>it</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=n>its</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>accumulator</span><span class=p>.</span><span class=na>currentValue</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>it</span><span class=p>.</span><span class=na>currentValue</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>accumulator</span><span class=p>.</span><span class=na>prevValue</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>it</span><span class=p>.</span><span class=na>prevValue</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kd>class</span> <span class=nc>PrevValueAccum</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>private</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>prevValue</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>private</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>currentValue</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>statusCount函数（UDTF:UDF - Table Functions）：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nn>com.fliaping.flink.udf</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.apache.flink.api.java.tuple.Tuple2</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.apache.flink.shaded.guava18.com.google.common.base.Objects</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.apache.flink.table.functions.TableFunction</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>StatusCountUdtf</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>TableFunction</span><span class=o>&lt;</span><span class=n>Tuple2</span><span class=o>&lt;</span><span class=n>String</span><span class=p>,</span><span class=w> </span><span class=n>Integer</span><span class=o>&gt;&gt;</span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=kt>long</span><span class=w> </span><span class=n>serialVersionUID</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>5467096366714935845L</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>eval</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>bizStatus</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>prevBizStatus</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=p>(</span><span class=n>Objects</span><span class=p>.</span><span class=na>equal</span><span class=p>(</span><span class=n>bizStatus</span><span class=p>,</span><span class=w> </span><span class=n>prevBizStatus</span><span class=p>))</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>return</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>bizStatus</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>collect</span><span class=p>(</span><span class=n>Tuple2</span><span class=p>.</span><span class=na>of</span><span class=p>(</span><span class=n>bizStatus</span><span class=p>,</span><span class=w> </span><span class=n>1</span><span class=p>));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>prevBizStatus</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>collect</span><span class=p>(</span><span class=n>Tuple2</span><span class=p>.</span><span class=na>of</span><span class=p>(</span><span class=n>prevBizStatus</span><span class=p>,</span><span class=w> </span><span class=o>-</span><span class=n>1</span><span class=p>));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>离线 SQL代码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=line><span class=cl><span class=c1>-- 计算统计数量，包含day-1和day-2的数据
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>INSERT</span><span class=w> </span><span class=n>OVERWRITE</span><span class=w> </span><span class=k>TABLE</span><span class=w> </span><span class=n>order_status_num</span><span class=w> </span><span class=n>PARTITION</span><span class=p>(</span><span class=n>ds</span><span class=o>=</span><span class=s1>&#39;${bizdate}&#39;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>SELECT</span><span class=w>  </span><span class=k>IF</span><span class=p>(</span><span class=n>a</span><span class=p>.</span><span class=k>user</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NULL</span><span class=p>,</span><span class=n>b</span><span class=p>.</span><span class=n>user_id</span><span class=p>,</span><span class=n>a</span><span class=p>.</span><span class=n>user_id</span><span class=p>)</span><span class=w> </span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=k>IF</span><span class=p>(</span><span class=n>a</span><span class=p>.</span><span class=n>biz_status</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NULL</span><span class=p>,</span><span class=n>b</span><span class=p>.</span><span class=n>biz_status</span><span class=p>,</span><span class=n>a</span><span class=p>.</span><span class=n>biz_status</span><span class=p>)</span><span class=w> </span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>b</span><span class=p>.</span><span class=n>num</span><span class=w> </span><span class=n>last_day_num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>a</span><span class=p>.</span><span class=n>num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FROM</span><span class=w>    </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>SELECT</span><span class=w>  </span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=k>COUNT</span><span class=p>(</span><span class=n>order_no</span><span class=p>)</span><span class=w> </span><span class=n>num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>FROM</span><span class=w>    </span><span class=n>my_order</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>WHERE</span><span class=w>   </span><span class=n>ds</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s1>&#39;${bizdate}&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>AND</span><span class=w>     </span><span class=n>biz_status</span><span class=w> </span><span class=k>IN</span><span class=w> </span><span class=p>(</span><span class=mi>10</span><span class=p>,</span><span class=mi>15</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>GROUP</span><span class=w> </span><span class=k>BY</span><span class=w> </span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                     </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>)</span><span class=w> </span><span class=n>a</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FULL</span><span class=w> </span><span class=k>OUTER</span><span class=w> </span><span class=k>JOIN</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>SELECT</span><span class=w>  </span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                            </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                            </span><span class=p>,</span><span class=k>COUNT</span><span class=p>(</span><span class=n>order_no</span><span class=p>)</span><span class=w> </span><span class=n>num</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>FROM</span><span class=w>    </span><span class=n>my_order</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>WHERE</span><span class=w>   </span><span class=n>ds</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>to_char</span><span class=p>(</span><span class=n>dateadd</span><span class=p>(</span><span class=n>to_date</span><span class=p>(</span><span class=s1>&#39;${bizdate}&#39;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;yyyymmdd&#34;</span><span class=p>),</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;dd&#39;</span><span class=p>),</span><span class=w> </span><span class=s1>&#39;yyyymmdd&#39;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>AND</span><span class=w>     </span><span class=n>biz_status</span><span class=w> </span><span class=k>IN</span><span class=w> </span><span class=p>(</span><span class=mi>10</span><span class=p>,</span><span class=mi>15</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>GROUP</span><span class=w> </span><span class=k>BY</span><span class=w> </span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                             </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=p>)</span><span class=w> </span><span class=n>b</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>ON</span><span class=w>      </span><span class=n>a</span><span class=p>.</span><span class=n>user_id</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>b</span><span class=p>.</span><span class=n>user_id</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>AND</span><span class=w>     </span><span class=n>a</span><span class=p>.</span><span class=n>biz_status</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>b</span><span class=p>.</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>-- 计算单据状态，包含day-1和day-2的数据
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>INSERT</span><span class=w> </span><span class=n>OVERWRITE</span><span class=w> </span><span class=k>TABLE</span><span class=w> </span><span class=n>order_status_history</span><span class=w> </span><span class=n>PARTITION</span><span class=p>(</span><span class=n>ds</span><span class=o>=</span><span class=s1>&#39;${bizdate}&#39;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>SELECT</span><span class=w>  </span><span class=k>IF</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>a</span><span class=p>.</span><span class=n>order_no</span><span class=w> </span><span class=k>IS</span><span class=w> </span><span class=k>NULL</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>,</span><span class=n>b</span><span class=p>.</span><span class=n>order_no</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>,</span><span class=n>a</span><span class=p>.</span><span class=n>order_no</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>)</span><span class=w> </span><span class=n>order_no</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>a</span><span class=p>.</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>b</span><span class=p>.</span><span class=n>biz_status</span><span class=w> </span><span class=n>last_biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>a</span><span class=p>.</span><span class=n>gmt_modified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>,</span><span class=n>b</span><span class=p>.</span><span class=n>gmt_modified</span><span class=w> </span><span class=n>last_gmt_modified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FROM</span><span class=w>    </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>SELECT</span><span class=w>  </span><span class=n>order_no</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>,</span><span class=n>gmt_modified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>FROM</span><span class=w>    </span><span class=n>my_order</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>WHERE</span><span class=w>   </span><span class=n>ds</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s1>&#39;${bizdate}&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>AND</span><span class=w>     </span><span class=n>biz_status</span><span class=w> </span><span class=k>IN</span><span class=w> </span><span class=p>(</span><span class=mi>10</span><span class=p>,</span><span class=mi>15</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>)</span><span class=w> </span><span class=n>a</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>FULL</span><span class=w> </span><span class=k>OUTER</span><span class=w> </span><span class=k>JOIN</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>SELECT</span><span class=w>  </span><span class=n>order_no</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                            </span><span class=p>,</span><span class=n>biz_status</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                            </span><span class=p>,</span><span class=n>gmt_modified</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>FROM</span><span class=w>    </span><span class=n>my_order</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>WHERE</span><span class=w>   </span><span class=n>ds</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>to_char</span><span class=p>(</span><span class=n>dateadd</span><span class=p>(</span><span class=n>to_date</span><span class=p>(</span><span class=s1>&#39;${bizdate}&#39;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;yyyymmdd&#34;</span><span class=p>),</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;dd&#39;</span><span class=p>),</span><span class=w> </span><span class=s1>&#39;yyyymmdd&#39;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>AND</span><span class=w>     </span><span class=n>biz_status</span><span class=w> </span><span class=k>IN</span><span class=w> </span><span class=p>(</span><span class=mi>10</span><span class=p>,</span><span class=mi>15</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=p>)</span><span class=w> </span><span class=n>b</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>ON</span><span class=w>      </span><span class=n>a</span><span class=p>.</span><span class=n>order_no</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>b</span><span class=p>.</span><span class=n>order_no</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>Payne Xu</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2020-10-14</span></p><p class=copyright-item><span class=item-title>原始文档</span>
+<span class=item-content><a class=link-to-markdown href=https://fliaping.github.io/Blog/use-flink-sql-count-order-status-and-include-history/index.md target=_blank>查看本文 Markdown 版本 »</a></span></p><p class=copyright-item><span class=item-title>许可协议</span>
+<span class=item-content><a rel="license noopener" href=https://creativecommons.org/licenses/by-nc-nd/4.0/ target=_blank>CC BY-NC-ND 4.0</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/Blog/tags/flink/>flink</a>
+<a href=/Blog/tags/%E5%AE%9E%E6%97%B6%E8%AE%A1%E7%AE%97/>实时计算</a></div><nav class=post-nav><a class=prev href=/Blog/llm-why-does-it-work/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">大模型系列文章-大模型为什么有效</span>
+<span class="prev-text nav-mobile">上一篇</span>
+</a><a class=next href=/Blog/arts-week-7/><span class="next-text nav-default">ARTS-Week-7</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script><script type=text/javascript>var gitalk=new Gitalk({id:"2020-10-14 09:39:27 +0800 +0800",title:"利用Flink SQL实时统计单据状态（含历史数据）",clientID:"c4ef14e88fbeca886191",clientSecret:"9abcc260c662ad994ea4cf8c7267feb9c66da87a",repo:"Blog",owner:"fliaping",admin:["fliaping"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:xavierrpayne@gmail.com class="iconfont icon-email" title=email></a><a href=https://twitter.com/fliaping class="iconfont icon-twitter" title=twitter></a><a href=https://www.linkedin.com/in/paynexu/ class="iconfont icon-linkedin" title=linkedin></a><a href=https://github.com/fliaping class="iconfont icon-github" title=github></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动
+</span><span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 次 </span><span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2015 -
+2026<span class=heart><i class="iconfont icon-heart"></i></span><span>fliaping</span>
+</span><span><a href=http://www.miitbeian.gov.cn>豫ICP备15007908号-2</a></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://fastly.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://fastly.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/Blog/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script><script type=text/javascript>window.MathJax={loader:{load:["input/asciimath"]},tex:{inlineMath:[["$","$"],["\\(","\\)"]],tags:"ams",processEscapes:!0}}</script><script id=MathJax-script async src=https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==="localhost")return;var t,e=document.createElement("script");e.async=!0,e.src="https://hm.baidu.com/hm.js?3b9e1727c271ab68867e6c829416ed4c",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script><script>function createCopyButton(e){const t=document.createElement("div");t.className="copy-code",t.innerText="Copy",t.addEventListener("click",()=>copyCodeToClipboard(t,e)),addCopyButtonToDom(t,e)}async function copyCodeToClipboard(e,t){const n=t.querySelector(":last-child > .chroma > code").innerText;await navigator.clipboard.writeText(n),e.blur(),e.innerText="Copied!",setTimeout(()=>e.innerText="Copy",2e3)}function addCopyButtonToDom(e,t){t.insertBefore(e,t.firstChild);const n=document.createElement("div");n.className="highlight-wrapper",t.parentNode.insertBefore(n,t),n.appendChild(t)}var isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);isMobile||document.querySelectorAll(".highlight").forEach(e=>createCopyButton(e))</script></body></html>

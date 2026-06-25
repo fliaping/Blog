@@ -1,0 +1,97 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>shadowsocks在centos编译安装 - Fliaping's Blog</title>
+<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Payne Xu"><meta name=description content="现在新疆把python 的软件库都封了，pip都安不上，那只好自己编译安装了。系统为centos6 x64 ###1.安装编译环境
+1 2 3 yum install gcc glib2-devel openssl-devel pcre-devel bzip2-devel gzip-devel zlib-devel yum install build-essential autoconf libtool gcc -y "><meta name=keywords content="fliaping,Payne.Xu"><meta name=generator content="Hugo 0.124.1 with theme even"><link rel=canonical href=https://fliaping.github.io/Blog/how-to-compile-and-install-shadowsocks-on-centos/><link rel=apple-touch-icon sizes=180x180 href=/Blog/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/Blog/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/Blog/favicon-16x16.png><link rel=manifest href=/Blog/manifest.json><link rel=mask-icon href=/Blog/safari-pinned-tab.svg color=#5bbad5><script defer src=https://cn.vercount.one/js></script><link href=/Blog/sass/main.min.2a3766884c406c389d3a4ca20b300e80e434d78f1c08825bbdf164a13f4a4235.css rel=stylesheet><link rel=stylesheet href=https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="shadowsocks在centos编译安装"><meta property="og:description" content="现在新疆把python 的软件库都封了，pip都安不上，那只好自己编译安装了。系统为centos6 x64
+###1.安装编译环境
+
+
+1
+2
+3
+
+
+yum install gcc glib2-devel openssl-devel pcre-devel bzip2-devel gzip-devel zlib-devel 
+
+yum install build-essential autoconf libtool gcc -y 
+
+
+"><meta property="og:type" content="article"><meta property="og:url" content="https://fliaping.github.io/Blog/how-to-compile-and-install-shadowsocks-on-centos/"><meta property="article:section" content="post"><meta property="article:published_time" content="2015-12-23T07:23:17+00:00"><meta property="article:modified_time" content="2023-09-02T11:58:58+08:00"><meta itemprop=name content="shadowsocks在centos编译安装"><meta itemprop=description content="现在新疆把python 的软件库都封了，pip都安不上，那只好自己编译安装了。系统为centos6 x64
+###1.安装编译环境
+
+
+1
+2
+3
+
+
+yum install gcc glib2-devel openssl-devel pcre-devel bzip2-devel gzip-devel zlib-devel 
+
+yum install build-essential autoconf libtool gcc -y 
+
+
+"><meta itemprop=datePublished content="2015-12-23T07:23:17+00:00"><meta itemprop=dateModified content="2023-09-02T11:58:58+08:00"><meta itemprop=wordCount content="172"><meta itemprop=keywords content="shadowsocks,"><meta name=twitter:card content="summary"><meta name=twitter:title content="shadowsocks在centos编译安装"><meta name=twitter:description content="现在新疆把python 的软件库都封了，pip都安不上，那只好自己编译安装了。系统为centos6 x64
+###1.安装编译环境
+
+
+1
+2
+3
+
+
+yum install gcc glib2-devel openssl-devel pcre-devel bzip2-devel gzip-devel zlib-devel 
+
+yum install build-essential autoconf libtool gcc -y 
+
+
+"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://fastly.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://fastly.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Fliaping's Blog</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/Blog/><li class=mobile-menu-item>🏠 主页</li></a><a href=/Blog/post/><li class=mobile-menu-item>⏱️ 时间轴</li></a><a href=/Blog/tags/><li class=mobile-menu-item>🧩 标签</li></a><a href=/Blog/categories/><li class=mobile-menu-item>🗃️ 分类</li></a><a href=/Blog/categories/%E9%9A%8F%E7%AC%94><li class=mobile-menu-item>😊 随笔</li></a><a href=/Blog/about/><li class=mobile-menu-item>🙋🏻‍♂️ 关于</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Fliaping's Blog</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/Blog/>🏠 主页</a></li><li class=menu-item><a class=menu-item-link href=/Blog/post/>⏱️ 时间轴</a></li><li class=menu-item><a class=menu-item-link href=/Blog/tags/>🧩 标签</a></li><li class=menu-item><a class=menu-item-link href=/Blog/categories/>🗃️ 分类</a></li><li class=menu-item><a class=menu-item-link href=/Blog/categories/%E9%9A%8F%E7%AC%94>😊 随笔</a></li><li class=menu-item><a class=menu-item-link href=/Blog/about/>🙋🏻‍♂️ 关于</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>shadowsocks在centos编译安装</h1><div class=post-meta><span class=post-time>2015-12-23</span><div class=post-category><a href=/Blog/categories/developer/>Developer</a></div><span class=more-meta>约 172 字 </span><span class=more-meta>预计阅读 1 分钟 </span><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents></nav></div></div><div class=post-content><p>现在新疆把python 的软件库都封了，pip都安不上，那只好自己编译安装了。系统为centos6 x64
+###1.安装编译环境</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>yum install gcc glib2-devel openssl-devel pcre-devel bzip2-devel gzip-devel zlib-devel 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>yum install build-essential autoconf libtool gcc -y 
+</span></span></code></pre></td></tr></table></div></div><p>###2.编译安装shadowsocks</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git clone git://github.com/madeye/shadowsocks-libev.git
+</span></span><span class=line><span class=cl><span class=nb>cd</span> shadowsocks-libev
+</span></span><span class=line><span class=cl>./configure
+</span></span><span class=line><span class=cl>make 
+</span></span><span class=line><span class=cl>make install
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> ~
+</span></span><span class=line><span class=cl>git clone https://github.com/rofl0r/proxychains-ng.git 
+</span></span><span class=line><span class=cl><span class=nb>cd</span> proxychains-ng 
+</span></span><span class=line><span class=cl>./configure <span class=o>&amp;&amp;</span> make <span class=o>&amp;&amp;</span> make install  
+</span></span><span class=line><span class=cl>make install-config
+</span></span></code></pre></td></tr></table></div></div><p>Now we can edit proxychains configure file</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>vim /usr/local/etc/proxychains.conf
+</span></span></code></pre></td></tr></table></div></div><p>Go to last line, replace this line</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>socks4  127.0.0.1 <span class=m>9050</span>  --&gt;  socks5 127.0.0.1 <span class=m>1080</span>
+</span></span></code></pre></td></tr></table></div></div><p>save and quit, and now you can using it .</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>proxychains4 wget google.com
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>Payne Xu</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2023-09-02
+<a href=https://github.com/fliaping/Blog.git/commit/21ed07b2316b861ea471724dc08970be3243aedf title=目录调整>(21ed07b)</a></span></p><p class=copyright-item><span class=item-title>原始文档</span>
+<span class=item-content><a class=link-to-markdown href=https://fliaping.github.io/Blog/how-to-compile-and-install-shadowsocks-on-centos/index.md target=_blank>查看本文 Markdown 版本 »</a></span></p><p class=copyright-item><span class=item-title>许可协议</span>
+<span class=item-content><a rel="license noopener" href=https://creativecommons.org/licenses/by-nc-nd/4.0/ target=_blank>CC BY-NC-ND 4.0</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/Blog/tags/shadowsocks/>shadowsocks</a></div><nav class=post-nav><a class=prev href=/Blog/how-to-insall-manyuser-shadowsocks-on-ubuntu/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">在ubuntu下安装shadowsocks多用户版</span>
+<span class="prev-text nav-mobile">上一篇</span>
+</a><a class=next href=/Blog/the-simulation-of-baidu-wenku-about-converting-office-document-to-pdf-on-server/><span class="next-text nav-default">仿百度文库，office转pdf核心转换功能</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script><script type=text/javascript>var gitalk=new Gitalk({id:"2015-12-23 07:23:17 +0000 UTC",title:"shadowsocks在centos编译安装",clientID:"c4ef14e88fbeca886191",clientSecret:"9abcc260c662ad994ea4cf8c7267feb9c66da87a",repo:"Blog",owner:"fliaping",admin:["fliaping"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:xavierrpayne@gmail.com class="iconfont icon-email" title=email></a><a href=https://twitter.com/fliaping class="iconfont icon-twitter" title=twitter></a><a href=https://www.linkedin.com/in/paynexu/ class="iconfont icon-linkedin" title=linkedin></a><a href=https://github.com/fliaping class="iconfont icon-github" title=github></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动
+</span><span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 次 </span><span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2015 -
+2026<span class=heart><i class="iconfont icon-heart"></i></span><span>fliaping</span>
+</span><span><a href=http://www.miitbeian.gov.cn>豫ICP备15007908号-2</a></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://fastly.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://fastly.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/Blog/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script><script type=text/javascript>window.MathJax={loader:{load:["input/asciimath"]},tex:{inlineMath:[["$","$"],["\\(","\\)"]],tags:"ams",processEscapes:!0}}</script><script id=MathJax-script async src=https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==="localhost")return;var t,e=document.createElement("script");e.async=!0,e.src="https://hm.baidu.com/hm.js?3b9e1727c271ab68867e6c829416ed4c",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script><script>function createCopyButton(e){const t=document.createElement("div");t.className="copy-code",t.innerText="Copy",t.addEventListener("click",()=>copyCodeToClipboard(t,e)),addCopyButtonToDom(t,e)}async function copyCodeToClipboard(e,t){const n=t.querySelector(":last-child > .chroma > code").innerText;await navigator.clipboard.writeText(n),e.blur(),e.innerText="Copied!",setTimeout(()=>e.innerText="Copy",2e3)}function addCopyButtonToDom(e,t){t.insertBefore(e,t.firstChild);const n=document.createElement("div");n.className="highlight-wrapper",t.parentNode.insertBefore(n,t),n.appendChild(t)}var isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);isMobile||document.querySelectorAll(".highlight").forEach(e=>createCopyButton(e))</script></body></html>

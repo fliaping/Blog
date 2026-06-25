@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>酷cool玩 on Fliaping's Blog</title><link>https://fliaping.github.io/Blog/categories/%E9%85%B7cool%E7%8E%A9/</link><description>Recent content in 酷cool玩 on Fliaping's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 23 Sep 2024 14:15:29 +0800</lastBuildDate><atom:link href="https://fliaping.github.io/Blog/categories/%E9%85%B7cool%E7%8E%A9/index.xml" rel="self" type="application/rss+xml"/><item><title>网易云音乐Linux客户端GUI不能显示问题排查</title><link>https://fliaping.github.io/Blog/analysis-of-the-problem-that-netease-music-linux-client-cant-show-gui/</link><pubDate>Sat, 05 May 2018 06:51:02 +0000</pubDate><guid>https://fliaping.github.io/Blog/analysis-of-the-problem-that-netease-music-linux-client-cant-show-gui/</guid><description>&lt;p>&lt;img src="https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2018/05/deepinscreenshot_select-area_20180505224924.png" alt="netease-music">&lt;/p>
+&lt;p>OS: ubuntu 17.10,ubuntu 18.04
+网易云音乐版本：netease-cloud-music_1.1.0_amd64_ubuntu.deb&lt;/p>
+&lt;h2 id="症状">症状&lt;/h2>
+&lt;p>启动了页面弹不出来，命令行也一样，然后呢，点关机按钮，弹出来确认框，随后网易乐音乐页面也弹出来了，这时取消关机，可以正常使用云音乐。&lt;/p>
+&lt;p>并且录了屏：https://weibo.com/tv/v/FwZO3ltaM?fid=1034:1d480a191cbbcc940b81f619f0614a98&lt;/p></description></item><item><title>利用容器技术在一个宿主机上运行OpenWrt(LEDE)</title><link>https://fliaping.github.io/Blog/run-lede-on-a-fake-docker/</link><pubDate>Mon, 04 Dec 2017 02:31:48 +0000</pubDate><guid>https://fliaping.github.io/Blog/run-lede-on-a-fake-docker/</guid><description>&lt;p>在阅读本文之前，可以先了解下另外一篇文章&lt;a href="https://fliaping.github.io/Blog/container-core-technical-details">容器核心技术详解&lt;/a>。&lt;/p>
+&lt;p>容器技术所用到的技术主要是Linux Namespace和cgroup，目前最成功的方案就是Docker，我们也来试着利用Linux kernel的 Namespace来简单实现docker的部分功能，这里称之为假Docker。&lt;/p>
+&lt;p>本文相关的代码在这里 &lt;a href="https://github.com/fliaping/docker_learning/tree/master/fake_docker">fake_docker&lt;/a>，文章中对于比较长的代码会省略，可以在代码仓库中查看。&lt;/p></description></item><item><title>Connecting Android Devices with Linux</title><link>https://fliaping.github.io/Blog/connecting-android-devices-with-linux/</link><pubDate>Sun, 24 Sep 2017 06:11:58 +0000</pubDate><guid>https://fliaping.github.io/Blog/connecting-android-devices-with-linux/</guid><description>&lt;p>结合自身的实际，在Linux上连接Android的需求其实可以分为一下几类：&lt;/p>
+&lt;ol>
+&lt;li>手机的通知可以在Linux上弹窗提示&lt;/li>
+&lt;li>能方便的在手机和Linux之间传输文件、甚至同步粘贴板&lt;/li>
+&lt;li>能将手机画面同步到Linux上，并且还能直接操作&lt;/li>
+&lt;li>将手机作为另外一个屏幕，共享Linux的鼠标键盘，直接操作Android系统&lt;/li>
+&lt;li>仅仅将手机作为Linux的扩展屏&lt;/li>
+&lt;/ol>
+&lt;p>接下来我就来介绍几个软件，看看它们都能实现哪些需求&lt;/p></description></item><item><title>重新迁回阿里云</title><link>https://fliaping.github.io/Blog/re-move-back-to-alibaba-cloud-for-my-vps/</link><pubDate>Thu, 10 Aug 2017 18:41:46 +0000</pubDate><guid>https://fliaping.github.io/Blog/re-move-back-to-alibaba-cloud-for-my-vps/</guid><description>&lt;h1 id="历史">历史&lt;/h1>
+&lt;p>细细数来，最开始在大学开始买了阿里云9.9的学生机，后来毕业之后就没有这优惠了，用了好几个月的45元的阿里云。然后有了个读研的GF，准备来个学生认证继续用阿里云，可惜认证没通过，不过在腾讯云认证通过了，就转移到腾讯云。可最近腾讯云要求域名备案，http的链接都已经被拦掉了，https依然可以，但毕竟不友好。我的域名在阿里云备过，还要重复再备一次，好麻烦，于是思索看阿里云能用不，所幸阿里云学生认证可以通过支付宝获取数据，于是又转回阿里云。&lt;/p></description></item><item><title>树莓派3简明配置</title><link>https://fliaping.github.io/Blog/the-brief-configuration-of-raspberrypi-3/</link><pubDate>Sat, 08 Apr 2017 12:33:25 +0000</pubDate><guid>https://fliaping.github.io/Blog/the-brief-configuration-of-raspberrypi-3/</guid><description>&lt;h1 id="系统安装">系统安装&lt;/h1>
+&lt;p>首先选择一个系统，Linux有很多发行版都是支持raspberry-pi的，每个人有自己的喜好，如果是想深入学习Linux（或者说喜欢折腾）的，ArchLinux和Gentoo是不错的选择，但是若目的不再于此，选择官方系统可能是比较好的选择。另外像Ubuntu Meta也挺不错。&lt;/p>
+&lt;h2 id="使用-noobs-安装">使用 noobs 安装&lt;/h2>
+&lt;ul>
+&lt;li>有显示器：格式化 sd 卡为 fat32格式，将 &lt;a href="https://www.raspberrypi.org/downloads/noobs/">noobs&lt;/a>解压拷贝到 sd 卡，插上sd 卡上电，HDMI 连接显示器按照步骤安装就可以。&lt;/li>
+&lt;li>无显示器：recovery.cmdline 加入silentinstall&lt;/li>
+&lt;/ul>
+&lt;h2 id="直接安装">直接安装&lt;/h2>
+&lt;p>&lt;strong>官方系统Raspbain&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>直接将系统刻录到SD卡
+Mac和Linux一般使用dd命令即可，Windows需要一些刻录软件，例如UltalISO，以及一些装机软件，如大白菜都可以完成刻录工作。&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo dd &lt;span class="nv">bs&lt;/span>&lt;span class="o">=&lt;/span>4M &lt;span class="k">if&lt;/span>&lt;span class="o">=&lt;/span>raspbian.img &lt;span class="nv">of&lt;/span>&lt;span class="o">=&lt;/span>/dev/sdb
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>插入内存卡，开机
+官方系统会自动扩展文件系统，如果没有自动扩展，开机之后也可以使用raspi-config和扩展以及另外的一些配置&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo raspi-config
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

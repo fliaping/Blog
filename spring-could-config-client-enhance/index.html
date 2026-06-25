@@ -1,0 +1,489 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>Spring Could Config Client 增强 - Fliaping's Blog</title>
+<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Payne Xu"><meta name=description content="config-client-enhance 对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置， 并修改spring-cloud-bus"><meta name=keywords content="fliaping,Payne.Xu"><meta name=generator content="Hugo 0.124.1 with theme even"><link rel=canonical href=https://fliaping.github.io/Blog/spring-could-config-client-enhance/><link rel=apple-touch-icon sizes=180x180 href=/Blog/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/Blog/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/Blog/favicon-16x16.png><link rel=manifest href=/Blog/manifest.json><link rel=mask-icon href=/Blog/safari-pinned-tab.svg color=#5bbad5><script defer src=https://cn.vercount.one/js></script><link href=/Blog/sass/main.min.2a3766884c406c389d3a4ca20b300e80e434d78f1c08825bbdf164a13f4a4235.css rel=stylesheet><link rel=stylesheet href=https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Spring Could Config Client 增强"><meta property="og:description" content="config-client-enhance 对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置， 并修改spring-cloud-bus"><meta property="og:type" content="article"><meta property="og:url" content="https://fliaping.github.io/Blog/spring-could-config-client-enhance/"><meta property="article:section" content="post"><meta property="article:published_time" content="2017-10-22T07:15:23+00:00"><meta property="article:modified_time" content="2024-09-23T14:15:29+08:00"><meta itemprop=name content="Spring Could Config Client 增强"><meta itemprop=description content="config-client-enhance 对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置， 并修改spring-cloud-bus"><meta itemprop=datePublished content="2017-10-22T07:15:23+00:00"><meta itemprop=dateModified content="2024-09-23T14:15:29+08:00"><meta itemprop=wordCount content="4628"><meta itemprop=keywords content="spring-cloud,config-server,"><meta name=twitter:card content="summary"><meta name=twitter:title content="Spring Could Config Client 增强"><meta name=twitter:description content="config-client-enhance 对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置， 并修改spring-cloud-bus"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://fastly.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://fastly.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Fliaping's Blog</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/Blog/><li class=mobile-menu-item>🏠 主页</li></a><a href=/Blog/post/><li class=mobile-menu-item>⏱️ 时间轴</li></a><a href=/Blog/tags/><li class=mobile-menu-item>🧩 标签</li></a><a href=/Blog/categories/><li class=mobile-menu-item>🗃️ 分类</li></a><a href=/Blog/categories/%E9%9A%8F%E7%AC%94><li class=mobile-menu-item>😊 随笔</li></a><a href=/Blog/about/><li class=mobile-menu-item>🙋🏻‍♂️ 关于</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Fliaping's Blog</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/Blog/>🏠 主页</a></li><li class=menu-item><a class=menu-item-link href=/Blog/post/>⏱️ 时间轴</a></li><li class=menu-item><a class=menu-item-link href=/Blog/tags/>🧩 标签</a></li><li class=menu-item><a class=menu-item-link href=/Blog/categories/>🗃️ 分类</a></li><li class=menu-item><a class=menu-item-link href=/Blog/categories/%E9%9A%8F%E7%AC%94>😊 随笔</a></li><li class=menu-item><a class=menu-item-link href=/Blog/about/>🙋🏻‍♂️ 关于</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Spring Could Config Client 增强</h1><div class=post-meta><span class=post-time>2017-10-22</span><div class=post-category><a href=/Blog/categories/developer/>Developer</a></div><span class=more-meta>约 4628 字 </span><span class=more-meta>预计阅读 10 分钟 </span><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#config-client-enhance>config-client-enhance</a><ul><li><a href=#简介>简介</a></li><li><a href=#原理>原理</a><ul><li><a href=#官方spring-cloud-config的工作原理>官方spring-cloud-config的工作原理</a></li></ul></li><li><a href=#用法>用法</a><ul><li><a href=#jar包>jar包</a></li><li><a href=#配置文件>配置文件</a></li></ul></li><li><a href=#详细实现>详细实现</a><ul><li><a href=#从多配置仓库加载配置>从多配置仓库加载配置</a></li><li><a href=#批量刷新共有配置>批量刷新共有配置</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><h1 id=config-client-enhance>config-client-enhance</h1><p>对spring-cloud-config-client官方版本功能进行扩展，可从多个配置源加载配置，
+并修改spring-cloud-bus的相关功能，实现批量刷新.</p><p>github链接：<a href=https://github.com/fliaping/config-client-enhance>config-client-enhance</a></p><h2 id=简介>简介</h2><p>随着微服务改造的推进，每个服务的功能趋于专一，不过有些服务是从一个单体应用中拆分出来，
+因此微服务之间有不少的共有配置，导致每个应用重复配置，当某个配置项发生改变时，
+需要逐个修改，比较麻烦。最好的办法是将这些公共配置项抽取出来作为一个配置源，
+但是官方的spring-cloud-config-client只能从单一配置源加载配置。因此在官方的基础上进行扩展，
+通过config group的概念，可以将一个应用加入多个config group中，共用不同group的配置项。
+再结合spring-cloud-bus，让每个服务能感知所加入的config group的改动，从而做到一处更改多处生效。</p><p>基于官方<a href=https://github.com/spring-cloud/spring-cloud-config>spring-cloud-config-client</a>,
+通过spring-boot的autoconfig功能，覆盖配置源加载的方法，在兼容官方的配置前提下，
+增加了一些配置项，使其能能从多个配置源加载配置。自动更新时客户端会收到远程的refresh消息，
+并通过一个函数来确定是不是发给自己的，通过切面，修改这个判断函数，使多配置源的修改能及时更新到应用。</p><h2 id=原理>原理</h2><h3 id=官方spring-cloud-config的工作原理>官方spring-cloud-config的工作原理</h3><p>如下图，就是我们常用的结构，当然是比较简化的。</p><p><img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2017/10/spring-cloud-config.png alt=spring-cloud-config></p><ol><li>当我们的配置发生变化之后，配置在git仓库的webhook用http的方式向ConfigServer发送refresh消息（或者自己手动触发）</li><li>ConfigServer再将这个消息发送给spring cloud bus（用kafka或者rabbitMQ实现）</li><li>每个应用中有一个config-client，将会收到这个refresh消息</li><li>如果destination和自己匹配，就执行刷新动作。 向config-server请求配置</li><li>config-server拉取配置仓库中的配置文件并转成相应的json格式</li><li>回传给config-client，随后config-client将内容更新到上下文中。</li></ol><p>那么我们增强的地方是哪里呢？其实都在config-client那里。先给出增强版的用法.</p><h2 id=用法>用法</h2><h3 id=jar包>jar包</h3><p>在项目根目录执行命令<code>gradle build</code>，在build/libs中可以找到jar包</p><p>如果在有私有的maven仓库，通过<code>gradle uploadArchives</code>将jar包上传到仓库,通过maven或者gradle坐标就可以引用</p><p>maven:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;dependency&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&lt;groupId&gt;</span>com.dianwoda.cloud.config<span class=nt>&lt;/groupId&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&lt;artifactId&gt;</span>config-client-enhance<span class=nt>&lt;/artifactId&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&lt;version&gt;</span>1.0-SNAPSHOT<span class=nt>&lt;/version&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>gradle:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-groovy data-lang=groovy><span class=line><span class=cl><span class=n>compile</span> <span class=s1>&#39;com.dianwoda.cloud.config:config-client-enhance:1.0-SNAPSHOT&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=配置文件>配置文件</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># config-client-enhance 新增配置
+</span></span><span class=line><span class=cl># 该配置组的名字，和spring.application.name作用相同，确定配置仓库
+</span></span><span class=line><span class=cl>spring.cloud.config.group[0].name=sparta-web
+</span></span><span class=line><span class=cl># 该配置组的profile，和spring.cloud.config.profile作用相同，一般表示环境，确定仓库中的哪个文件
+</span></span><span class=line><span class=cl>spring.cloud.config.group[0].profile=dwd-dev
+</span></span><span class=line><span class=cl># 该配置组的label，和spring.cloud.config.label作用相同，git仓库的分支
+</span></span><span class=line><span class=cl>spring.cloud.config.group[0].label=master,RC
+</span></span><span class=line><span class=cl># 该配置组的其他文本配置，可以多个，半角逗号分开
+</span></span><span class=line><span class=cl>spring.cloud.config.group[0].plainText=mm1.json,mm2.json
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>spring.cloud.config.group[1].name=sparta-dubbo
+</span></span><span class=line><span class=cl>spring.cloud.config.group[1].profile=dwd-dev
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 主配置仓库中的纯文本配置
+</span></span><span class=line><span class=cl>spring.cloud.config.plain-text=sms_template.json,push_fto.json,xx.json
+</span></span><span class=line><span class=cl># 忽略向ConfigServer发送refresh消息时，没有destination的情况（实际destination会变成通配符，匹配所有应用）
+</span></span><span class=line><span class=cl>spring.cloud.bus.ignore-empty-dest=true
+</span></span><span class=line><span class=cl># 是否接受配置组发生的改变
+</span></span><span class=line><span class=cl>spring.cloud.bus.accept-group-change=true
+</span></span><span class=line><span class=cl># config-client-enhance config 结束
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># spring cloud config 官方版本配置
+</span></span><span class=line><span class=cl># 应用名（主仓库名）
+</span></span><span class=line><span class=cl>spring.application.name=your application name
+</span></span><span class=line><span class=cl>spring.cloud.consul.port=8500
+</span></span><span class=line><span class=cl>#配置consul通过ip检查应用健康状态
+</span></span><span class=line><span class=cl>spring.cloud.consul.discovery.prefer-ip-address=true
+</span></span><span class=line><span class=cl>spring.cloud.consul.discovery.query-passing=true
+</span></span><span class=line><span class=cl>#使用服务发现找到配置中心服务
+</span></span><span class=line><span class=cl>spring.cloud.config.discovery.enabled=true
+</span></span><span class=line><span class=cl>spring.cloud.config.discovery.serviceId=config-server
+</span></span><span class=line><span class=cl>spring.cloud.config.fail-fast=true
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>health.config.enabled=false
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>#对应配置仓库的profile
+</span></span><span class=line><span class=cl>spring.cloud.config.profile=dwd-dev
+</span></span><span class=line><span class=cl>#对应配置仓库的分支
+</span></span><span class=line><span class=cl>spring.cloud.config.label=master
+</span></span><span class=line><span class=cl>#consul host 开发环境
+</span></span><span class=line><span class=cl>spring.cloud.consul.host=192.168.11.29
+</span></span><span class=line><span class=cl># spring cloud bus 开关
+</span></span><span class=line><span class=cl>spring.cloud.bus.enabled=true
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>#spring cloud bus kafka
+</span></span><span class=line><span class=cl>spring.cloud.stream.kafka.binder.zk-nodes=192.168.11.30:2181,192.168.11.33:2181,192.168.11.35:2181
+</span></span><span class=line><span class=cl>spring.cloud.stream.kafka.binder.brokers=192.168.11.30:9092,192.168.11.33:9092,192.168.11.35:9092
+</span></span><span class=line><span class=cl># # spring cloud config 官方版本配置结束
+</span></span></code></pre></td></tr></table></div></div><p>配置文件在完全兼容官方版本，但是额外增加一些配置，主要是config-group和refresh消息的控制。
+group可以为多个，每个group有些配置项，基本和主配置一样，另外多加了plain-text是方便使用其他类型的纯文本配置，
+下面给出示例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Component</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>ConfigListener</span><span class=w> </span><span class=kd>implements</span><span class=w> </span><span class=n>ApplicationListener</span><span class=o>&lt;</span><span class=n>EnvironmentChangeEvent</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>onApplicationEvent</span><span class=p>(</span><span class=n>EnvironmentChangeEvent</span><span class=w> </span><span class=n>event</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Set</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>keys</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>event</span><span class=p>.</span><span class=na>getKeys</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>keys</span><span class=p>.</span><span class=na>contains</span><span class=p>(</span><span class=s>&#34;xx.json&#34;</span><span class=p>))</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;根据xx.json重新配置&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=详细实现>详细实现</h2><h3 id=从多配置仓库加载配置>从多配置仓库加载配置</h3><p>要想改造首先就要在代码水平清楚知道启动时如何加载远程服务器中的配置，我们从加了spring cloud的spring boot启动说起。
+当执行了<code>SpringApplication.run(Application.class)</code>首先来到了这里，起个别名函数1</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 函数1 SpringApplication</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>ConfigurableApplicationContext</span><span class=w> </span><span class=nf>run</span><span class=p>(</span><span class=n>String</span><span class=p>...</span><span class=w> </span><span class=n>args</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>StopWatch</span><span class=w> </span><span class=n>stopWatch</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>StopWatch</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>stopWatch</span><span class=p>.</span><span class=na>start</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>ConfigurableApplicationContext</span><span class=w> </span><span class=n>context</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>FailureAnalyzers</span><span class=w> </span><span class=n>analyzers</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>configureHeadlessProperty</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>SpringApplicationRunListeners</span><span class=w> </span><span class=n>listeners</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getRunListeners</span><span class=p>(</span><span class=n>args</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>listeners</span><span class=p>.</span><span class=na>starting</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>ApplicationArguments</span><span class=w> </span><span class=n>applicationArguments</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>DefaultApplicationArguments</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>					</span><span class=n>args</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>ConfigurableEnvironment</span><span class=w> </span><span class=n>environment</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>prepareEnvironment</span><span class=p>(</span><span class=n>listeners</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>					</span><span class=n>applicationArguments</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>Banner</span><span class=w> </span><span class=n>printedBanner</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>printBanner</span><span class=p>(</span><span class=n>environment</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>context</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>createApplicationContext</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>analyzers</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>FailureAnalyzers</span><span class=p>(</span><span class=n>context</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>prepareContext</span><span class=p>(</span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=n>environment</span><span class=p>,</span><span class=w> </span><span class=n>listeners</span><span class=p>,</span><span class=w> </span><span class=n>applicationArguments</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>					</span><span class=n>printedBanner</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>refreshContext</span><span class=p>(</span><span class=n>context</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>afterRefresh</span><span class=p>(</span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=n>applicationArguments</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>listeners</span><span class=p>.</span><span class=na>finished</span><span class=p>(</span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=kc>null</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>stopWatch</span><span class=p>.</span><span class=na>stop</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=na>logStartupInfo</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>				</span><span class=k>new</span><span class=w> </span><span class=n>StartupInfoLogger</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=na>mainApplicationClass</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>						</span><span class=p>.</span><span class=na>logStarted</span><span class=p>(</span><span class=n>getApplicationLog</span><span class=p>(),</span><span class=w> </span><span class=n>stopWatch</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=k>return</span><span class=w> </span><span class=n>context</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>Throwable</span><span class=w> </span><span class=n>ex</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>handleRunFailure</span><span class=p>(</span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=n>listeners</span><span class=p>,</span><span class=w> </span><span class=n>analyzers</span><span class=p>,</span><span class=w> </span><span class=n>ex</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>IllegalStateException</span><span class=p>(</span><span class=n>ex</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>在这个函数中，嵌入spring cloud的程序和没有嵌入的行为有些差异，尤其是当我们调试的时候，我们会发现
+程序进入<code>ConfigurableEnvironment environment = prepareEnvironment(listeners, applicationArguments);</code>（函数2）
+这一行后又重新进入这个函数（普通的SpringBoot程序只会调用该函数一次），再看下进程，还是主进程，
+于是通过IDEA强大的代码索引能力，我们发现<code>SpringApplicationBuilder</code>的
+<code>public ConfigurableApplicationContext run(String... args)</code>这个函数（函数3）中有调用函数1，通过不断调试追踪，函数3是被
+<code>BootstrapApplicationListener</code>调用，这个Listener监听<code>ApplicationEnvironmentPreparedEvent</code>事件。
+可见在此期间肯定产生了这个事件，但是这个Listener是如何注册被调用的？我们再回到函数2：prepareEnvironment，</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 函数2 SpringApplication</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>private</span><span class=w> </span><span class=n>ConfigurableEnvironment</span><span class=w> </span><span class=nf>prepareEnvironment</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>SpringApplicationRunListeners</span><span class=w> </span><span class=n>listeners</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>ApplicationArguments</span><span class=w> </span><span class=n>applicationArguments</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=c1>// Create and configure the environment</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>ConfigurableEnvironment</span><span class=w> </span><span class=n>environment</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getOrCreateEnvironment</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>configureEnvironment</span><span class=p>(</span><span class=n>environment</span><span class=p>,</span><span class=w> </span><span class=n>applicationArguments</span><span class=p>.</span><span class=na>getSourceArgs</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>listeners</span><span class=p>.</span><span class=na>environmentPrepared</span><span class=p>(</span><span class=n>environment</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=k>this</span><span class=p>.</span><span class=na>webEnvironment</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>environment</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>EnvironmentConverter</span><span class=p>(</span><span class=n>getClassLoader</span><span class=p>())</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>					</span><span class=p>.</span><span class=na>convertToStandardEnvironmentIfNecessary</span><span class=p>(</span><span class=n>environment</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=k>return</span><span class=w> </span><span class=n>environment</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>可以看到有个继承自<code>SpringApplicationRunListener</code>的listener集合，通过找哪个地方用到这个类，
+在一个spring.factories（后续再说这个）中发现了<code>EventPublishingRunListener</code>，这个类的<code>environmentPrepared</code>
+方法广播了<code>ApplicationEnvironmentPreparedEvent</code>，因此BootstrapApplicationListener监听到事件之后执行后续动作。</p><p>这里会有一个疑问，这些listener是如何加载到的，其实就是前面说的<code>spring.factories</code>，函数1中<code>getRunListeners(args)</code>
+就是去加载listener，通过<code>SpringFactoriesLoader</code>加载这个配置文件<code>META-INF/spring.factories</code>，并解析出其中的类进行加载
+，其实这个配置文件很有用，后面还会用到。</p><p>继续前面的内容，BootstrapApplicationListener重新调用函数1，目的是为了插入一些spring cloud相关初始化需要的环境，
+这里的细节就不表了，主要应该是一些相关的配置类。我们关心的如何将远程配置加载到spring中。通过调试，找到了<code>PropertySourceBootstrapConfiguration</code>，
+可见这是一个取代了原来spring boot中的PropertySource配置的配置类，其中有个initialize函数，我们可以一窥究竟。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 函数4  BootstrapApplicationListener</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>initialize</span><span class=p>(</span><span class=n>ConfigurableApplicationContext</span><span class=w> </span><span class=n>applicationContext</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompositePropertySource</span><span class=w> </span><span class=n>composite</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>CompositePropertySource</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>BOOTSTRAP_PROPERTY_SOURCE_NAME</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>AnnotationAwareOrderComparator</span><span class=p>.</span><span class=na>sort</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=na>propertySourceLocators</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kt>boolean</span><span class=w> </span><span class=n>empty</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>true</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>ConfigurableEnvironment</span><span class=w> </span><span class=n>environment</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>applicationContext</span><span class=p>.</span><span class=na>getEnvironment</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=n>PropertySourceLocator</span><span class=w> </span><span class=n>locator</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=k>this</span><span class=p>.</span><span class=na>propertySourceLocators</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>PropertySource</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>source</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>source</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>locator</span><span class=p>.</span><span class=na>locate</span><span class=p>(</span><span class=n>environment</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>source</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>continue</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>logger</span><span class=p>.</span><span class=na>info</span><span class=p>(</span><span class=s>&#34;Located property source: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>source</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>composite</span><span class=p>.</span><span class=na>addPropertySource</span><span class=p>(</span><span class=n>source</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>empty</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>false</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>empty</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>MutablePropertySources</span><span class=w> </span><span class=n>propertySources</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>environment</span><span class=p>.</span><span class=na>getPropertySources</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>String</span><span class=w> </span><span class=n>logConfig</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>environment</span><span class=p>.</span><span class=na>resolvePlaceholders</span><span class=p>(</span><span class=s>&#34;${logging.config:}&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>LogFile</span><span class=w> </span><span class=n>logFile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>LogFile</span><span class=p>.</span><span class=na>get</span><span class=p>(</span><span class=n>environment</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>propertySources</span><span class=p>.</span><span class=na>contains</span><span class=p>(</span><span class=n>BOOTSTRAP_PROPERTY_SOURCE_NAME</span><span class=p>))</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>propertySources</span><span class=p>.</span><span class=na>remove</span><span class=p>(</span><span class=n>BOOTSTRAP_PROPERTY_SOURCE_NAME</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>insertPropertySources</span><span class=p>(</span><span class=n>propertySources</span><span class=p>,</span><span class=w> </span><span class=n>composite</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>reinitializeLoggingSystem</span><span class=p>(</span><span class=n>environment</span><span class=p>,</span><span class=w> </span><span class=n>logConfig</span><span class=p>,</span><span class=w> </span><span class=n>logFile</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>setLogLevels</span><span class=p>(</span><span class=n>environment</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>handleIncludedProfiles</span><span class=p>(</span><span class=n>environment</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>这里引入了<code>propertySourceLocator</code>看名字就知道用他们来取得propertySource，并且可以有很多个Locator，
+最后加入到<code>CompositePropertySource</code>（组合PropertySource），再来看看有那些<code>PropertySourceLocator</code>，
+一下子就发现了<code>ConfigServicePropertySourceLocator</code>，这应该就是从configServer中获取配置的地方。
+果不其然。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nd>@Retryable</span><span class=p>(</span><span class=n>interceptor</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>&#34;configServerRetryInterceptor&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=kd>public</span><span class=w> </span><span class=n>org</span><span class=p>.</span><span class=na>springframework</span><span class=p>.</span><span class=na>core</span><span class=p>.</span><span class=na>env</span><span class=p>.</span><span class=na>PropertySource</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>locate</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=n>org</span><span class=p>.</span><span class=na>springframework</span><span class=p>.</span><span class=na>core</span><span class=p>.</span><span class=na>env</span><span class=p>.</span><span class=na>Environment</span><span class=w> </span><span class=n>environment</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>ConfigClientProperties</span><span class=w> </span><span class=n>properties</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>this</span><span class=p>.</span><span class=na>defaultProperties</span><span class=p>.</span><span class=na>override</span><span class=p>(</span><span class=n>environment</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>CompositePropertySource</span><span class=w> </span><span class=n>composite</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>CompositePropertySource</span><span class=p>(</span><span class=s>&#34;configService&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=n>RestTemplate</span><span class=w> </span><span class=n>restTemplate</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>this</span><span class=p>.</span><span class=na>restTemplate</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=kc>null</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=n>getSecureRestTemplate</span><span class=p>(</span><span class=n>properties</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>				</span><span class=p>:</span><span class=w> </span><span class=k>this</span><span class=p>.</span><span class=na>restTemplate</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=p>...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=p>...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=c1>// Try all the labels until one works</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>label</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=n>labels</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>				</span><span class=n>Environment</span><span class=w> </span><span class=n>result</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getRemoteEnvironment</span><span class=p>(</span><span class=n>restTemplate</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>						</span><span class=n>properties</span><span class=p>,</span><span class=w> </span><span class=n>label</span><span class=p>.</span><span class=na>trim</span><span class=p>(),</span><span class=w> </span><span class=n>state</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>				</span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>result</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>					</span><span class=p>...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>					</span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>result</span><span class=p>.</span><span class=na>getPropertySources</span><span class=p>()</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=c1>// result.getPropertySources() can be null if using xml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>						</span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=n>PropertySource</span><span class=w> </span><span class=n>source</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=n>result</span><span class=p>.</span><span class=na>getpro</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>							</span><span class=nd>@SuppressWarnings</span><span class=p>(</span><span class=s>&#34;unchecked&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>							</span><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=p>,</span><span class=w> </span><span class=n>Object</span><span class=o>&gt;</span><span class=w> </span><span class=n>map</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=p>,</span><span class=w> </span><span class=n>Object</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span><span class=n>source</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>									</span><span class=p>.</span><span class=na>getSource</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>							</span><span class=n>composite</span><span class=p>.</span><span class=na>addPropertySource</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=n>MapPropertySource</span><span class=p>(</span><span class=n>source</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>									</span><span class=p>.</span><span class=na>getName</span><span class=p>(),</span><span class=w> </span><span class=n>map</span><span class=p>));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>						</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>					</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>					</span><span class=p>...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>					</span><span class=k>return</span><span class=w> </span><span class=n>composite</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>				</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=p>...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>通过RestTemplate向configServer发送http请求获取配置，将获取到的PropertySources组装成env的PropertySource后返回，
+更加详细的获取过程就在函数<code>getRemoteEnvironment(restTemplate, properties, label.trim(), state);</code>
+这里不细说。那么如果我们想扩展配置的获取方式，可以新增加一个像<code>ConfigServicePropertySourceLocator</code>的locator，
+那么我最后确实是这么做的。先找到配置<code>ConfigServicePropertySourceLocator</code>的类<code>ConfigServiceBootstrapConfiguration</code>
+我扩展了config的功能，于是叫<code>ExtendConfigServiceBootstrapConfiguration</code>，那获取配置的locator就叫<code>ExtendConfigServicePropertySourceLocator</code>，
+当然也需要些额外的配置项<code>ExtendConfigClientProperties</code>。最后为了能加载这些配置类，加了<code>spring.factories</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># Bootstrap components
+</span></span><span class=line><span class=cl>org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+</span></span><span class=line><span class=cl>com.dianwoda.cloud.config.client.ExtendConfigServiceBootstrapConfiguration
+</span></span></code></pre></td></tr></table></div></div><h3 id=批量刷新共有配置>批量刷新共有配置</h3><p>spring cloud config在刷新的时候有点不爽的地方，当没有destination的时候会configServer会转成<code>*:**</code>，这是对所有应用生效，
+另外如果想对某一类应用更新的话destination规则比较死板，虽然支持通配符的destination，但是如果我想对不同名字的应用，
+但是使用了同一个共有配置仓库的应用更新的话就没有办法，于是就在对官方的bus下手进行魔改，当然前提也是要搞清楚是怎么回事才能改。</p><p><img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2017/10/spring-cloud-config-bus.png alt=spring-cloud-config-bus></p><p>利用spring-cloud-starter-stream-kafka的整合，利用注解，将kafka消息转化为<code>RemoteApplicationEvent</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@StreamListener</span><span class=p>(</span><span class=n>SpringCloudBusClient</span><span class=p>.</span><span class=na>INPUT</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>acceptRemote</span><span class=p>(</span><span class=n>RemoteApplicationEvent</span><span class=w> </span><span class=n>event</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>event</span><span class=w> </span><span class=k>instanceof</span><span class=w> </span><span class=n>AckRemoteApplicationEvent</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=na>bus</span><span class=p>.</span><span class=na>getTrace</span><span class=p>().</span><span class=na>isEnabled</span><span class=p>()</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=o>!</span><span class=k>this</span><span class=p>.</span><span class=na>serviceMatcher</span><span class=p>.</span><span class=na>isFromSelf</span><span class=p>(</span><span class=n>event</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=k>this</span><span class=p>.</span><span class=na>applicationEventPublisher</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>this</span><span class=p>.</span><span class=na>applicationEventPublisher</span><span class=p>.</span><span class=na>publishEvent</span><span class=p>(</span><span class=n>event</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// If it&#39;s an ACK we are finished processing at this point</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=na>serviceMatcher</span><span class=p>.</span><span class=na>isForSelf</span><span class=p>(</span><span class=n>event</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=k>this</span><span class=p>.</span><span class=na>applicationEventPublisher</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=k>this</span><span class=p>.</span><span class=na>serviceMatcher</span><span class=p>.</span><span class=na>isFromSelf</span><span class=p>(</span><span class=n>event</span><span class=p>))</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>this</span><span class=p>.</span><span class=na>applicationEventPublisher</span><span class=p>.</span><span class=na>publishEvent</span><span class=p>(</span><span class=n>event</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=na>bus</span><span class=p>.</span><span class=na>getAck</span><span class=p>().</span><span class=na>isEnabled</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>AckRemoteApplicationEvent</span><span class=w> </span><span class=n>ack</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>AckRemoteApplicationEvent</span><span class=p>(</span><span class=k>this</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>this</span><span class=p>.</span><span class=na>serviceMatcher</span><span class=p>.</span><span class=na>getServiceId</span><span class=p>(),</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=k>this</span><span class=p>.</span><span class=na>bus</span><span class=p>.</span><span class=na>getAck</span><span class=p>().</span><span class=na>getDestinationService</span><span class=p>(),</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=n>event</span><span class=p>.</span><span class=na>getDestinationService</span><span class=p>(),</span><span class=w> </span><span class=n>event</span><span class=p>.</span><span class=na>getId</span><span class=p>(),</span><span class=w> </span><span class=n>event</span><span class=p>.</span><span class=na>getClass</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>this</span><span class=p>.</span><span class=na>cloudBusOutboundChannel</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>.</span><span class=na>send</span><span class=p>(</span><span class=n>MessageBuilder</span><span class=p>.</span><span class=na>withPayload</span><span class=p>(</span><span class=n>ack</span><span class=p>).</span><span class=na>build</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>this</span><span class=p>.</span><span class=na>applicationEventPublisher</span><span class=p>.</span><span class=na>publishEvent</span><span class=p>(</span><span class=n>ack</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=na>bus</span><span class=p>.</span><span class=na>getTrace</span><span class=p>().</span><span class=na>isEnabled</span><span class=p>()</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=k>this</span><span class=p>.</span><span class=na>applicationEventPublisher</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// We are set to register sent events so publish it for local consumption,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// irrespective of the origin</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>applicationEventPublisher</span><span class=p>.</span><span class=na>publishEvent</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=n>SentApplicationEvent</span><span class=p>(</span><span class=k>this</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>event</span><span class=p>.</span><span class=na>getOriginService</span><span class=p>(),</span><span class=w> </span><span class=n>event</span><span class=p>.</span><span class=na>getDestinationService</span><span class=p>(),</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>event</span><span class=p>.</span><span class=na>getId</span><span class=p>(),</span><span class=w> </span><span class=n>event</span><span class=p>.</span><span class=na>getClass</span><span class=p>()));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>通过ServiceMatcher来判断是不是给自己的消息，是的话就发布出去，触发后续流程，不是的话直接ack，
+利用这一点，用切面覆盖了isForSelf函数，最后就可以由自己控制何种情况下接受，何种情况下拒绝。</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>Payne Xu</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2024-09-23
+<a href=https://github.com/fliaping/Blog.git/commit/96bf251e692fee02a026bcec4dc0e3481e96e5b6 title=修改图片域名>(96bf251)</a></span></p><p class=copyright-item><span class=item-title>原始文档</span>
+<span class=item-content><a class=link-to-markdown href=https://fliaping.github.io/Blog/spring-could-config-client-enhance/index.md target=_blank>查看本文 Markdown 版本 »</a></span></p><p class=copyright-item><span class=item-title>许可协议</span>
+<span class=item-content><a rel="license noopener" href=https://creativecommons.org/licenses/by-nc-nd/4.0/ target=_blank>CC BY-NC-ND 4.0</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/Blog/tags/spring-cloud/>spring-cloud</a>
+<a href=/Blog/tags/config-server/>config-server</a></div><nav class=post-nav><a class=prev href=/Blog/invoke-c-or-c-plus-plus-in-python/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">Python 调用C/C++</span>
+<span class="prev-text nav-mobile">上一篇</span>
+</a><a class=next href=/Blog/container-core-technical-details/><span class="next-text nav-default">容器核心技术详解</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script><script type=text/javascript>var gitalk=new Gitalk({id:"2017-10-22 07:15:23 +0000 UTC",title:"Spring Could Config Client 增强",clientID:"c4ef14e88fbeca886191",clientSecret:"9abcc260c662ad994ea4cf8c7267feb9c66da87a",repo:"Blog",owner:"fliaping",admin:["fliaping"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:xavierrpayne@gmail.com class="iconfont icon-email" title=email></a><a href=https://twitter.com/fliaping class="iconfont icon-twitter" title=twitter></a><a href=https://www.linkedin.com/in/paynexu/ class="iconfont icon-linkedin" title=linkedin></a><a href=https://github.com/fliaping class="iconfont icon-github" title=github></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动
+</span><span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 次 </span><span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2015 -
+2026<span class=heart><i class="iconfont icon-heart"></i></span><span>fliaping</span>
+</span><span><a href=http://www.miitbeian.gov.cn>豫ICP备15007908号-2</a></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://fastly.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://fastly.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/Blog/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script><script type=text/javascript>window.MathJax={loader:{load:["input/asciimath"]},tex:{inlineMath:[["$","$"],["\\(","\\)"]],tags:"ams",processEscapes:!0}}</script><script id=MathJax-script async src=https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==="localhost")return;var t,e=document.createElement("script");e.async=!0,e.src="https://hm.baidu.com/hm.js?3b9e1727c271ab68867e6c829416ed4c",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script><script>function createCopyButton(e){const t=document.createElement("div");t.className="copy-code",t.innerText="Copy",t.addEventListener("click",()=>copyCodeToClipboard(t,e)),addCopyButtonToDom(t,e)}async function copyCodeToClipboard(e,t){const n=t.querySelector(":last-child > .chroma > code").innerText;await navigator.clipboard.writeText(n),e.blur(),e.innerText="Copied!",setTimeout(()=>e.innerText="Copy",2e3)}function addCopyButtonToDom(e,t){t.insertBefore(e,t.firstChild);const n=document.createElement("div");n.className="highlight-wrapper",t.parentNode.insertBefore(n,t),n.appendChild(t)}var isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);isMobile||document.querySelectorAll(".highlight").forEach(e=>createCopyButton(e))</script></body></html>

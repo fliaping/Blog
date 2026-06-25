@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Shadowsocks on Fliaping's Blog</title><link>https://fliaping.github.io/Blog/tags/shadowsocks/</link><description>Recent content in Shadowsocks on Fliaping's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sat, 02 Sep 2023 11:58:58 +0800</lastBuildDate><atom:link href="https://fliaping.github.io/Blog/tags/shadowsocks/index.xml" rel="self" type="application/rss+xml"/><item><title>在ubuntu下安装shadowsocks多用户版</title><link>https://fliaping.github.io/Blog/how-to-insall-manyuser-shadowsocks-on-ubuntu/</link><pubDate>Thu, 24 Dec 2015 17:53:24 +0000</pubDate><guid>https://fliaping.github.io/Blog/how-to-insall-manyuser-shadowsocks-on-ubuntu/</guid><description>&lt;p>###环境说明
+系统：AWS ubuntu 14.04 x64
+##安装shadowsocks支持
+1.首先更新软件源&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">apt-get update
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>2.安装Python&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">apt-get install python-pip python-m2crypto 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pip install cymysql
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>shadowsocks在centos编译安装</title><link>https://fliaping.github.io/Blog/how-to-compile-and-install-shadowsocks-on-centos/</link><pubDate>Wed, 23 Dec 2015 07:23:17 +0000</pubDate><guid>https://fliaping.github.io/Blog/how-to-compile-and-install-shadowsocks-on-centos/</guid><description>&lt;p>现在新疆把python 的软件库都封了，pip都安不上，那只好自己编译安装了。系统为centos6 x64
+###1.安装编译环境&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">yum install gcc glib2-devel openssl-devel pcre-devel bzip2-devel gzip-devel zlib-devel 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yum install build-essential autoconf libtool gcc -y 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

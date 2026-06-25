@@ -1,0 +1,213 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>在ubuntu下安装shadowsocks多用户版 - Fliaping's Blog</title>
+<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Payne Xu"><meta name=description content="###环境说明 系统：AWS ubuntu 14.04 x64 ##安装shadowsocks支持 1.首先更新软件源
+1 apt-get update 2.安装Python
+1 2 apt-get install python-pip python-m2crypto pip install cymysql "><meta name=keywords content="fliaping,Payne.Xu"><meta name=generator content="Hugo 0.124.1 with theme even"><link rel=canonical href=https://fliaping.github.io/Blog/how-to-insall-manyuser-shadowsocks-on-ubuntu/><link rel=apple-touch-icon sizes=180x180 href=/Blog/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/Blog/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/Blog/favicon-16x16.png><link rel=manifest href=/Blog/manifest.json><link rel=mask-icon href=/Blog/safari-pinned-tab.svg color=#5bbad5><script defer src=https://cn.vercount.one/js></script><link href=/Blog/sass/main.min.2a3766884c406c389d3a4ca20b300e80e434d78f1c08825bbdf164a13f4a4235.css rel=stylesheet><link rel=stylesheet href=https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="在ubuntu下安装shadowsocks多用户版"><meta property="og:description" content="###环境说明
+系统：AWS ubuntu 14.04 x64
+##安装shadowsocks支持
+1.首先更新软件源
+
+
+1
+
+
+apt-get update
+
+
+2.安装Python
+
+
+1
+2
+
+
+apt-get install python-pip python-m2crypto 
+pip install cymysql
+
+
+"><meta property="og:type" content="article"><meta property="og:url" content="https://fliaping.github.io/Blog/how-to-insall-manyuser-shadowsocks-on-ubuntu/"><meta property="article:section" content="post"><meta property="article:published_time" content="2015-12-24T17:53:24+00:00"><meta property="article:modified_time" content="2023-09-02T11:58:58+08:00"><meta itemprop=name content="在ubuntu下安装shadowsocks多用户版"><meta itemprop=description content="###环境说明
+系统：AWS ubuntu 14.04 x64
+##安装shadowsocks支持
+1.首先更新软件源
+
+
+1
+
+
+apt-get update
+
+
+2.安装Python
+
+
+1
+2
+
+
+apt-get install python-pip python-m2crypto 
+pip install cymysql
+
+
+"><meta itemprop=datePublished content="2015-12-24T17:53:24+00:00"><meta itemprop=dateModified content="2023-09-02T11:58:58+08:00"><meta itemprop=wordCount content="1156"><meta itemprop=keywords content="shadowsocks,gfw,"><meta name=twitter:card content="summary"><meta name=twitter:title content="在ubuntu下安装shadowsocks多用户版"><meta name=twitter:description content="###环境说明
+系统：AWS ubuntu 14.04 x64
+##安装shadowsocks支持
+1.首先更新软件源
+
+
+1
+
+
+apt-get update
+
+
+2.安装Python
+
+
+1
+2
+
+
+apt-get install python-pip python-m2crypto 
+pip install cymysql
+
+
+"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://fastly.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://fastly.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Fliaping's Blog</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/Blog/><li class=mobile-menu-item>🏠 主页</li></a><a href=/Blog/post/><li class=mobile-menu-item>⏱️ 时间轴</li></a><a href=/Blog/tags/><li class=mobile-menu-item>🧩 标签</li></a><a href=/Blog/categories/><li class=mobile-menu-item>🗃️ 分类</li></a><a href=/Blog/categories/%E9%9A%8F%E7%AC%94><li class=mobile-menu-item>😊 随笔</li></a><a href=/Blog/about/><li class=mobile-menu-item>🙋🏻‍♂️ 关于</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Fliaping's Blog</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/Blog/>🏠 主页</a></li><li class=menu-item><a class=menu-item-link href=/Blog/post/>⏱️ 时间轴</a></li><li class=menu-item><a class=menu-item-link href=/Blog/tags/>🧩 标签</a></li><li class=menu-item><a class=menu-item-link href=/Blog/categories/>🗃️ 分类</a></li><li class=menu-item><a class=menu-item-link href=/Blog/categories/%E9%9A%8F%E7%AC%94>😊 随笔</a></li><li class=menu-item><a class=menu-item-link href=/Blog/about/>🙋🏻‍♂️ 关于</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>在ubuntu下安装shadowsocks多用户版</h1><div class=post-meta><span class=post-time>2015-12-24</span><div class=post-category><a href=/Blog/categories/developer/>Developer</a></div><span class=more-meta>约 1156 字 </span><span class=more-meta>预计阅读 3 分钟 </span><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents></nav></div></div><div class=post-content><p>###环境说明
+系统：AWS ubuntu 14.04 x64
+##安装shadowsocks支持
+1.首先更新软件源</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apt-get update
+</span></span></code></pre></td></tr></table></div></div><p>2.安装Python</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apt-get install python-pip python-m2crypto 
+</span></span><span class=line><span class=cl>pip install cymysql
+</span></span></code></pre></td></tr></table></div></div><p>##安装LNMP</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>wget -c http://soft.vpser.net/lnmp/lnmp1.2-full.tar.gz <span class=o>&amp;&amp;</span> tar zxf lnmp1.2-full.tar.gz <span class=o>&amp;&amp;</span> <span class=nb>cd</span> lnmp1.2-full <span class=o>&amp;&amp;</span> ./install.sh lnmp
+</span></span></code></pre></td></tr></table></div></div><p>##后端安装配置
+1.安装</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git clone -b manyuser https://github.com/mengskysama/shadowsocks.git  
+</span></span><span class=line><span class=cl><span class=nb>cd</span> ./shadowsocks/shadowsocks  
+</span></span><span class=line><span class=cl>vim Config.py      
+</span></span><span class=line><span class=cl><span class=c1>#Config      </span>
+</span></span><span class=line><span class=cl><span class=nv>MYSQL_HOST</span> <span class=o>=</span> <span class=s1>&#39;localhost&#39;</span> <span class=c1>#这一行是服务器IP，127.0.0.1表示本机      </span>
+</span></span><span class=line><span class=cl><span class=nv>MYSQL_PORT</span> <span class=o>=</span> <span class=m>3306</span> <span class=c1>#数据库端口号      </span>
+</span></span><span class=line><span class=cl><span class=nv>MYSQL_USER</span> <span class=o>=</span> <span class=s1>&#39;ss&#39;</span> <span class=c1>#数据库用户名      </span>
+</span></span><span class=line><span class=cl><span class=nv>MYSQL_PASS</span> <span class=o>=</span> <span class=s1>&#39;ss&#39;</span> <span class=c1>#数据库密码      </span>
+</span></span><span class=line><span class=cl><span class=nv>MYSQL_DB</span> <span class=o>=</span> <span class=s1>&#39;shadowsocks&#39;</span> <span class=c1>#数据库名称  </span>
+</span></span><span class=line><span class=cl>      
+</span></span><span class=line><span class=cl><span class=nv>MANAGE_PASS</span> <span class=o>=</span> <span class=s1>&#39;ss233333333&#39;</span>      
+</span></span><span class=line><span class=cl> <span class=c1>#if you want manage in other server you should set this value to global ip      </span>
+</span></span><span class=line><span class=cl><span class=nv>MANAGE_BIND_IP</span> <span class=o>=</span> <span class=s1>&#39;127.0.0.1&#39;</span>      
+</span></span><span class=line><span class=cl> <span class=c1>#make sure this port is idle      </span>
+</span></span><span class=line><span class=cl><span class=nv>MANAGE_PORT</span> <span class=o>=</span> <span class=m>23333</span>
+</span></span></code></pre></td></tr></table></div></div><p>2.数据库配置</p><p>2.1 新建ss用户，用来操作shadowsocks这个数据库</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>//登录MYSQL
+</span></span><span class=line><span class=cl>@&gt;mysql -u root -p
+</span></span><span class=line><span class=cl>@&gt;密码
+</span></span><span class=line><span class=cl>//创建用户
+</span></span><span class=line><span class=cl>mysql&gt; insert into mysql.user<span class=o>(</span>Host,User,Password<span class=o>)</span> values<span class=o>(</span><span class=s2>&#34;localhost&#34;</span>,<span class=s2>&#34;ss&#34;</span>,password<span class=o>(</span><span class=s2>&#34;ss&#34;</span><span class=o>))</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>//刷新系统权限表
+</span></span><span class=line><span class=cl>mysql&gt;flush privileges<span class=p>;</span>
+</span></span></code></pre></td></tr></table></div></div><p>2.2 新建shadowsocks数据库</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>//登录MYSQL（有ROOT权限）。我里我以ROOT身份登录.
+</span></span><span class=line><span class=cl>@&gt;mysql -u root -p
+</span></span><span class=line><span class=cl>@&gt;密码
+</span></span><span class=line><span class=cl>//首先为用户创建一个数据库(shadowsocks)
+</span></span><span class=line><span class=cl>mysql&gt;create database shadowsocks;
+</span></span><span class=line><span class=cl>//授权phplamp用户拥有phplamp数据库的所有权限。
+</span></span><span class=line><span class=cl>&gt;grant all privileges on shadowsocks.* to ss@localhost identified by &#39;ss&#39;;
+</span></span><span class=line><span class=cl>//刷新系统权限表
+</span></span><span class=line><span class=cl>mysql&gt;flush privileges;
+</span></span></code></pre></td></tr></table></div></div><p>2.3 导入sql脚本</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mysql&gt; use shadowsocks<span class=p>;</span>
+</span></span><span class=line><span class=cl>mysql&gt; <span class=nb>source</span> shadowsocks.sql<span class=p>;</span>
+</span></span><span class=line><span class=cl>mysql&gt; show tables<span class=p>;</span>  <span class=c1>#查看表</span>
+</span></span><span class=line><span class=cl>mysql&gt; show columns from user<span class=p>;</span>  <span class=c1>#查看表结构</span>
+</span></span></code></pre></td></tr></table></div></div><p>4、安装supervisor进程守护</p><p>这样可以不用长时间开启SSH连接，即使断开SSH后端也会继续运行下去，亦可用screen来运行。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apt-get install python-pip python-m2crypto supervisor
+</span></span></code></pre></td></tr></table></div></div><p>在目录/etc/supervisor/conf.d/下， 新建一个文件，名字：shadowsocks.conf
+在shadowsocks.conf文件里编辑添加：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[program:shadowsocks]
+</span></span><span class=line><span class=cl>command=python /root/shadowsocks/shadowsocks/server.py -c /root/shadowsocks/shadowsocks/config.json #/此处目录请自行修改
+</span></span><span class=line><span class=cl>autorestart=true
+</span></span><span class=line><span class=cl>user=root
+</span></span></code></pre></td></tr></table></div></div><p>修改以下文件
+/etc/profile
+/etc/default/supervisor
+在文件结尾处添加以下3行内容</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>ulimit -n 51200
+</span></span><span class=line><span class=cl>ulimit -Sn 4096
+</span></span><span class=line><span class=cl>ulimit -Hn 8192
+</span></span></code></pre></td></tr></table></div></div><p>启动supervisor</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>service</span> <span class=n>supervisor</span> <span class=n>start</span> <span class=c1>#启动</span>
+</span></span><span class=line><span class=cl><span class=n>supervisorctl</span> <span class=n>reload</span> <span class=c1>#重载</span>
+</span></span></code></pre></td></tr></table></div></div><p>debug查看连接日志等</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>supervisorctl tail -f shadowsocks stderr #Ctrl+C 取消查看
+</span></span><span class=line><span class=cl>supervisorctl status  #获得所有程序状态
+</span></span><span class=line><span class=cl>supervisorctl stop spider  #关闭目标程序
+</span></span><span class=line><span class=cl>supervisorctl start spider   #启动目标程序
+</span></span><span class=line><span class=cl>supervisorctl shutdown    #关闭所有程序
+</span></span></code></pre></td></tr></table></div></div><p>开机supervisord自启动</p><p>编辑文件：vi /etc/rc.local<br>在末尾另起一行添加supervisord，保存退出
+##安装前端程序
+安装sspanel：<br>git项目地址：https://github.com/orvice/ss-panel<br>中文安装文档：https://github.com/orvice/ss-panel/wiki/Install-Guide-zh_cn</p><p>中文安装文档已经说明的很详细了。导入ss-panel-master里sql文件夹下面的所有数据库到你自己建立的数据库中，就是之前建立了的ss数据库，修改lib/config-sample.php（里面填写你的数据库信息）并改为：config.php即可。
+修改默认配置即可。</p><p>新版sspanel后台默认用户名密码已更新，默认情况下，user表中uid为1的用户为管理员
+默认管理帐号: <a href=mailto:first@blood.com>first@blood.com</a> 密码 1993</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>Payne Xu</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2023-09-02
+<a href=https://github.com/fliaping/Blog.git/commit/21ed07b2316b861ea471724dc08970be3243aedf title=目录调整>(21ed07b)</a></span></p><p class=copyright-item><span class=item-title>原始文档</span>
+<span class=item-content><a class=link-to-markdown href=https://fliaping.github.io/Blog/how-to-insall-manyuser-shadowsocks-on-ubuntu/index.md target=_blank>查看本文 Markdown 版本 »</a></span></p><p class=copyright-item><span class=item-title>许可协议</span>
+<span class=item-content><a rel="license noopener" href=https://creativecommons.org/licenses/by-nc-nd/4.0/ target=_blank>CC BY-NC-ND 4.0</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/Blog/tags/shadowsocks/>shadowsocks</a>
+<a href=/Blog/tags/gfw/>gfw</a></div><nav class=post-nav><a class=prev href=/Blog/some-tips-for-using-hexo/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">hexo使用技巧汇总</span>
+<span class="prev-text nav-mobile">上一篇</span>
+</a><a class=next href=/Blog/how-to-compile-and-install-shadowsocks-on-centos/><span class="next-text nav-default">shadowsocks在centos编译安装</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=gitalk-container></div><link rel=stylesheet href=https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.css crossorigin=anonymous><script src=https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js crossorigin=anonymous></script><script type=text/javascript>var gitalk=new Gitalk({id:"2015-12-24 17:53:24 +0000 UTC",title:"在ubuntu下安装shadowsocks多用户版",clientID:"c4ef14e88fbeca886191",clientSecret:"9abcc260c662ad994ea4cf8c7267feb9c66da87a",repo:"Blog",owner:"fliaping",admin:["fliaping"],body:decodeURI(location.href)});gitalk.render("gitalk-container")</script><noscript>Please enable JavaScript to view the <a href=https://github.com/gitalk/gitalk>comments powered by gitalk.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:xavierrpayne@gmail.com class="iconfont icon-email" title=email></a><a href=https://twitter.com/fliaping class="iconfont icon-twitter" title=twitter></a><a href=https://www.linkedin.com/in/paynexu/ class="iconfont icon-linkedin" title=linkedin></a><a href=https://github.com/fliaping class="iconfont icon-github" title=github></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动
+</span><span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 次 </span><span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/Blog/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2015 -
+2026<span class=heart><i class="iconfont icon-heart"></i></span><span>fliaping</span>
+</span><span><a href=http://www.miitbeian.gov.cn>豫ICP备15007908号-2</a></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://fastly.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://fastly.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://fastly.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/Blog/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script><script type=text/javascript>window.MathJax={loader:{load:["input/asciimath"]},tex:{inlineMath:[["$","$"],["\\(","\\)"]],tags:"ams",processEscapes:!0}}</script><script id=MathJax-script async src=https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==="localhost")return;var t,e=document.createElement("script");e.async=!0,e.src="https://hm.baidu.com/hm.js?3b9e1727c271ab68867e6c829416ed4c",t=document.getElementsByTagName("script")[0],t.parentNode.insertBefore(e,t)})()</script><script>function createCopyButton(e){const t=document.createElement("div");t.className="copy-code",t.innerText="Copy",t.addEventListener("click",()=>copyCodeToClipboard(t,e)),addCopyButtonToDom(t,e)}async function copyCodeToClipboard(e,t){const n=t.querySelector(":last-child > .chroma > code").innerText;await navigator.clipboard.writeText(n),e.blur(),e.innerText="Copied!",setTimeout(()=>e.innerText="Copy",2e3)}function addCopyButtonToDom(e,t){t.insertBefore(e,t.firstChild);const n=document.createElement("div");n.className="highlight-wrapper",t.parentNode.insertBefore(n,t),n.appendChild(t)}var isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);isMobile||document.querySelectorAll(".highlight").forEach(e=>createCopyButton(e))</script></body></html>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Raspberry-Pi on Fliaping's Blog</title><link>https://fliaping.github.io/Blog/tags/raspberry-pi/</link><description>Recent content in Raspberry-Pi on Fliaping's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 23 Sep 2024 14:15:29 +0800</lastBuildDate><atom:link href="https://fliaping.github.io/Blog/tags/raspberry-pi/index.xml" rel="self" type="application/rss+xml"/><item><title>树莓派3简明配置</title><link>https://fliaping.github.io/Blog/the-brief-configuration-of-raspberrypi-3/</link><pubDate>Sat, 08 Apr 2017 12:33:25 +0000</pubDate><guid>https://fliaping.github.io/Blog/the-brief-configuration-of-raspberrypi-3/</guid><description>&lt;h1 id="系统安装">系统安装&lt;/h1>
+&lt;p>首先选择一个系统，Linux有很多发行版都是支持raspberry-pi的，每个人有自己的喜好，如果是想深入学习Linux（或者说喜欢折腾）的，ArchLinux和Gentoo是不错的选择，但是若目的不再于此，选择官方系统可能是比较好的选择。另外像Ubuntu Meta也挺不错。&lt;/p>
+&lt;h2 id="使用-noobs-安装">使用 noobs 安装&lt;/h2>
+&lt;ul>
+&lt;li>有显示器：格式化 sd 卡为 fat32格式，将 &lt;a href="https://www.raspberrypi.org/downloads/noobs/">noobs&lt;/a>解压拷贝到 sd 卡，插上sd 卡上电，HDMI 连接显示器按照步骤安装就可以。&lt;/li>
+&lt;li>无显示器：recovery.cmdline 加入silentinstall&lt;/li>
+&lt;/ul>
+&lt;h2 id="直接安装">直接安装&lt;/h2>
+&lt;p>&lt;strong>官方系统Raspbain&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>直接将系统刻录到SD卡
+Mac和Linux一般使用dd命令即可，Windows需要一些刻录软件，例如UltalISO，以及一些装机软件，如大白菜都可以完成刻录工作。&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo dd &lt;span class="nv">bs&lt;/span>&lt;span class="o">=&lt;/span>4M &lt;span class="k">if&lt;/span>&lt;span class="o">=&lt;/span>raspbian.img &lt;span class="nv">of&lt;/span>&lt;span class="o">=&lt;/span>/dev/sdb
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>插入内存卡，开机
+官方系统会自动扩展文件系统，如果没有自动扩展，开机之后也可以使用raspi-config和扩展以及另外的一些配置&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo raspi-config
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

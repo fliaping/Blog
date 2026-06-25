@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>软件 on Fliaping's Blog</title><link>https://fliaping.github.io/Blog/tags/%E8%BD%AF%E4%BB%B6/</link><description>Recent content in 软件 on Fliaping's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 23 Sep 2024 14:15:29 +0800</lastBuildDate><atom:link href="https://fliaping.github.io/Blog/tags/%E8%BD%AF%E4%BB%B6/index.xml" rel="self" type="application/rss+xml"/><item><title>Connecting Android Devices with Linux</title><link>https://fliaping.github.io/Blog/connecting-android-devices-with-linux/</link><pubDate>Sun, 24 Sep 2017 06:11:58 +0000</pubDate><guid>https://fliaping.github.io/Blog/connecting-android-devices-with-linux/</guid><description>&lt;p>结合自身的实际，在Linux上连接Android的需求其实可以分为一下几类：&lt;/p>
+&lt;ol>
+&lt;li>手机的通知可以在Linux上弹窗提示&lt;/li>
+&lt;li>能方便的在手机和Linux之间传输文件、甚至同步粘贴板&lt;/li>
+&lt;li>能将手机画面同步到Linux上，并且还能直接操作&lt;/li>
+&lt;li>将手机作为另外一个屏幕，共享Linux的鼠标键盘，直接操作Android系统&lt;/li>
+&lt;li>仅仅将手机作为Linux的扩展屏&lt;/li>
+&lt;/ol>
+&lt;p>接下来我就来介绍几个软件，看看它们都能实现哪些需求&lt;/p></description></item></channel></rss>

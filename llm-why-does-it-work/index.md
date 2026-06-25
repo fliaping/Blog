@@ -1,0 +1,393 @@
+# 引言
+
+## 什么是智能？
+
+人类公认的智能体就是人类自己，人类智能有以下特点：
+
+- 学习能力: 能够从经验中学习并适应新的环境。
+- 理解与推理: 能够理解复杂的信息和进行逻辑推断。
+- 解决问题: 面对挑战或问题时，能够找到有效的解决方案。
+- 自主决策: 在没有外部帮助的情况下，基于信息和经验做出决策。
+- 语言处理: 理解和产生语言，进行有效的沟通。
+- 创造性: 能够创新或想出新的解决方案
+
+那么其他动物例如猫狗、果蝇、蜜蜂，是否是有智能的？和常说的人类智能有一定区别，这些动物在某些方面匹配智能的一些特点，例如：狗可以被训练来识别命令、找到物品，甚至进行某些任务；而猫则在捕猎和地盘卫士方面表现出复杂的策略；果蝇可以被训练识别特定的气味并与之关联特定的奖励或惩罚；蜜蜂能够进行简单的数量识别和分类。和人类的智能相比其他动物的智能都相对低级。
+
+## 人类如何产生智能的？
+
+对于这个问题，目前的科学水平还无法很好的回答，从当前的认知来讲，人类智能的产生可以从神经科学、生物学、心理学、进化学和其他多个领域来进行解释，这里分享下个人的理解：
+
+1. 硬件基础：人类的大脑有比较复杂的结构，有庞大的神经网络，相当于有了硬件基础。一些无脑生物，例如单细胞生物就只有本能的反应，不会产生智能的表现。
+2. 现实需求：人类的远古祖先学会使用工具来适应环境和获取食物，这需要更高级的认知和解决问题的能力。包括为了生存的集体合作，催生了复杂的语言和文化的形成。
+3. 软件实现：在人类社会生存，需要不断适应社会环境，不断学习，传承文化和知识，人类的智能可以认为不是个体的成就，应该是群体的智慧，通过学习掌握后表现为个体的智能。
+4. 优化迭代：创造性是人类智能的推进剂，情感是人类智能的稳定剂，通过这两种形式让人类智能不断进度，达到更高的高度。
+
+# 大脑的原理
+
+我们先从大脑的原理出发，看看智能需要什么样的硬件，当然当前的研究结论并不一定是完全正确的。
+
+## 基本结构
+
+1. **大脑皮层 (Cerebral Cortex)** ：是大脑的外部层，主要由灰质组成。它是人类的思维、知觉、决策和行动的中心。大脑皮层可以进一步分为四个叶：
+
+* 前额叶 (Frontal Lobe)：与决策、规划、情绪和行为控制有关。
+* 顶叶 (Parietal Lobe)：处理触觉信息，如触摸、温度和痛感。
+* 枕叶 (Occipital Lobe)：处理视觉信息。
+* 颞叶 (Temporal Lobe)：涉及听觉、记忆和某些方面的情感处理。
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/image-8.png)
+
+2. **基底核 (Basal Ganglia)** ：这是一组深入大脑的核，与运动控制、学习和情绪有关。
+3. **丘脑 (Thalamus)** ：它是大脑的主要传感信息中继站，负责将大部分传感器输入信息发送到适当的大脑皮层区域。
+4. **下丘脑 (Hypothalamus)** ：是调节体温、饥饿、渴和其他基本生理功能的中心。它也与许多情感反应和驱动力有关。
+5. **海马体 (Hippocampus)** ：与记忆形成、组织和存储有关。
+6. **杏仁核 (Amygdala)** ：涉及情感处理，特别是与恐惧和愉悦有关的反应。
+7. **脑干 (Brainstem)** ：包括中脑、桥脑和延脑。它连接大脑和脊髓，并控制许多基本的生命维持功能，如呼吸、心跳和血压。
+8. **小脑 (Cerebellum)** ：主要与协调运动、平衡和身体位置感知有关。
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/image-9.png)
+
+## 神经网络
+
+神经网络是各种动物大脑中的基本结构，神经网络由许多神经元连接组成，其中神经元的结构如下
+
+![神经元的结构](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-2.png)
+
+**突触 (Synapses)：** 突触是神经元之间的连接点，使神经元能够传递信号给其他神经元。
+当一个神经元兴奋时，它通过突触释放化学物质（神经递质）来激活或抑制另一个神经元。
+大脑中有数万亿的突触，为神经元提供了丰富的连接网络。
+
+**神经递质 (Neurotransmitters)：** 神经递质是在神经元之间传递信号的化学物质。
+常见的神经递质包括多巴胺、乙酰胆碱、5-羟色胺、GABA和谷氨酸等。
+这些化学物质对大脑功能和心理状态（如情绪、认知和行为）有着重要的影响。
+
+**轴突 (Axons) 和 树突 (Dendrites)：**
+轴突是神经元的“发送”部分，用于将电信号传递到其他神经元或肌肉。
+树突是神经元的“接收”部分，它们接收来自其他神经元的信号。
+
+**髓鞘 (Myelin Sheath)：** 髓鞘是一种包裹在多数轴突周围的脂肪质材料，其功能是加速电信号的传播。
+
+人体大脑中大约有860亿神经元，每个神经元每秒能够产生高达一千次的电脉冲，并通过突触可以和其他上千个神经元连接，总的突触数量在百万亿级别，下图是一个大脑可视化项目【H01】数据集，可以看到模拟出来的3D图形中密密麻麻的神经网络连接。
+
+![神经网络的连接](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-1.png)
+
+# AI神经网络
+
+对比前文提到的智能的定义，对比当今的AI技术
+
+- 学习能力: 通过模型预训练，将海量的数据内化到千亿级的参数中
+- 理解与推理: 从ChatGPT 3.5开始，AI表现出来优秀的含义理解能力和逻辑推理能力
+- 解决问题: ChatGPT给的答案就是解决问题的能力，但答案正确性，解决方案的有效性仍是一个大的问题
+- 自主决策: 初级阶段，AI自主决策的风险比较高，有个人工智能小镇的一个实验用了自主决策的能力
+- 语言处理: 这一方面是ChatGPT的拿手好戏
+- 创造性：生成式AI就是机器创造出不存在的东西，虽然和已有的比较像，但绝对不是完全一样。
+
+从上面的情况看人类智能的定义，以ChatGPT4的效果看，很多方面已经达到了非常接近人的水平，但有些方面还需要提高。
+
+## 从函数出发
+
+在数学上函数是一个输入输出系统，数字输入，数字输出
+
+<img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-3.png width=50%>
+
+例如初中学习的三角函数，解方程，这些都是前人已经发现的函数，我们由已知函数函数去求解
+
+<img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-4.png width=50%>
+
+如果是我们知道在(x,y)平面坐标系的一系列的点集，求对于(x,y)关系的函数，我们怎么做？高中数学也有类似的题，我们拿点集在二维坐标上标记，然后将点连起来，看跟我们学过的哪个函数比较像，就用这个函数套进来就行了。
+
+![点集到函数](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-5.png)
+
+这时我们做的就是 **函数逼近** ，对于未知的函数f近似已知函数T，即 `f(x)≈T(x)`
+
+但是对于复杂的场景，例如下图，要求我们找到一个函数，输入点坐标，输出点颜色，`f(x,y)=z` x,y是输入，z是输出，这个函数就不是简简单单一个公式就可以表示的，确切说很难找到一个标准的函数去描述它们。
+
+![复杂的分类点集](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-10.png)
+
+再例如我们平时写的代码也是函数，各种函数叠加在一起形成系统，系统整体可以看做一个大函数，函数的定义是将人类的形式逻辑用机器语言表达出来。但是如果让我们写代码识别图片中的小猫，如果还按照形式逻辑来写代码识别，几乎无法实现。
+
+![一只小猫](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-9.png)
+
+## 通用函数逼近器
+
+如果我们有一个目标函数，如图，但我们并不知道这个函数的定义，我们能否有一个通用的方法模拟出该函数？
+
+<img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-11.png width=50%>
+
+如果没有在数学领域有深入研究，这个事情还是比较难的，从常识来讲看起来是有一个简单的公式来描述的，但可惜我们不知道，这里用这个曲线只是为了便于说明，那么回到正题如何模拟这样一个函数？f
+
+我们知道一些简单的线性函数，例如 `y=wx+b`，其中w是权重，b是偏置，这两个参数的变化会对应函数图像的变化
+![线性函数变化](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/linear-function-plot.gif)
+
+能否用简单的线性函数模拟呢，我们都会过微积分，也知道分而治之的理念，那么将曲线分割为一段段的直线，就可以近似模拟出来，如下图：
+
+<img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-12.png width=50%>
+
+上面的模拟如何用函数表示出来？我们对每一段直线测量两个点，代入 `y=wx+b`就能算出每个直线度的w和b值如下：
+
+<img src=https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-13.png width=50%>
+
+如何把分开的函数合并为一个？如果把上面的函数全部画在一个图上，就是六条交叉的直线，要拟合目标函数还需要限定每个函数的左右范围，我们当然可以通过限定x区间使用不同函数方式。
+
+<div>
+$$
+f(x) = \left \{ \begin{array}{l} 
+  N_{0}(x),   x \in \left (r1,r2 \right]\\
+  N_{1}(x),   x \in \left (r2,r3 \right]\\
+  N_{2}(x),   x \in \left (r3,r4 \right]\\
+  N_{3}(x),   x \in \left (r4,r5 \right]\\
+  N_{4}(x),   x \in \left (r5,r6 \right]\\
+  N_{5}(x),   x \in \left (r6,r7 \right]\\
+\end{array}  \right.
+$$
+</div>
+
+当然这是一种省事的方式，但计算机来解这个题的话，如何计算出每个函数的权重(w)和偏移(b)以及每个函数的作用区间r1...rn?
+
+这里引入神经网络，我们定义一个神经元就是简单的线性函数 `y=wx+b`,神经元计算时就是把输入的x代入，计算出输出y，很多神经元连接在一起，组成一个简单的神经网络，在数学上表示就是把各个神经元的函数通过运算连接起来，这里假设我们已经知道了每个神经元中参数，如果是简单的加减乘除运算，线性函数叠加线性函数依然是线性函数.
+
+![线性函数叠加仍是线性](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-14.png)
+
+为了叠加出非线性函数，可以对每个神经元应用激活函数，激活函数顾名思义可以限定在某些条件下激活，这就可以将神经元从线性函数转变为非线性的，例如常用的ReLU函数，非常简单 $ReLU(x)=MAX(x,0)$ ,叠加之后神经元的函数变为 $N(x)=MAX(wx+b,0)$
+
+![relu-activation-function](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/relu-activation-function.gif)
+
+这样N个非线性神经元叠加就可以产生非线性的整体函数，通过已知数据集的代入，就可以修改每个神经元的参数，经过非常多尝试后所有的数据集都能匹配这个神经网络，于是这个神经网络就是对已知数据的模拟。
+
+![神经元叠加](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/neuron-overlay.gif)
+
+前面讨论的神经元比较简单，只有一维变量（一元一次方程），在更复杂的问题中，输入数据是多维的，例如文字、图片、语音，那么多维神经元可以简单表示为
+
+$$
+N(x_{1},x_{1},...,x_{n})=w_{1}x_{1}+w_{2}x_{2}+...w_{n}x_{n}+b
+$$
+
+## 可视化训练
+
+我们通过可视化的工具[Tensor-Playground](https://playground.tensorflow.org/) 可以自己上手体验下神经网络的学习过程。
+
+![Demo](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/tensor-playground-capture-2023-7-16.gif)
+
+![palyground-area](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-16/21-49/image-15.png)
+
+# 人工概率系统
+
+前面从函数出发，用一个简单的数学示例讲了神经网络是通用的函数逼近器。本节主要在应用的角度，看看神经网络如何有效解决实际的问题。
+
+## 概率性与确定性
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/The_Avengers_Doctor_Fantastic.gif)
+
+### 世界的概率性
+
+整个世界的运行到处都是概率：
+
+**生活中的概率**
+
+人们常常基于不完全或模糊的信息做出决策。
+
+- 当我们决定是否带伞出门时，我们可能会考虑天气预报说有60%的机率下雨。
+- 当医生评估治疗效果或药物反应的风险时，他们经常依赖于统计数据和概率。
+- 市场经济中的价格波动、股票市场的上升和下降、供需关系等都显示出明显的随机性
+- 人类的决策过程，尽管受到许多因素的影响，但往往具有不可预测性，导致某种程度的概率性。
+
+**生物过程的概率**
+
+- 遗传变异是一个基于概率的过程，基因的突变是难以预测的。
+- 繁殖、死亡和生存也都受到随机事件的影响，尤其是在动植物群落中。
+
+**基础物理的概率**
+
+- 在微观尺度上，量子力学描述了基本粒子行为的概率性。例如，一个电子的位置不是一个固定的点，而是一个概率分布。这种微观的随机性可以在宏观尺度上累积，并在某些情况下产生可观察的效果。
+
+### 概率中的确定性
+
+概率虽然不能完全100%的预测，但是在更大尺度上，或者更多样本中，概率是相对可预测的
+
+例如：
+
+- 抛一枚硬币，正反面出现的概率是1/2, 那么抛10次有一次正面的概率就非常高(99.9%)
+- 当我们对一个粒子进行观测时，观测到一个特定的状态，而这个状态的选择是概率性的，但是对于两个纠缠的量子，当知道其中一个的量子态，另一个的状态一定是确定的。
+- 中心极限定理：对于许多随机变量（满足一定的条件），它们的和（或平均值）的分布趋近于正态分布，无论原始分布是什么。
+
+这给了我们在面对大量随机变量时的一种确定性感，科学家从中发现了一些确定性的规律，作为公理、定理、理论。
+
+### 基于概率的AI
+
+AI的发展经历的很多阶段，从最初的理论研究(1956-1980)到规则的专家系统(1980-1987)、然后神经网络的提出(1987-1993)、再到当前主流的统计理论为基础的机器学习（1993-现在）。目前阶段就是以统计学的概率为主要理论，通过概率和分布去预测结果。
+
+从前面函数的例子，当前的AI算法本质就是根据现有数据进行模拟（预训练），近似出一个巨复杂的函数去对新数据进行预测（预测推理）。
+
+预训练阶段的概率性：
+
+- 数据的随机性：训练数据可能包含噪声和不确定性。这种不确定性可能来源于数据收集过程中的误差、测量误差或其他随机因素。
+- 参数初始化的随机性：在训练深度学习模型时，参数的初始值通常是随机选择的。这种随机初始化有助于模型的收敛。
+- 随机优化算法：例如，随机梯度下降（SGD）是一种常用的优化算法，它在每次迭代中使用一个随机选择的数据子集（或称为mini-batch）来更新模型参数。
+- 正则化技术的概率解释：例如，Dropout是一种随机地关闭神经元的技术，以防止过拟合。这种随机性可以从概率的角度进行解释。
+- 模型结构的随机性：某些模型，如随机森林，明确地引入了随机性，通过构建多个决策树并随机选择特征来提高模型的泛化能力。
+
+预测阶段的概率性：
+
+- 概率输出：许多机器学习模型，如逻辑回归或某些深度学习模型，为预测结果提供概率输出。例如，一个分类器可能会输出一个输入样本属于某个类别的概率。
+- 模型的不确定性：某些模型，如贝叶斯神经网络，可以为其预测提供不确定性估计。这种不确定性可以帮助我们了解模型对其预测的信心。
+- 集成方法的概率性：集成方法，如bagging或boosting，结合了多个模型的预测结果。这些方法通常会考虑每个模型的预测概率，并结合它们来提供一个综合的概率预测。
+
+## 频率与分布
+
+### 频率
+
+词袋模型 (Bag-of-Words, BoW) & TF-IDF：BoW 是最简单的表示法之一，将文档表示为单词出现的频数的向量，而TF-IDF（Term Frequency-Inverse Document Frequency）是对 BoW 的一个增强，评估一个词在文档集或语料库中的重要性。两者都忽略了单词的顺序。
+
+### 词嵌入 (Word Embeddings)
+
+词嵌入 (Word Embeddings)：这是由深度学习模型生成的密集向量表示，例如 Word2Vec、GloVe 或 FastText。这些嵌入捕获了单词的语义信息，使得在该空间中语义上相似的单词彼此接近。
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/words_space.gif)
+
+## 理解与推理
+
+### 理解能力
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/12-16/image-3.png)
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/12-16/image-2.png)
+
+### 推理能力
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-26/10-04/image-2.png)
+
+ChatGPT，基于GPT系列模型，模拟推理能力的核心机制是基于其训练过程和Transformer架构的特性。以下是几个关键点来解释其模拟推理的方式：
+
+1. 大量训练数据：ChatGPT在训练时接触了大量的文本数据，这些数据包括了各种逻辑推理、论证和结论。因此，当它遇到一个需要逻辑推理的问题时，它可以生成一个回答，这个回答反映了它在训练数据中看到的模式。
+2. 注意力机制：GPT模型中的注意力机制使得模型能够“关注”输入文本中的关键部分。这意味着，当提供一个问题和上下文时，模型可以根据上下文和问题的重要性进行权衡，从而生成一个合适的回答。
+3. 上下文理解：GPT模型有能力考虑前面的文本来为当前的问题提供答案。这意味着，如果你给它一个逻辑推理的问题，它会考虑问题的上下文来生成一个答案。
+4. 统计关联：GPT不是通过真实的逻辑进程来“推理”的。相反，它根据在训练数据中看到的统计关联来生成答案。例如，如果它在训练数据中经常看到两个概念一起出现，当其中一个概念在问题中出现时，它可能会在答案中引用另一个概念。
+5. 生成式能力：GPT是一个生成式模型，这意味着它可以生成连贯和结构化的文本。这使得它的答案看起来像是经过逻辑推理的结果，尽管这只是基于模型在数据中学到的模式。
+
+ChatGPT模拟推理能力的方式主要是基于它在大量文本数据中学到的模式和结构，以及它的架构特性，如注意力机制。然而，这种“推理”是基于统计学习和模式匹配的，而不是真正的逻辑推理。例如如下的例子：
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-26/10-04/image-1.png)
+
+# Transformer与GPT
+
+## GPT预测过程
+
+以GPT模型为例，看它是如何进行文本续写的，这里使用wolfram语言来演示（由于GPT3之后模型比较大，所以用500+M的GPT2模型），当然也有[Python版本的示例](TODO)，不过wolfram语言看起来更简洁些。
+
+![](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/image.png)
+
+```wolfram
+model = NetModel[{"GPT2 Transformer Trained on WebText Data", 
+   "Task" -> "LanguageModeling"}]
+
+Row[{Style[Text@"The best thing about AI is its ability to",15],Spacer[10],Dataset[ReverseSort[Association[model["The best thing about AI is its ability to",{"TopProbabilities",5}]]],ItemDisplayFunction->(PercentForm[#,2]&)]}]
+```
+
+第一句代码比较简单，就是定义了一个gpt2模型model，第二句比较复杂，不过大部分是展示样式，核心是 `ReverseSort[Association[model["The best thing about AI is its ability to",{"TopProbabilities",5}]]]`, 即下一个最有概率的5个词，按照概率倒序排列。可以看到最有可能的单词 learn的概率最高有4.5%
+
+如果我们一直往前预测，每次都取概率最高的单词
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/image-1.png)
+
+```wolfram
+NestList[StringJoin[#,model[#,"Decision"]]&,"The best thing about AI is its ability to",7]
+```
+
+看起来补全的是一个完整的句子，那么按照这种模式继续预测
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/image-2.png)
+
+```wolfram
+StringReplace[Nest[StringJoin[#,model[#,"Decision"]]&,"The best thing about AI is its ability to",100],"\n".. ->" "]
+```
+
+> 可以看到按照最大概率去生成文本，几句话之后就开始重复，其实这个现象在开源大模型上也是会出现的，尤其是模型量化后或者训练集中某种语言比例比较少的情况下，非常容易出现重复。例如下图，是在Mac电脑上运行llama.cpp版本的4bit量化模型时的情况。
+> ![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/22020d97ae75284d9c74d16e926522ef.png)
+
+但是，如果不是总是选择“顶部”单词，而是有时随机选择“非顶部”单词（“随机性”对应于“温度”0.8）呢？
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/image-3.png)
+
+```wolfram
+NestList[StringJoin[#,model[#,{"RandomSample","Temperature"->.8}]]&,"The best thing about AI is its ability to",7]
+```
+
+不过每次执行，预测的内容都不相同，主要原因是引入了随机性
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/image-4.png)
+
+```wolfram
+Table[Nest[StringJoin[#,model[#,{"RandomSample","Temperature"->.8}]]&,"The best thing about AI is its ability to",7],5]
+```
+
+那么我们尝试预测更长的文本
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/image-5.png)
+
+```wolfram
+StringReplace[Nest[StringJoin[#,model[#,{"RandomSample","Temperature"->.8}]]&,"The best thing about AI is its ability to",100],"\n".. ->" "]
+```
+
+虽然是胡话连篇，前言不搭后语，但都算是完整的句子，并且也没有重复。因为GPT2是2019年完成的最小的模型，所以预测效果并不好。可以尝试用GPT3来看看效果，OpenAI没有开源GPT3，不过有对应的web api，我们可以看下效果：
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/image-6.png)
+
+用GPT3.5来尝试下，可以看到续写的内容更加合理
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/00-12/image-7.png)
+
+## Transformer
+
+GPT模型基于Transformer。事实上，Transformer自提出之后就被广泛应用并不断扩展。例如DeepMind公司就应用Transformer构建了蛋白质结构预测模型AlphaFold 2，现在Transformer也进入了计算机视觉领域，在许多复杂任务中正慢慢取代卷积神经网络。可以说，Transformer已经成为深度学习和深度神经网络技术进步的最亮眼成果之一。
+
+### seq2seq
+
+序列，指的是文本数据、语音数据、视频数据等一系列具有连续关系的数据。这些数据在这一时刻的内容，往往与前几个时刻的内容相关，同样也会影响着后续时刻的内容。例如翻译任务就是把一种语言的序列转换为另一个语言的序列，聊天机器人就是把问题文字序列转换回答文字序列。
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/12-16/image-1.png)
+
+序列到序列模型一般是由编码器(encoder)和解码器(decoder)组成的。如下图是一张标准的编解码机制结构图，其工作流程可以简单描述为，在编码器侧对输入序列进行编码，生成一个中间的语义编码向量，然后在解码器侧对这个中间向量进行解码，得到目标输出序列。以中译英场景为例，编码器侧对应的输入是一段中文序列，解码器侧对应的输出就是翻译出来的英文序列。
+
+![Alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2023-08-21/12-16/image.png)
+
+### 注意力机制
+
+> 传统的编码器—解码器架构对序列长度有限制，本质原因是它无法体现对一个句子序列中不同词语的关注程度。在不同的自然语言处理任务中，一个句子中的不同部分是有不同含义和重要性的，比如“我喜欢这本书，因为它讲了很多关于养花的知识”这句话：如果对这句话做情感分析，训练的时候明显应该对“喜欢”这个词语进行更多的关注；而如果基于书的内容进行分类，我们应该更关注“养花”这个词。这就涉及我们接下来要谈的注意力机制，这其实是借鉴了人类的注意力思维方式：人类从直觉出发，能利用有限的注意力，从大量信息中快速获取最有价值的信息。
+
+## GPT
+
+GPT能取得当前的效果，以下几方面的优化功不可没。
+
+**上下文相关性 (Contextuality):** GPT对上下文中单词的分布和频率有很好的理解，可以为同一个单词在不同上下文中生成不同的向量。
+
+**位置编码:** Transformer模型引入了位置编码，这允许模型处理序列数据并考虑单词的位置信息。
+
+**自注意力：** 自注意力机制使模型能够对输入序列的不同部分分配不同的注意力权重，从而能更好地捕捉上下文信息，因为单词的上下文在决定其意义时很重要。注意力机制有助于GPT理解词汇的分布式含义
+
+例如：“明天上午苹果举行新品发布会”，“苹果”是可以是一种水果，也可以是苹果公司，根据“发布会”就可以认为这里指“苹果公司”的概率更大。
+
+**大规模语料库训练：** GPT在训练时使用了大量的文本数据。这些数据捕获了自然语言中各种单词和短语的频率和分布。因此，GPT对于高频和低频词汇的使用模式都有很好的感知。
+
+**RLHF机制：**
+
+![alt text](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2024-10-17/21-44/image-3.png)
+
+# AGI是否会产生？
+
+神经网络能够注意到自然界中那些人类未曾注意到的规律。但是，如果我们想解决那些属于数学或计算科学范畴的问题，神经网络是无法做到的，除非它有效地将一个“普通”的计算系统作为“工具”，例如wolfram。
+
+过去有很多任务，包括写作难题，我们认为计算机在某种程度上无法完成。现在我们看到像ChatGPT这样的工具可以完成这些任务，我们突然认为计算机的能力必定变得更强大了，特别是超越了它们已经基本能够做到的事情。但这并不是正确的结论。计算上不可约的过程仍然是计算上不可约的，对于计算机来说仍然是基本困难的。即使计算机可以轻松计算它们的每个步骤。
+
+我们应该得出的结论是，像写作这样的任务，我们之前认为计算机无法做到，而我们人类可以做到，而实际上在某种意义上看起来起来比我们想象的要容易。换句话说，神经网络之所以能够成功地撰写文章，是因为写作文章实际上是一个比我们想象的“更浅层的计算”的问题。从某种意义上讲，人类写文章这样的事情有一个我们人类未意识到的机制，而我们通过神经网络找到了这个隐含的机制。如果你有足够大的神经网络，对于人类能够轻松做到的事情，计算机也能够做到。
+
+关于人类智能的产生，心理学家 Marcus 提出了一个有关「认知」的公式：Cognition=f（a, k ,e），其中 a 代表先天的算法，k 代表先天知识，e 代表经验。小孩子刚出生并没有智慧或认知，但有基因，可以认为是算法a，一些刚生下来就有的生物的本能，暂且认为是先天知识k，之后的所有经历都是训练数据，人从经历中获取到规则，那就是经验e。从某种意义上讲计算机可以模拟人类的历程，产生认知，但这仍然有非常远的路需要走。
+
+# 参考内容
+
+- [What Is ChatGPT Doing … and Why Does It Work?](https://writings.stephenwolfram.com/2023/02/what-is-chatgpt-doing-and-why-does-it-work/)
+- [AI有逻辑思维与创造力吗？AI的弱点和发展](https://www.bilibili.com/video/BV1PW4y1p7gX)
+- [为什么神经网络可以学习几乎任何东西？](https://www.bilibili.com/video/BV148411c7LQ/)
+- [人工神经网络是否模拟了人类大脑？](https://cloud.tencent.com/developer/article/1086037)
+- [Tensorflow Playground 讲解](https://juejin.cn/post/6844904200988540942)
+- [李沐 - Transformer论文逐段精读【论文精读】](https://www.bilibili.com/video/BV1pu411o7BE)
+- [李沐 -  GPT，GPT-2，GPT-3 论文精读【论文精读】](https://www.bilibili.com/video/BV1AF411b7xQ)
+- [Sparks of Artificial General Intelligence: Early experiments with GPT-4](https://arxiv.org/abs/2303.12712)
