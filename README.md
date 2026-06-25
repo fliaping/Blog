@@ -15,7 +15,13 @@ git submodule update --remote
 1. 新建草稿: `hugo new draft/new-article.md`
 2. 撰写文章, 并push到github
 3. 准备发布: 将meta信息中的draft改为false, 并移动到post目录
-4. deploy到服务器: `./deploy`
+4. push 到 `master` 后由 GitHub Actions 自动构建并发布到 GitHub Pages
+
+## GitHub Pages
+
+首次启用时，在 GitHub 仓库 `Settings -> Pages` 中将 `Build and deployment` 的 `Source` 设置为 `GitHub Actions`。
+
+未配置自定义域名时，站点会发布到 GitHub Pages 默认地址。
 
 ## other
 
