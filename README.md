@@ -19,9 +19,9 @@ git submodule update --remote
 
 ## GitHub Pages
 
-首次启用时，在 GitHub 仓库 `Settings -> Pages` 中将 `Build and deployment` 的 `Source` 设置为 `GitHub Actions`。
+首次启用时，在 GitHub 仓库 `Settings -> Pages` 中将 `Build and deployment` 的 `Source` 设置为 `Deploy from a branch`，分支选择 `gh-pages`，目录选择 `/ (root)`。
 
-未配置自定义域名时，站点会发布到 GitHub Pages 默认地址。
+未配置自定义域名时，站点会发布到 GitHub Pages 默认地址：`https://fliaping.github.io/Blog/`。
 
 ## other
 
