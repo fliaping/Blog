@@ -33,16 +33,25 @@ jobs:
           hugo-version: "0.124.1"
           extended: true
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install Wrangler
+        run: npm install -g wrangler@4.104.0
+
       - name: Build
         run: hugo --gc --minify --baseURL "https://fliaping-blog.pages.dev/"
 
-      - name: Deploy
-        uses: cloudflare/wrangler-action@v3
+      - name: Create Pages project
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        with:
-          wranglerVersion: "4.104.0"
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy public --project-name fliaping-blog --branch master
+        run: wrangler pages project create fliaping-blog --production-branch master || true
+
+      - name: Deploy
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: wrangler pages deploy public --project-name fliaping-blog --branch master
