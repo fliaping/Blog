@@ -1,0 +1,13 @@
+// ==============================
+// Fliaping's Blog — main stylesheet
+// 设计方向：科技前沿 / 精密仪器感 / 深浅自适应
+// 令牌层见 _tokens.scss，各模块按页面职责拆分
+// ==============================
+
+@import "tokens";
+@import "base";
+@import "masthead";
+@import "home";
+@import "article";
+@import "pages";
+@import "syntax";

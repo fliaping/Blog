@@ -1,0 +1,106 @@
+{{ define "main" }}
+<div class="shell shell--full">
+  <header class="page-head">
+    <span class="eyebrow">Search</span>
+    <h1 class="page-head__title">搜索</h1>
+    <p class="page-head__sub">在标题、摘要与标签中查找</p>
+  </header>
+
+  <div class="search">
+    <label class="visually-hidden" for="search-input">搜索文章</label>
+    <div class="search__field">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+      </svg>
+      <input class="search__input" id="search-input" type="search"
+             placeholder="输入关键词…" autocomplete="off" autofocus>
+    </div>
+    <p class="search__hint" data-search-hint>共 {{ len (where site.RegularPages "Type" "post") }} 篇文章可供检索</p>
+    <div class="feed" data-search-results></div>
+  </div>
+</div>
+
+<script id="search-index" type="application/json">
+  {{- $idx := slice -}}
+  {{- range where site.RegularPages "Type" "post" -}}
+    {{- $idx = $idx | append (dict
+      "t" .Title
+      "u" .RelPermalink
+      "d" (.Date.Format "2006.01.02")
+      "c" (index .Params.categories 0)
+      "s" (.Summary | plainify | truncate 90)
+      "g" (delimit (.Params.tags | default slice) " ")
+    ) -}}
+  {{- end -}}
+  {{ $idx | jsonify }}
+</script>
+
+<script>
+(function () {
+  var raw = document.getElementById('search-index');
+  var input = document.getElementById('search-input');
+  var out = document.querySelector('[data-search-results]');
+  var hint = document.querySelector('[data-search-hint]');
+  if (!raw || !input || !out) return;
+
+  var docs = [];
+  try { docs = JSON.parse(raw.textContent); } catch (e) { return; }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function render(list, q) {
+    if (!q) {
+      out.innerHTML = '';
+      hint.textContent = '共 ' + docs.length + ' 篇文章可供检索';
+      return;
+    }
+    if (!list.length) {
+      out.innerHTML = '';
+      hint.textContent = '没有匹配「' + q + '」的文章';
+      return;
+    }
+    hint.textContent = '找到 ' + list.length + ' 篇相关文章';
+    out.innerHTML = list.map(function (d) {
+      return '<article class="entry">' +
+        '<div class="entry__rail">' +
+          '<time class="entry__date">' + esc(d.d) + '</time>' +
+          (d.c ? '<span class="entry__cat">' + esc(d.c) + '</span>' : '') +
+        '</div>' +
+        '<div class="entry__body">' +
+          '<h3 class="entry__title"><a class="entry__link" href="' + esc(d.u) + '">' + esc(d.t) + '</a></h3>' +
+          '<p class="entry__excerpt">' + esc(d.s) + '</p>' +
+        '</div>' +
+      '</article>';
+    }).join('');
+  }
+
+  function search(q) {
+    var needle = q.trim().toLowerCase();
+    if (!needle) return [];
+    var terms = needle.split(/\s+/);
+    return docs.filter(function (d) {
+      var hay = ((d.t || '') + ' ' + (d.s || '') + ' ' + (d.g || '') + ' ' + (d.c || '')).toLowerCase();
+      return terms.every(function (t) { return hay.indexOf(t) !== -1; });
+    });
+  }
+
+  var timer;
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    var q = input.value;
+    timer = setTimeout(function () { render(search(q), q.trim()); }, 130);
+  });
+
+  // 支持 ?q= 直达
+  var preset = new URLSearchParams(location.search).get('q');
+  if (preset) {
+    input.value = preset;
+    render(search(preset), preset.trim());
+  }
+})();
+</script>
+{{ end }}

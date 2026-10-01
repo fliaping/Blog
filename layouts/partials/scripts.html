@@ -1,0 +1,50 @@
+{{- $opts := dict "minify" hugo.IsProduction "target" "es2018" }}
+{{- $js := resources.Get "js/app.js" | js.Build $opts }}
+{{- if hugo.IsProduction }}{{ $js = $js | fingerprint }}{{ end }}
+<script src="{{ $js.RelPermalink }}"{{ if hugo.IsProduction }} integrity="{{ $js.Data.Integrity }}"{{ end }} defer></script>
+
+{{- if site.Params.fancybox }}
+<script src="https://fastly.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js"></script>
+<script>
+  window.addEventListener('load', function () {
+    if (!window.jQuery || !jQuery.fn.fancybox) return;
+    jQuery('.prose img').each(function () {
+      var $img = jQuery(this);
+      if ($img.parent().is('a')) return;
+      $img.wrap('<a href="' + ($img.attr('src') || '') + '" data-fancybox="gallery"></a>');
+    });
+  });
+</script>
+{{- end }}
+
+{{- if and site.Params.mathjax (or .IsPage .IsHome) }}
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [{{ if site.Params.mathjaxEnableSingleDollar }}['$', '$'], {{ end }}['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      {{ if site.Params.mathjaxEnableAutoNumber }}tags: 'ams',{{ end }}
+      processEscapes: true
+    },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+</script>
+<script defer src="https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{{- end }}
+
+{{ range site.Params.customJS -}}
+<script src="{{ (printf "/js/%s" .) | relURL }}"></script>
+{{ end -}}
+
+{{- with site.Params.baiduAnalytics }}
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?{{ . }}';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+{{- end }}

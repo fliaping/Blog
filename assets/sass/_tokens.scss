@@ -1,0 +1,218 @@
+// ==============================
+// Design Tokens — Fliaping Blog
+// 科技前沿 / 精密仪器感 / 深浅自适应
+// ==============================
+
+:root {
+  // ---------- Signal Hue ----------
+  // 琥珀信号色：避开 AI 套路的 cyan / purple，
+  // 在深浅两种模式下都保持足够对比与识别度。
+  --signal-h: 32;
+  --signal-s: 96%;
+
+  // ---------- Spacing (4pt base) ----------
+  --space-3xs: 4px;
+  --space-2xs: 8px;
+  --space-xs: 12px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 144px;
+
+  // 流体间距：随视口呼吸
+  --gutter: clamp(20px, 5vw, 48px);
+  --section-gap: clamp(56px, 9vw, 128px);
+
+  // ---------- Measure ----------
+  --measure: 46rem;        // 正文最佳阅读宽度
+  --measure-wide: 76rem;   // 栅格 / 列表容器
+  --measure-full: 90rem;
+
+  // ---------- Radius ----------
+  // 克制的圆角，偏工程感
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  // ---------- Type ----------
+  --font-sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC",
+    "Noto Sans CJK SC", sans-serif;
+  --font-mono: "Spline Sans Mono", ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, "Liberation Mono", monospace;
+  --font-cjk-display: "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC",
+    "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+
+  // 模块化音阶 (1.25 major third)，流体化
+  --fs-2xs: 0.75rem;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.0625rem;
+  --fs-lg: clamp(1.125rem, 0.4vw + 1.05rem, 1.25rem);
+  --fs-xl: clamp(1.375rem, 0.8vw + 1.2rem, 1.625rem);
+  --fs-2xl: clamp(1.75rem, 1.6vw + 1.4rem, 2.25rem);
+  --fs-3xl: clamp(2.125rem, 2.8vw + 1.5rem, 3.25rem);
+  --fs-4xl: clamp(2.5rem, 4.6vw + 1.4rem, 4.5rem);
+
+  // 中文正文行高偏大，字距微松
+  --lh-tight: 1.2;
+  --lh-snug: 1.38;
+  --lh-normal: 1.6;
+  --lh-relaxed: 1.85;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+  --tracking-caps: 0.14em;
+
+  // ---------- Motion ----------
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 140ms;
+  --dur-base: 240ms;
+  --dur-slow: 420ms;
+  --dur-entrance: 640ms;
+
+  // ---------- Z ----------
+  --z-base: 1;
+  --z-toc: 20;
+  --z-header: 50;
+  --z-drawer: 90;
+  --z-top: 100;
+}
+
+// ==============================
+// Light — 纸白基底，冷灰微偏
+// ==============================
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: hsl(40 22% 97%);
+  --bg-subtle: hsl(40 18% 94.5%);
+  --bg-sunken: hsl(38 16% 91.5%);
+  --surface: hsl(0 0% 100%);
+  --surface-raised: hsl(0 0% 100%);
+
+  --text: hsl(222 24% 12%);
+  --text-secondary: hsl(220 12% 30%);
+  --text-muted: hsl(220 10% 40%);
+  --text-faint: hsl(220 9% 50%);
+
+  --border: hsl(38 14% 87%);
+  --border-strong: hsl(38 12% 78%);
+  --border-hairline: hsl(38 14% 90%);
+
+  --signal: hsl(var(--signal-h) var(--signal-s) 34%);
+  --signal-hover: hsl(var(--signal-h) var(--signal-s) 28%);
+  --signal-contrast: hsl(40 100% 98%);
+  --signal-wash: hsl(var(--signal-h) 90% 96%);
+  --signal-ring: hsl(var(--signal-h) var(--signal-s) 42% / 0.4);
+
+  --code-bg: hsl(38 20% 95.5%);
+  --code-text: hsl(340 62% 40%);
+  --selection-bg: hsl(var(--signal-h) 92% 84%);
+  --selection-text: hsl(222 30% 10%);
+
+  --shadow-sm: 0 1px 2px hsl(220 20% 20% / 0.05);
+  --shadow-md: 0 2px 4px hsl(220 20% 20% / 0.04),
+    0 8px 20px -6px hsl(220 20% 20% / 0.08);
+  --shadow-lg: 0 4px 8px hsl(220 20% 20% / 0.05),
+    0 20px 48px -12px hsl(220 22% 18% / 0.14);
+
+  --grid-line: hsl(38 14% 89%);
+  --header-bg: hsl(40 22% 97% / 0.82);
+  --signal-glow: hsl(var(--signal-h) var(--signal-s) 52% / 0.14);
+}
+
+// ==============================
+// Dark — 石墨基底，非纯黑
+// ==============================
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: hsl(225 14% 8.5%);
+  --bg-subtle: hsl(225 13% 11%);
+  --bg-sunken: hsl(225 15% 6.5%);
+  --surface: hsl(225 12% 12.5%);
+  --surface-raised: hsl(225 11% 15.5%);
+
+  --text: hsl(40 18% 93%);
+  --text-secondary: hsl(225 10% 78%);
+  --text-muted: hsl(225 9% 66%);
+  --text-faint: hsl(225 8% 56%);
+
+  --border: hsl(225 10% 21%);
+  --border-strong: hsl(225 9% 30%);
+  --border-hairline: hsl(225 10% 17%);
+
+  --signal: hsl(var(--signal-h) 92% 60%);
+  --signal-hover: hsl(var(--signal-h) 96% 68%);
+  --signal-contrast: hsl(225 30% 8%);
+  --signal-wash: hsl(var(--signal-h) 60% 60% / 0.12);
+  --signal-ring: hsl(var(--signal-h) 92% 60% / 0.45);
+
+  --code-bg: hsl(225 14% 14%);
+  --code-text: hsl(346 80% 72%);
+  --selection-bg: hsl(var(--signal-h) 80% 46%);
+  --selection-text: hsl(40 30% 97%);
+
+  --shadow-sm: 0 1px 2px hsl(225 40% 2% / 0.4);
+  --shadow-md: 0 2px 6px hsl(225 40% 2% / 0.4),
+    0 10px 24px -8px hsl(225 40% 2% / 0.5);
+  --shadow-lg: 0 6px 12px hsl(225 40% 2% / 0.42),
+    0 24px 56px -14px hsl(225 40% 2% / 0.62);
+
+  --grid-line: hsl(225 10% 18%);
+  --header-bg: hsl(225 14% 8.5% / 0.78);
+  --signal-glow: hsl(var(--signal-h) 92% 58% / 0.17);
+}
+
+// 跟随系统（用户未手动指定时）
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --bg: hsl(225 14% 8.5%);
+    --bg-subtle: hsl(225 13% 11%);
+    --bg-sunken: hsl(225 15% 6.5%);
+    --surface: hsl(225 12% 12.5%);
+    --surface-raised: hsl(225 11% 15.5%);
+
+    --text: hsl(40 18% 93%);
+    --text-secondary: hsl(225 10% 78%);
+    --text-muted: hsl(225 9% 66%);
+    --text-faint: hsl(225 8% 56%);
+
+    --border: hsl(225 10% 21%);
+    --border-strong: hsl(225 9% 30%);
+    --border-hairline: hsl(225 10% 17%);
+
+    --signal: hsl(var(--signal-h) 92% 60%);
+    --signal-hover: hsl(var(--signal-h) 96% 68%);
+    --signal-contrast: hsl(225 30% 8%);
+    --signal-wash: hsl(var(--signal-h) 60% 60% / 0.12);
+    --signal-ring: hsl(var(--signal-h) 92% 60% / 0.45);
+
+    --code-bg: hsl(225 14% 14%);
+    --code-text: hsl(346 80% 72%);
+    --selection-bg: hsl(var(--signal-h) 80% 46%);
+    --selection-text: hsl(40 30% 97%);
+
+    --shadow-sm: 0 1px 2px hsl(225 40% 2% / 0.4);
+    --shadow-md: 0 2px 6px hsl(225 40% 2% / 0.4),
+      0 10px 24px -8px hsl(225 40% 2% / 0.5);
+    --shadow-lg: 0 6px 12px hsl(225 40% 2% / 0.42),
+      0 24px 56px -14px hsl(225 40% 2% / 0.62);
+
+    --grid-line: hsl(225 10% 18%);
+    --header-bg: hsl(225 14% 8.5% / 0.78);
+    --signal-glow: hsl(var(--signal-h) 92% 58% / 0.17);
+  }
+}

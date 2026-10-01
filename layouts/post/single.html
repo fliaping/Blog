@@ -1,0 +1,92 @@
+{{ define "main" }}
+<div class="progress" aria-hidden="true"><div class="progress__bar" data-progress></div></div>
+
+<article class="article shell shell--full" data-article-body>
+  <header class="article__head">
+    <span class="eyebrow">
+      {{- with (index .Params.categories 0) }}{{ . }}{{ else }}文章{{ end -}}
+    </span>
+    <h1 class="article__title">{{ .Title }}</h1>
+    <div class="article__meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.dateFormatToUse | default "2006-01-02") }}</time>
+      <span class="article__meta-sep"></span>
+      <span>{{ .WordCount }} 字</span>
+      <span class="article__meta-sep"></span>
+      <span>约 {{ .ReadingTime }} 分钟</span>
+      {{- with .Params.categories }}
+      <span class="article__meta-sep"></span>
+      {{- range . }}
+      <a href="{{ (printf "/categories/%s/" (. | urlize)) | relLangURL }}">{{ . }}</a>
+      {{- end }}
+      {{- end }}
+    </div>
+  </header>
+
+  {{- if and .Params.toc (ne .Params.toc false) }}
+    {{- if .TableOfContents }}
+    <aside class="toc" data-toc aria-label="目录">
+      <div class="toc__title">目录</div>
+      {{ .TableOfContents }}
+    </aside>
+    {{- end }}
+  {{- end }}
+
+  {{- partial "outdated.html" . }}
+
+  <div class="prose">
+    {{ .Content }}
+  </div>
+
+  <footer class="article__foot">
+    {{- with .Params.tags }}
+    <div class="tags">
+      {{- range . }}
+      <a class="tag" href="{{ (printf "/tags/%s/" (. | urlize)) | relLangURL }}">{{ . }}</a>
+      {{- end }}
+    </div>
+    {{- end }}
+
+    {{- if site.Params.postMetaInFooter }}
+    <div class="colophon">
+      <dl>
+        <dt>作者</dt>
+        <dd>{{ .Params.author | default site.Params.author.name }}</dd>
+        {{- if not .Lastmod.IsZero }}
+        <dt>更新于</dt>
+        <dd>
+          {{- if and site.Params.gitRepo .GitInfo }}
+          <a href="{{ site.Params.gitRepo }}/commit/{{ .GitInfo.Hash }}" target="_blank" rel="noopener">{{ .Lastmod.Format "2006-01-02" }}</a>
+          {{- else }}{{ .Lastmod.Format "2006-01-02" }}{{ end }}
+        </dd>
+        {{- end }}
+        <dt>链接</dt>
+        <dd>{{ .Permalink }}</dd>
+        {{- with site.Params.contentCopyright }}
+        <dt>许可</dt>
+        <dd>{{ . | safeHTML }}</dd>
+        {{- end }}
+      </dl>
+    </div>
+    {{- end }}
+  </footer>
+
+  {{- if or .PrevInSection .NextInSection }}
+  <nav class="post-nav" aria-label="上下篇">
+    {{- with .PrevInSection }}
+    <a class="post-nav__item" href="{{ .RelPermalink }}">
+      <span class="post-nav__label">上一篇</span>
+      <span class="post-nav__title">{{ .Title }}</span>
+    </a>
+    {{- else }}<span></span>{{ end }}
+    {{- with .NextInSection }}
+    <a class="post-nav__item post-nav__item--next" href="{{ .RelPermalink }}">
+      <span class="post-nav__label">下一篇</span>
+      <span class="post-nav__title">{{ .Title }}</span>
+    </a>
+    {{- end }}
+  </nav>
+  {{- end }}
+
+  {{- partial "comments.html" . }}
+</article>
+{{ end }}

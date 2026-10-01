@@ -1,0 +1,25 @@
+{{- if and .IsPage (ne .Params.comment false) -}}
+  {{- with site.Params.gitalk -}}
+    {{- if and .owner .repo .clientId .clientSecret -}}
+<section class="comments">
+  <div id="gitalk-container"></div>
+</section>
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://fastly.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+  window.addEventListener('load', function () {
+    if (typeof Gitalk === 'undefined') return;
+    new Gitalk({
+      clientID: {{ .clientId }},
+      clientSecret: {{ .clientSecret }},
+      repo: {{ .repo }},
+      owner: {{ .owner }},
+      admin: [{{ .owner }}],
+      id: location.pathname.slice(0, 50),
+      distractionFreeMode: false
+    }).render('gitalk-container');
+  });
+</script>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

@@ -1,0 +1,31 @@
+{{ define "main" }}
+  {{- $name := .Data.Plural -}}
+  {{- $label := cond (eq $name "tags") "标签" "分类" -}}
+  {{- $terms := .Data.Terms.ByCount -}}
+
+  <div class="shell shell--full">
+    <header class="page-head">
+      <span class="eyebrow">{{ $name | title }}</span>
+      <h1 class="page-head__title">{{ $label }}</h1>
+      <p class="page-head__sub">共 {{ len $terms }} 个{{ $label }}</p>
+    </header>
+
+    <div class="terms">
+      {{- if $terms }}
+      <div class="terms__grid">
+        {{- range $terms }}
+        <a class="term" href="{{ (printf "/%s/%s/" $name (.Term | urlize)) | relLangURL }}">
+          {{ .Term }}
+          <span class="term__count">{{ len .Pages }}</span>
+        </a>
+        {{- end }}
+      </div>
+      {{- else }}
+      <div class="empty">
+        <p class="empty__title">还没有{{ $label }}</p>
+        <p class="empty__desc">发布文章并添加{{ $label }}后，这里会自动汇总。</p>
+      </div>
+      {{- end }}
+    </div>
+  </div>
+{{ end }}

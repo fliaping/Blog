@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="{{ site.LanguageCode | default "zh-CN" }}" data-theme-boot>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    {{- block "title" . -}}
+      {{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}
+    {{- end -}}
+  </title>
+
+  {{/* 防闪烁：在样式渲染前定好主题 */}}
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (e) {}
+      document.documentElement.removeAttribute('data-theme-boot');
+    })();
+  </script>
+
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <a class="skip-link" href="#main">跳转到主内容</a>
+
+  {{ partial "masthead.html" . }}
+
+  <main id="main">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  {{ partial "footer.html" . }}
+
+  <button class="to-top" data-to-top type="button" aria-label="回到顶部">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  {{ partial "scripts.html" . }}
+</body>
+</html>

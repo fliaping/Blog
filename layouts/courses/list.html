@@ -1,0 +1,42 @@
+{{ define "main" }}
+<div class="shell shell--full">
+  <header class="page-head">
+    <span class="eyebrow">Courses</span>
+    <h1 class="page-head__title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-head__sub">{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="section section--tight">
+    {{- if .Pages }}
+    <div class="courses">
+      {{- range .Pages }}
+      <article class="course-card" data-reveal>
+        <span class="course-card__index">{{ .Params.code | default (printf "%02d" (add 1 (int .Weight))) }}</span>
+        <h2 class="course-card__title">
+          <a class="course-card__link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </h2>
+        <p class="course-card__desc">{{ .Description | default (.Summary | plainify | truncate 90) }}</p>
+        <div class="course-card__foot">
+          {{- with .Params.lessons }}<span>{{ . }} 讲</span><span class="course-card__dot"></span>{{ end }}
+          {{- with .Params.level }}<span>{{ . }}</span>{{ end }}
+        </div>
+      </article>
+      {{- end }}
+    </div>
+    {{- else }}
+    <div class="empty">
+      <p class="empty__title">课程正在筹备中</p>
+      <p class="empty__desc">
+        围绕大模型应用、Agent 工程与 AI 编码实践的课程内容正在整理，
+        完成后会第一时间发布在这里。
+      </p>
+      <a class="btn btn--ghost" href="{{ "/post/" | relLangURL }}">先看看文章</a>
+    </div>
+    {{- end }}
+  </div>
+
+  {{- with .Content }}
+  <div class="prose">{{ . }}</div>
+  {{- end }}
+</div>
+{{ end }}

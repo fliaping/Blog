@@ -20,8 +20,6 @@ paginate = 10                                              # 首页每页显示�
 # googleAnalytics = "UA-63276498-2"      # UA-XXXXXXXX-X
 # copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
 
-[author]                  # essential                     # 必需
-  name = "fliaping"
 
 [sitemap]                 # essential                     # 必需
   changefreq = "weekly"
@@ -29,38 +27,46 @@ paginate = 10                                              # 首页每页显示�
   filename = "sitemap.xml"
 
 [[menu.main]]             # config your menu              # 配置目录
-  name = "🏠 主页"
+  name = "首页"
   weight = 10
   identifier = "home"
   url = "/"
 [[menu.main]]
-  name = "⏱️ 时间轴"
+  name = "文章"
   weight = 20
   identifier = "archives"
   url = "/post/"
 [[menu.main]]
-  name = "🧩 标签"
+  name = "课程"
   weight = 30
+  identifier = "courses"
+  url = "/courses/"
+[[menu.main]]
+  name = "标签"
+  weight = 40
   identifier = "tags"
   url = "/tags/"
 [[menu.main]]
-  name = "🗃️ 分类"
-  weight = 40
+  name = "分类"
+  weight = 50
   identifier = "categories"
   url = "/categories/"
 [[menu.main]]
-  name = "😊 随笔"
-  weight =50
-  identifier = "mood"
-  url = "/categories/随笔"
-[[menu.main]]
-  name = "🙋🏻‍♂️ 关于"
+  name = "搜索"
   weight = 60
+  identifier = "search"
+  url = "/search/"
+[[menu.main]]
+  name = "关于"
+  weight = 70
   identifier = "about"
   url = "/about/"
 
 [params]
   version = "4.x"           # Used to give a friendly message when you have an incompatible update
+  # 内联表写法：子表不开启作用域，避免后续键被归入 params.author
+  author = { name = "fliaping" }
+
   debug = false             # If true, load `eruda.min.js`. See https://github.com/liriliri/eruda
 
   since = "2015"            # Site creation time          # 站点建立时间
@@ -69,9 +75,14 @@ paginate = 10                                              # 首页每页显示�
   gitRepo = "https://github.com/fliaping/Blog.git"
 
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
-  # logoTitle = ""        # default: the title value    # 默认值: 上面设置的title值
+  logoTitle = "fliaping"
   keywords = ["fliaping", "Payne.Xu"]
-  description = "fliaping's notes, idea"
+  description = "记录关于 AI、工程与思考的长期观察。"
+
+  # Hero 区文案（首页）
+  heroEyebrow = "个人知识沉淀与对外表达"
+  heroTitle = "在 AI 重写一切的时代，<em>保留思考的痕迹</em>"
+  heroLede = "这里记录我对大模型、Agent 工程与软件开发的持续观察，也沉淀成体系的课程与笔记。"
 
   # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目，建议修改为一个较大的值
   archivePaginate = 30

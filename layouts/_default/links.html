@@ -1,0 +1,14 @@
+{{ define "main" }}
+<article class="article shell shell--full" data-article-body>
+  <header class="article__head">
+    <span class="eyebrow">Links</span>
+    <h1 class="article__title">{{ .Title }}</h1>
+  </header>
+
+  <div class="prose">
+    {{ .Content }}
+  </div>
+
+  {{- partial "comments.html" . }}
+</article>
+{{ end }}

@@ -1,0 +1,40 @@
+<footer class="site-footer">
+  <div class="shell shell--full">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <span class="site-footer__name">~/{{ site.Params.logoTitle | default "fliaping" }}</span>
+        <p class="site-footer__desc">{{ site.Params.description }}</p>
+      </div>
+
+      {{- with site.Params.social }}
+      <div class="social">
+        {{- range $key, $url := . }}
+          {{- $name := replaceRE "^[a-z]-" "" $key }}
+          <a class="social__link" href="{{ $url }}" aria-label="{{ $name }}"
+             {{ if not (hasPrefix $url "mailto:") }}target="_blank" rel="noopener noreferrer"{{ end }}>
+            {{- partial "icon.html" $name -}}
+          </a>
+        {{- end }}
+      </div>
+      {{- end }}
+    </div>
+
+    <div class="site-footer__bottom">
+      <span>
+        © {{ site.Params.since | default "2015" }}–{{ now.Format "2006" }}
+        {{ site.Params.author.name | default "fliaping" }}
+      </span>
+
+      {{- if site.Params.busuanzi.enable }}
+      <span class="site-footer__stats">
+        {{- if site.Params.busuanzi.siteUV }}<span id="busuanzi_container_site_uv" style="display:none">访客 <span id="busuanzi_value_site_uv"></span></span>{{ end }}
+        {{- if site.Params.busuanzi.sitePV }}<span id="busuanzi_container_site_pv" style="display:none">访问 <span id="busuanzi_value_site_pv"></span></span>{{ end }}
+      </span>
+      {{- end }}
+
+      <span>
+        由 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 驱动
+      </span>
+    </div>
+  </div>
+</footer>
