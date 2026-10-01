@@ -1,0 +1,30 @@
+{{ define "main" }}
+  {{- $label := cond (eq .Data.Singular "tag") "标签" "分类" -}}
+
+  <div class="shell shell--full">
+    <header class="page-head">
+      <span class="eyebrow">{{ $label }}</span>
+      <h1 class="page-head__title">{{ .Title }}</h1>
+      <p class="page-head__sub">{{ len .Pages }} 篇文章</p>
+    </header>
+
+    <div class="timeline">
+      {{- range .Pages.GroupByDate "2006" }}
+      <h2 class="timeline__year">
+        {{ .Key }}
+        <span class="timeline__count">{{ len .Pages }}</span>
+      </h2>
+      <ul class="timeline__list">
+        {{- range .Pages }}
+        <li class="timeline__item">
+          <time class="timeline__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "01.02" }}</time>
+          <span class="timeline__title">
+            <a class="timeline__link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </span>
+        </li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    </div>
+  </div>
+{{ end }}

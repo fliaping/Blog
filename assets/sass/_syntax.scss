@@ -1,0 +1,138 @@
+// ==============================
+// Syntax highlighting — Chroma classes
+// 深浅双模式，色相与 signal 体系协调
+// ==============================
+
+:root {
+  --syn-comment: hsl(220 9% 52%);
+  --syn-keyword: hsl(280 52% 48%);
+  --syn-string: hsl(140 46% 33%);
+  --syn-number: hsl(24 78% 42%);
+  --syn-function: hsl(214 72% 44%);
+  --syn-type: hsl(190 62% 32%);
+  --syn-variable: hsl(346 62% 44%);
+  --syn-operator: hsl(220 14% 38%);
+  --syn-line-hl: hsl(var(--signal-h) 90% 50% / 0.09);
+}
+
+:root[data-theme="dark"] {
+  --syn-comment: hsl(220 10% 50%);
+  --syn-keyword: hsl(286 72% 74%);
+  --syn-string: hsl(140 52% 66%);
+  --syn-number: hsl(28 92% 68%);
+  --syn-function: hsl(207 84% 71%);
+  --syn-type: hsl(186 68% 62%);
+  --syn-variable: hsl(346 80% 72%);
+  --syn-operator: hsl(220 12% 66%);
+  --syn-line-hl: hsl(var(--signal-h) 90% 60% / 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --syn-comment: hsl(220 10% 50%);
+    --syn-keyword: hsl(286 72% 74%);
+    --syn-string: hsl(140 52% 66%);
+    --syn-number: hsl(28 92% 68%);
+    --syn-function: hsl(207 84% 71%);
+    --syn-type: hsl(186 68% 62%);
+    --syn-variable: hsl(346 80% 72%);
+    --syn-operator: hsl(220 12% 66%);
+    --syn-line-hl: hsl(var(--signal-h) 90% 60% / 0.12);
+  }
+}
+
+.chroma {
+  background: transparent;
+  color: var(--text);
+
+  // 注释
+  .c, .ch, .cm, .c1, .cs, .cp, .cpf {
+    color: var(--syn-comment);
+    font-style: italic;
+  }
+
+  // 关键字
+  .k, .kc, .kd, .kn, .kp, .kr, .kt {
+    color: var(--syn-keyword);
+  }
+
+  // 字符串
+  .s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss {
+    color: var(--syn-string);
+  }
+
+  // 数字
+  .m, .mb, .mf, .mh, .mi, .il, .mo {
+    color: var(--syn-number);
+  }
+
+  // 函数 / 类名
+  .nf, .fm, .nc {
+    color: var(--syn-function);
+  }
+
+  // 类型 / 内建
+  .nb, .bp, .nt {
+    color: var(--syn-type);
+  }
+
+  // 变量 / 属性
+  .na, .nv, .vc, .vg, .vi, .vm, .nl {
+    color: var(--syn-variable);
+  }
+
+  // 运算符 / 标点
+  .o, .ow, .p {
+    color: var(--syn-operator);
+  }
+
+  // 常量 / 装饰器
+  .no, .nd, .ni, .ne {
+    color: var(--syn-number);
+  }
+
+  // 高亮行
+  .hl {
+    display: block;
+    width: 100%;
+    background: var(--syn-line-hl);
+  }
+
+  // 行号
+  .lnt, .ln {
+    color: var(--text-faint);
+    user-select: none;
+  }
+
+  // 错误
+  .err {
+    color: #e0483d;
+  }
+
+  // diff
+  .gd {
+    color: #cc3b33;
+  }
+
+  .gi {
+    color: #31a055;
+  }
+
+  .gs {
+    font-weight: 600;
+  }
+
+  .ge {
+    font-style: italic;
+  }
+}
+
+:root[data-theme="dark"] .chroma {
+  .gd {
+    color: #f08a82;
+  }
+
+  .gi {
+    color: #66d98a;
+  }
+}

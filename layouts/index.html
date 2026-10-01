@@ -1,0 +1,129 @@
+{{ define "main" }}
+  {{- $posts := where site.RegularPages "Type" "post" -}}
+  {{- $posts = where $posts ".Params.hiddenfromhomepage" "!=" true -}}
+
+  <section class="hero">
+    <div class="shell shell--full hero__inner">
+      <span class="eyebrow">{{ site.Params.heroEyebrow | default "个人知识沉淀与对外表达" }}</span>
+
+      <h1 class="hero__title">{{ site.Params.heroTitle | default "在 AI 重写一切的时代，<em>保留思考的痕迹</em>" | safeHTML }}</h1>
+
+      <p class="hero__lede">{{ site.Params.heroLede | default site.Params.description }}</p>
+
+      <div class="hero__meta">
+        <span class="hero__stat"><b>{{ len $posts }}</b> 篇文章</span>
+        <span class="hero__stat"><b>{{ sub now.Year (int (site.Params.since | default "2015")) }}</b> 年记录</span>
+        {{- with site.Taxonomies.tags }}<span class="hero__stat"><b>{{ len . }}</b> 个话题</span>{{ end }}
+      </div>
+
+      <div class="hero__links">
+        <a class="btn btn--primary" href="{{ "/post/" | relLangURL }}">
+          浏览全部文章
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="{{ "/about/" | relLangURL }}">关于我</a>
+      </div>
+    </div>
+  </section>
+
+  {{/* ---------- 课程板块：独立呈现，不混入时间线 ---------- */}}
+  {{- $courses := where site.RegularPages "Type" "courses" -}}
+  <section class="section section--tight">
+    <div class="shell shell--full">
+      <div class="section__head">
+        <div class="section__title-group">
+          <span class="eyebrow">Courses</span>
+          <h2 class="section__title">AI 课程</h2>
+        </div>
+        {{- if $courses }}
+        <a class="section__more" href="{{ "/courses/" | relLangURL }}">
+          全部课程
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        {{- end }}
+      </div>
+
+      <div class="courses">
+        {{- if $courses }}
+          {{- range first 3 $courses }}
+          <article class="course-card" data-reveal>
+            <span class="course-card__index">{{ .Params.code | default (printf "%02d" (add 1 (int .Weight))) }}</span>
+            <h3 class="course-card__title">
+              <a class="course-card__link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h3>
+            <p class="course-card__desc">{{ .Description | default (.Summary | plainify | truncate 90) }}</p>
+            <div class="course-card__foot">
+              {{- with .Params.lessons }}<span>{{ . }} 讲</span><span class="course-card__dot"></span>{{ end }}
+              {{- with .Params.level }}<span>{{ . }}</span>{{ end }}
+            </div>
+          </article>
+          {{- end }}
+        {{- else }}
+          {{/* 尚无课程：用占位卡说明规划，而不是留空 */}}
+          <article class="course-card course-card--placeholder">
+            <span class="course-card__index">SOON</span>
+            <h3 class="course-card__title">课程正在筹备中</h3>
+            <p class="course-card__desc">围绕大模型应用、Agent 工程与 AI 编码实践，正在整理成体系的课程内容。</p>
+            <div class="course-card__foot"><span>敬请期待</span></div>
+          </article>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
+  {{/* ---------- 文章流 ---------- */}}
+  {{- $paginator := .Paginate $posts -}}
+  <section class="section section--tight">
+    <div class="shell shell--full">
+      <div class="section__head">
+        <div class="section__title-group">
+          <span class="eyebrow">Writing</span>
+          <h2 class="section__title">最新文章</h2>
+        </div>
+        <a class="section__more" href="{{ "/post/" | relLangURL }}">
+          时间轴
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="feed">
+        {{- range $paginator.Pages }}
+        <article class="entry" data-reveal>
+          <div class="entry__rail">
+            <time class="entry__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+            {{- with (index .Params.categories 0) }}<span class="entry__cat">{{ . }}</span>{{ end }}
+          </div>
+          <div class="entry__body">
+            <h3 class="entry__title">
+              <a class="entry__link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h3>
+            <p class="entry__excerpt">{{ .Summary | plainify | truncate 96 }}</p>
+            <div class="entry__meta">
+              <span>{{ .WordCount }} 字</span>
+              <span>·</span>
+              <span>约 {{ .ReadingTime }} 分钟</span>
+            </div>
+          </div>
+        </article>
+        {{- end }}
+      </div>
+
+      {{- if or $paginator.HasPrev $paginator.HasNext }}
+      <nav class="pager" aria-label="分页">
+        {{- with $paginator.Prev }}
+        <a class="pager__link" href="{{ .URL }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          上一页
+        </a>
+        {{- else }}<span class="pager__spacer"></span>{{ end }}
+        {{- with $paginator.Next }}
+        <a class="pager__link" href="{{ .URL }}">
+          下一页
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        {{- end }}
+      </nav>
+      {{- end }}
+    </div>
+  </section>
+{{ end }}

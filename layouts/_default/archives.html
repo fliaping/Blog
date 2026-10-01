@@ -1,0 +1,30 @@
+{{ define "main" }}
+  {{- $posts := where site.RegularPages "Type" "post" -}}
+
+  <div class="shell shell--full">
+    <header class="page-head">
+      <span class="eyebrow">Archive</span>
+      <h1 class="page-head__title">时间轴</h1>
+      <p class="page-head__sub">共 {{ len $posts }} 篇文章 · 自 {{ site.Params.since | default "2015" }} 年起</p>
+    </header>
+
+    <div class="timeline">
+      {{- range $posts.GroupByDate "2006" }}
+      <h2 class="timeline__year">
+        {{ .Key }}
+        <span class="timeline__count">{{ len .Pages }}</span>
+      </h2>
+      <ul class="timeline__list">
+        {{- range .Pages }}
+        <li class="timeline__item">
+          <time class="timeline__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "01.02" }}</time>
+          <span class="timeline__title">
+            <a class="timeline__link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </span>
+        </li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    </div>
+  </div>
+{{ end }}

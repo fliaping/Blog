@@ -1,0 +1,28 @@
+{{ define "main" }}
+<article class="article shell shell--full" data-article-body>
+  <header class="article__head">
+    <span class="eyebrow">About</span>
+    <h1 class="article__title">{{ .Title }}</h1>
+  </header>
+
+  <div class="prose">
+    {{ .Content }}
+  </div>
+
+  {{- with site.Params.social }}
+  <div class="article__foot">
+    <div class="social">
+      {{- range $key, $url := . }}
+        {{- $name := replaceRE "^[a-z]-" "" $key }}
+        <a class="social__link" href="{{ $url }}" aria-label="{{ $name }}"
+           {{ if not (hasPrefix $url "mailto:") }}target="_blank" rel="noopener noreferrer"{{ end }}>
+          {{- partial "icon.html" $name -}}
+        </a>
+      {{- end }}
+    </div>
+  </div>
+  {{- end }}
+
+  {{- partial "comments.html" . }}
+</article>
+{{ end }}

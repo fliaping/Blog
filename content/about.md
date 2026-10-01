@@ -1,5 +1,5 @@
 ---
-title: "🙋🏻‍♂️关于"
+title: "关于"
 layout: about
 date: 2021-11-06T14:57:28+08:00
 hidemeta: true
