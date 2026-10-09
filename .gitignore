@@ -3,6 +3,7 @@ resources/_gen
 public/
 !themes/.keep
 uploads/
+.cache/
 achive_assets/
 # 不要忽略 assets/：这里存放手写的 SCSS / JS 源文件，
 # 是站点样式与交互的唯一来源，必须纳入版本控制。
