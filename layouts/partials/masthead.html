@@ -12,10 +12,15 @@
     <nav class="nav" id="site-nav" data-nav aria-label="主导航">
       {{- $current := . -}}
       {{ range site.Menus.main -}}
-        {{- $active := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) -}}
-        {{- $accent := eq .Identifier "courses" -}}
-        <a class="nav__link{{ if $accent }} nav__link--accent{{ end }}"
-           href="{{ .URL | relLangURL }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a>
+        {{- $active := $current.IsMenuCurrent "main" . -}}
+        {{- $ancestor := $current.HasMenuCurrent "main" . -}}
+        {{- with .Page -}}
+          {{- if and (not .IsHome) (.IsAncestor $current) -}}
+            {{- $ancestor = true -}}
+          {{- end -}}
+        {{- end -}}
+        <a class="nav__link" href="{{ .URL | relLangURL }}"
+           {{- if $active }} aria-current="page"{{ else if $ancestor }} aria-current="true"{{ end }}>{{ .Name }}</a>
       {{- end }}
 
       <button class="icon-btn theme-toggle" data-theme-toggle type="button" aria-label="切换深浅模式">

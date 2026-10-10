@@ -1,28 +1,110 @@
 {{ define "main" }}
-<article class="article shell shell--full" data-article-body>
-  <header class="article__head">
-    <span class="eyebrow">About</span>
-    <h1 class="article__title">{{ .Title }}</h1>
+{{- $about := .Params.about -}}
+<article class="about shell">
+  <header class="about__hero">
+    <div class="about__intro">
+      <span class="eyebrow">About / Building Intelligence</span>
+      <p class="about__greeting">{{ $about.greeting }}<span>{{ $about.alias }}</span></p>
+      <h1 class="about__title">{{ range $about.headline }}<span>{{ . }}</span>{{ end }}</h1>
+      <p class="about__summary">{{ $about.intro }}</p>
+      <div class="about__hero-links">
+        <a class="btn btn--primary" href="#building">看看我在做什么 <span aria-hidden="true">↓</span></a>
+        <a class="about__text-link" href="#connect">与我交流 <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <aside class="about__profile" aria-label="个人名片">
+      <div class="about__profile-top"><span class="about__monogram" aria-hidden="true">f.</span><span>{{ $about.location }}</span></div>
+      <div class="about__orbit" aria-hidden="true">
+        <svg viewBox="0 0 320 200" fill="none">
+          <path class="about__orbit-guide" d="M0 100h320M160 0v200"/>
+          <ellipse class="about__orbit-line" cx="160" cy="100" rx="126" ry="54" transform="rotate(-25 160 100)"/>
+          <ellipse class="about__orbit-line" cx="160" cy="100" rx="86" ry="54" transform="rotate(35 160 100)"/>
+          <circle class="about__orbit-core" cx="160" cy="100" r="29"/>
+          <path class="about__orbit-signal" d="M148 100h24m-12-12v24"/>
+          <circle class="about__orbit-dot" cx="269" cy="53" r="5"/>
+          <circle class="about__orbit-point" cx="90" cy="149" r="3"/>
+        </svg>
+      </div>
+      <p class="about__handle">fliaping<span>Building Intelligence.</span></p>
+      <p class="about__identity">{{ $about.identity }}</p>
+      <p class="about__outlook">{{ $about.outlook }}</p>
+      <div class="about__profile-foot"><span>ENGINEERING × CURIOSITY</span><span aria-hidden="true">↗</span></div>
+    </aside>
   </header>
 
-  <div class="prose">
-    {{ .Content }}
-  </div>
+  <dl class="about__facts">
+    {{- range $about.facts }}
+    <div><dt>{{ .label }}</dt><dd>{{ .value }}</dd></div>
+    {{- end }}
+  </dl>
 
-  {{- with site.Params.social }}
-  <div class="article__foot">
-    <div class="social">
-      {{- range $key, $url := . }}
-        {{- $name := replaceRE "^[a-z]-" "" $key }}
-        <a class="social__link" href="{{ $url }}" aria-label="{{ $name }}"
-           {{ if not (hasPrefix $url "mailto:") }}target="_blank" rel="noopener noreferrer"{{ end }}>
-          {{- partial "icon.html" $name -}}
-        </a>
+  <section class="about__section" aria-labelledby="about-approach">
+    <div class="about__section-head"><span class="about__index">01 / APPROACH</span><h2 id="about-approach">我怎样做事</h2></div>
+    <div class="about__section-body">
+      <div class="about__story prose">{{ .Content }}</div>
+      <div class="about__strengths">
+        {{- range $about.strengths }}
+        <div class="about__strength"><h3>{{ .title }}</h3><p>{{ .text }}</p></div>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="about__section" id="building" aria-labelledby="about-building">
+    <div class="about__section-head"><span class="about__index">02 / BUILDING</span><h2 id="about-building">最近在构建</h2><p>想法，放进真实的系统里。</p></div>
+    <div class="about__section-body about__work">
+      {{- range $about.work }}
+      <article class="about__project">
+        <div class="about__project-meta"><span class="about__project-name">{{ .name }}</span><span class="about__project-category">{{ .category }}</span></div>
+        <h3>{{ .title }}</h3>
+        <p>{{ .text }}</p>
+        <div class="about__project-foot">
+          <ul class="about__tags" aria-label="项目方向">{{ range .tags }}<li>{{ . }}</li>{{ end }}</ul>
+          <a class="about__text-link" href="{{ .link }}" {{ if hasPrefix .link "https://" }}target="_blank" rel="noopener noreferrer"{{ end }}>{{ .linkLabel }} <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
       {{- end }}
     </div>
-  </div>
-  {{- end }}
+  </section>
 
+  <section class="about__section" aria-labelledby="about-journey">
+    <div class="about__section-head"><span class="about__index">03 / JOURNEY</span><h2 id="about-journey">一路走来</h2><p>领域在变，构建的习惯一直在。</p></div>
+    <ol class="about__section-body about__journey">
+      {{- range $about.journey }}
+      <li><span class="about__period">{{ .period }}</span><div><h3>{{ .title }}</h3><p>{{ .text }}</p></div></li>
+      {{- end }}
+    </ol>
+  </section>
+
+  <section class="about__section" aria-labelledby="about-life">
+    <div class="about__section-head"><span class="about__index">04 / OFFLINE</span><h2 id="about-life">工作之外</h2></div>
+    <div class="about__section-body">
+      <div class="about__life">
+        {{- range $about.life }}
+        <div><span class="about__life-label">{{ .label }}</span><h3>{{ .title }}</h3><p>{{ .text }}</p></div>
+        {{- end }}
+      </div>
+      <div class="about__books"><span>书架的一角</span><ul>{{ range $about.books }}<li>《{{ . }}》</li>{{ end }}</ul></div>
+    </div>
+  </section>
+
+  <section class="about__section" aria-labelledby="about-writing">
+    <div class="about__section-head"><span class="about__index">05 / FIELD NOTES</span><h2 id="about-writing">从文章认识我</h2><p>好奇、动手，以及回头复盘。</p></div>
+    <ol class="about__section-body about__writing">
+      {{- range $about.writing }}
+      <li><a href="{{ .link }}"><span class="about__year">{{ .year }}</span><div><h3>{{ .title }}</h3><p>{{ .note }}</p></div><span class="about__writing-arrow" aria-hidden="true">↗</span></a></li>
+      {{- end }}
+    </ol>
+  </section>
+
+  <footer class="about__connect" id="connect">
+    <div><span class="eyebrow">Say hello</span><h2>{{ $about.contactTitle }}</h2><p>{{ $about.contactText }}</p></div>
+    <nav class="about__contacts" aria-label="联系我">
+      {{- range $about.contacts }}
+      <a href="{{ .url }}" {{ if not (hasPrefix .url "mailto:") }}target="_blank" rel="noopener noreferrer"{{ end }}>{{ partial "icon.html" .icon }}<span>{{ .label }}</span><span class="about__contact-arrow" aria-hidden="true">↗</span></a>
+      {{- end }}
+    </nav>
+  </footer>
   {{- partial "comments.html" . }}
 </article>
 {{ end }}

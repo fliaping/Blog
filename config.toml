@@ -30,36 +30,43 @@ paginate = 10                                              # 首页每页显示�
   name = "首页"
   weight = 10
   identifier = "home"
+  pageRef = "/"
   url = "/"
 [[menu.main]]
   name = "文章"
   weight = 20
   identifier = "archives"
+  pageRef = "/post"
   url = "/post/"
 [[menu.main]]
   name = "课程"
   weight = 30
   identifier = "courses"
+  pageRef = "/courses"
   url = "/courses/"
 [[menu.main]]
   name = "标签"
   weight = 40
   identifier = "tags"
+  pageRef = "/tags"
   url = "/tags/"
 [[menu.main]]
   name = "分类"
   weight = 50
   identifier = "categories"
+  pageRef = "/categories"
   url = "/categories/"
 [[menu.main]]
   name = "搜索"
   weight = 60
   identifier = "search"
+  pageRef = "/search"
   url = "/search/"
 [[menu.main]]
   name = "关于"
   weight = 70
   identifier = "about"
+  pageRef = "/about"
   url = "/about/"
 
 [params]

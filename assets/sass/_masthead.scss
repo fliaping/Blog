@@ -97,11 +97,12 @@
     background: var(--bg-subtle);
   }
 
-  &[aria-current="page"] {
-    color: var(--text);
+  &[aria-current] {
+    color: var(--signal);
+    font-weight: 600;
   }
 
-  &[aria-current="page"]::after {
+  &[aria-current]::after {
     content: "";
     position: absolute;
     left: var(--space-xs);
@@ -110,17 +111,6 @@
     height: 2px;
     border-radius: 2px;
     background: var(--signal);
-  }
-}
-
-// 课程入口做成信号色实心，视觉权重最高
-.nav__link--accent {
-  color: var(--signal);
-  font-weight: 600;
-
-  &:hover {
-    color: var(--signal-hover);
-    background: var(--signal-wash);
   }
 }
 
@@ -238,12 +228,12 @@
       border-bottom: none;
     }
 
-    &[aria-current="page"]::after {
+    &[aria-current]::after {
       display: none;
     }
 
-    &[aria-current="page"] {
-      color: var(--signal);
+    &[aria-current] {
+      background: var(--signal-wash);
     }
   }
 }
