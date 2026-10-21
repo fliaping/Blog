@@ -22,7 +22,7 @@ description: "复用现有设备，用 Docker 和 KDE 搭建独立的 Claude 开
 
 下面按搭建顺序，讲讲我是怎么做的。
 
-![复用现有设备搭建 Claude 开发环境：KDE、Docker、网络出口与 iPad 订阅](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2026-10-21/14-54/claude-us-environment-docker/cover.jpg)
+![复用现有设备搭建 Claude 开发环境：KDE、Docker、网络出口与 iPad 订阅](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2026-10-21/16-23/claude-us-environment-docker/cover-2d2887bbbd15.jpg)
 
 <!--more-->
 
