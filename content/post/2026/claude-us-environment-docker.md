@@ -1,5 +1,5 @@
 ---
-title: "不用买 4000 元的 Mac mini，我用现有设备搭了一套 Claude 美国环境"
+title: "不用买4000块Mac Mini 寄到美国，用本地设备实现Claude不封号的环境"
 date: 2026-10-21T13:22:31+08:00
 draft: false
 categories: ["AI之遥"]
