@@ -24,8 +24,6 @@ description: "复用现有设备，用 Docker 和 KDE 搭建独立的 Claude 开
 
 ![复用现有设备搭建 Claude 开发环境：KDE、Docker、网络出口与 iPad 订阅](https://fliaping-blog.oss-rg-china-mainland.aliyuncs.com/storage/2026-10-21/14-54/claude-us-environment-docker/cover.jpg)
 
-*本文同步自 [X 长文](https://x.com/fliaping/status/2112776524403507242)。*
-
 <!--more-->
 
 ## ① 用容器提供桌面，不再单独准备一台电脑
