@@ -129,3 +129,21 @@ DMIT 和 Webshare 分别负责不同环节：一个用于中转，一个提供�
 整套折腾下来，对我最有价值的是：复用了现有设备，基本没有新增硬件投入，就把桌面、网络出口和开发环境集中管理起来了。
 
 如果手里已经有闲置服务器、NAS 或其他能运行容器的设备，可以先评估这条路线，再决定是否需要购买专用电脑。
+
+## ⑦ claude-box Skill 实操：直接让 Agent 帮忙部署
+
+我把这套方案整理成开源的 claude-box Skill 了，放在 [fliaping/skills-bank](https://github.com/fliaping/skills-bank/tree/main/skills/claude-box)，大家可以直接让 Agent 帮忙部署。
+
+不用额外买 Mac mini，也不用自己构建镜像。利用现有 Linux 设备，组合现成的 KDE 桌面、Mihomo 和 Claude Code，提供统一代理出站、DNS 接管、断连阻断，以及启动时自动识别时区，识别失败则使用 UTC。
+
+安装：
+
+```bash
+npx skills add fliaping/skills-bank --skill claude-box
+```
+
+然后告诉 Agent：
+
+> 用 claude-box 在我的 Linux 服务器上部署 KDE 和 Claude Code 环境，使用我提供的节点，并检查网络出口和断连阻断。
+
+需要自备设备、节点和 Claude 账号。公开仓库只包含模板，密码和节点凭据在本地初始化，保存在独立运行目录，不会随代码上传。非 DNS 的 UDP 会被拒绝，IPv6 禁用；这套方案解决的是环境部署和网络出口管理，不代表“不可检测”或保证不封号。
